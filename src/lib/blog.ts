@@ -4,19 +4,14 @@ import { BlogPost } from '@/types';
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
-    const connection = await dbConnect();
-    if (!connection) {
-      console.warn('Database not connected. Returning null for post.');
-      return null;
-    }
-
-    const post = await BlogPostModel.findOne({
-      slug,
-      status: 'published'
+    await dbConnect();
+    const post = await BlogPostModel.findOne({ 
+      slug, 
+      status: 'published' 
     }).lean<BlogPost>();
-
+    
     if (!post) return null;
-
+    
     // Convert _id and dates to strings to match the interface and ensure serialization
     return {
       ...post,
@@ -33,12 +28,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 
 export async function getAllPosts(): Promise<BlogPost[]> {
   try {
-    const connection = await dbConnect();
-    if (!connection) {
-      console.warn('Database not connected. Returning empty posts array.');
-      return [];
-    }
-
+    await dbConnect();
     const posts = await BlogPostModel.find({ status: 'published' })
       .sort({ publishedAt: -1 })
       .select('-content') // Exclude heavy content for list view

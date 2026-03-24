@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { MagicDotPattern } from "@/components/ui/magicui-dot-pattern";
 
@@ -64,7 +63,7 @@ export function TestimonialsSection() {
             className="text-2xl font-medium tracking-tight text-gray-900 sm:text-4xl lg:text-5xl mb-3 sm:mb-4"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
-            What Our Clients Say
+            What Our Customers Say
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             Trusted by industry leaders who are transforming their operations with autonomous robotics

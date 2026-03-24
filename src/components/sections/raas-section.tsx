@@ -1,283 +1,218 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { RAAS_CONTENT } from "@/lib/constants";
-import { VideoPlayer } from "@/components/shared/video-player";
-import { FadeIn } from "@/components/ui/fade-in";
 import { ArrowRight } from "lucide-react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-
-interface ProductSectionProps {
-  product: (typeof RAAS_CONTENT.products)[0];
-  index: number;
-  setActiveIndex: (index: number) => void;
-}
-
-function ProductSection({
-  product,
-  index,
-  setActiveIndex,
-}: ProductSectionProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, {
-    margin: "-40% 0px -40% 0px", // Trigger when in middle of screen
-  });
-
-  useEffect(() => {
-    if (isInView) {
-      setActiveIndex(index);
-    }
-  }, [isInView, index, setActiveIndex]);
-
-  // Benefit-driven headlines mapping
-  const premiumHeadlines: Record<string, string> = {
-    "material-movement": "Logistics that move with your business.",
-    "lawn-mower": "The most reliable hand on your lawn.",
-    "wall-finishing": "Perfect finishes, every single time.",
-  };
-
-  return (
-    <div
-      ref={ref}
-      className="min-h-[60vh] lg:min-h-screen flex flex-col justify-center py-20 lg:py-0"
-    >
-      <div className="max-w-xl space-y-6">
-        <div className="flex items-center gap-3">
-          <span
-            className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#fdfcf0] border border-gray-200 text-gray-600 font-medium text-sm shadow-sm"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            {index + 1}
-          </span>
-          <span className="text-sm font-semibold text-[#7ccd54] uppercase tracking-wider">
-            {product.title}
-          </span>
-        </div>
-
-        <h3
-          className="text-3xl font-medium tracking-tight text-gray-900 sm:text-4xl lg:text-5xl"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
-        >
-          {premiumHeadlines[product.id] || product.title}
-        </h3>
-
-        <p className="text-lg leading-relaxed text-gray-600">
-          {product.description}
-        </p>
-
-        {/* Mobile Video - Only visible on small screens */}
-        <div className="lg:hidden mt-8">
-          <div className="relative rounded-xl overflow-hidden border border-gray-100 shadow-2xl bg-white">
-            <VideoPlayer videoId={product.videoId} title={product.title} />
-          </div>
-        </div>
-
-        <div className="pt-4">
-          <a
-            href={`/offerings/${product.id}`}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white hover:bg-[#7ccd54] transition-all duration-300 group shadow-lg hover:shadow-xl"
-          >
-            Learn more
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { motion } from "framer-motion";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 export function RaasSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const { ref: product1Ref, isIntersecting: product1Visible } = useIntersectionObserver({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
+
+  const { ref: product2Ref, isIntersecting: product2Visible } = useIntersectionObserver({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
+
+  const { ref: product3Ref, isIntersecting: product3Visible } = useIntersectionObserver({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
 
   return (
-    <div className="relative bg-[#fdfcf0] overflow-clip">
-      {/* ── Professional CSS blob system — compositor-only, zero JS ── */}
-      <style>{`
-        /* Shape morphing + drift — border-radius shift gives organic breathing feel */
-        @keyframes raas-blob-a {
-          0%,100% {
-            transform: translate(0px, 0px) scale(1);
-            border-radius: 62% 38% 68% 32% / 52% 64% 36% 48%;
-          }
-          30% {
-            transform: translate(55px, -70px) scale(1.07);
-            border-radius: 38% 62% 44% 56% / 66% 34% 58% 42%;
-          }
-          65% {
-            transform: translate(-40px, 50px) scale(0.95);
-            border-radius: 72% 28% 52% 48% / 38% 72% 28% 62%;
-          }
-        }
-        @keyframes raas-blob-b {
-          0%,100% {
-            transform: translate(0px, 0px) scale(1);
-            border-radius: 42% 58% 32% 68% / 64% 36% 56% 44%;
-          }
-          35% {
-            transform: translate(-60px, 55px) scale(1.06);
-            border-radius: 66% 34% 60% 40% / 42% 68% 32% 58%;
-          }
-          70% {
-            transform: translate(45px, -35px) scale(0.94);
-            border-radius: 36% 64% 50% 50% / 58% 42% 66% 34%;
-          }
-        }
-        @keyframes raas-blob-c {
-          0%,100% {
-            transform: translate(0px, 0px) scale(1);
-            border-radius: 54% 46% 40% 60% / 44% 56% 44% 56%;
-          }
-          40% {
-            transform: translate(50px, 65px) scale(0.92);
-            border-radius: 40% 60% 66% 34% / 60% 40% 54% 46%;
-          }
-          75% {
-            transform: translate(-45px, -45px) scale(1.09);
-            border-radius: 68% 32% 44% 56% / 36% 64% 40% 60%;
-          }
-        }
-        /* Subtle pulse on the accent glow — opacity only, lightest touch */
-        @keyframes raas-blob-accent {
-          0%,100% { opacity: 0.12; }
-          50%     { opacity: 0.22; }
-        }
-      `}</style>
+    <section id="raas" className="relative overflow-hidden bg-white">
+      {/* Header Section - Full Width */}
+      <div className="relative bg-[#fdfcf0] py-20 lg:py-28">
+        <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-[#7ccd54]/10 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-[#1a3a1f]/8 blur-3xl" />
 
-      {/*
-        Blob A — PRIMARY  (dark forest green, top-left, most defined)
-        Less blur = more "present", anchors the section visually
-      */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          width: "700px", height: "520px",
-          top: "-4%", left: "-8%",
-          background: "radial-gradient(ellipse at 45% 45%, rgba(26,58,31,0.45) 0%, rgba(26,58,31,0.22) 40%, transparent 72%)",
-          filter: "blur(55px)",
-          animation: "raas-blob-a 20s ease-in-out infinite",
-          willChange: "transform",
-          borderRadius: "62% 38% 68% 32% / 52% 64% 36% 48%",
-        }}
-      />
+        <div className="relative z-10 text-center px-8 sm:px-12 lg:px-16">
+          <div className="inline-block mb-8">
+            <div className="h-1 w-16 bg-primary mb-4 mx-auto"></div>
+            <span className="text-xs font-bold uppercase tracking-widest text-gray-600">
+              Our Solutions
+            </span>
+          </div>
 
-      {/*
-        Blob B — SECONDARY  (slightly brighter mid-green, center-right)
-        More blur = recedes into background, creates depth layer
-      */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          width: "620px", height: "460px",
-          top: "35%", right: "-6%",
-          background: "radial-gradient(ellipse at 55% 40%, rgba(45,90,45,0.38) 0%, rgba(45,90,45,0.16) 45%, transparent 72%)",
-          filter: "blur(75px)",
-          animation: "raas-blob-b 26s ease-in-out infinite",
-          willChange: "transform",
-          borderRadius: "42% 58% 32% 68% / 64% 36% 56% 44%",
-        }}
-      />
+          <h2
+            className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl mb-6 leading-[1.15]"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            Robots as a
+            <br />
+            <span className="text-primary">Service</span>
+          </h2>
 
-      {/*
-        Blob C — DEPTH  (darkest, bottom-left, heavily blurred)
-        Creates the shadowed "floor" of the composition
-      */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          width: "560px", height: "400px",
-          bottom: "5%", left: "15%",
-          background: "radial-gradient(ellipse at 50% 55%, rgba(20,48,24,0.32) 0%, rgba(20,48,24,0.14) 45%, transparent 72%)",
-          filter: "blur(90px)",
-          animation: "raas-blob-c 32s ease-in-out infinite",
-          willChange: "transform",
-          borderRadius: "54% 46% 40% 60% / 44% 56% 44% 56%",
-        }}
-      />
+          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-gray-600 sm:text-xl lg:text-2xl">
+            Cutting-edge robots on a flexible subscription basis, automating material handling and wall finishing with seamless integration.
+          </p>
+        </div>
+      </div>
 
-      {/*
-        Accent glow — brand lime green, center, extremely diffuse
-        Adds a faint warm highlight without competing with content
-      */}
-      <div
-        className="absolute pointer-events-none rounded-full"
-        style={{
-          width: "500px", height: "300px",
-          top: "18%", left: "30%",
-          background: "radial-gradient(ellipse at 50% 50%, rgba(124,205,84,0.18) 0%, transparent 65%)",
-          filter: "blur(60px)",
-          animation: "raas-blob-accent 8s ease-in-out infinite",
-          willChange: "opacity",
-        }}
-      />
+      {/* Product 1 - Material Movement with Video - Full Width Split */}
+      <div ref={product1Ref} className="relative w-full bg-white">
+        <div className="grid lg:grid-cols-2 min-h-[600px] lg:min-h-[800px]">
+          {/* Left - Video */}
+          <motion.div
+            className="relative bg-black order-2 lg:order-1"
+            initial={{ opacity: 0, x: -100 }}
+            animate={product1Visible ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
+            >
+              <source src="/hero-video.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+          </motion.div>
 
-      <section id="raas" className="relative z-10">
-        <div className="container mx-auto px-4 pt-24 lg:pt-32">
-          {/* Section Header */}
-          <FadeIn>
-            <div className="mb-12 lg:mb-24 text-center max-w-4xl mx-auto">
-              <div className="inline-block rounded-full bg-[#fdfcf0] px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
-                Our Solutions
-              </div>
-              <h2
-                className="mb-6 text-4xl font-medium tracking-tight text-gray-900 sm:text-5xl lg:text-6xl text-balance"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
+          {/* Right - Content */}
+          <div className="relative bg-white flex items-center order-1 lg:order-2">
+            <motion.div
+              className="w-full px-8 sm:px-12 lg:px-16 xl:px-20 py-16 lg:py-20"
+              initial={{ opacity: 0, x: 100 }}
+              animate={product1Visible ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            >
+              <h3
+                className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl mb-5 leading-[1.2]"
+                style={{ fontFamily: "var(--font-dm-sans)" }}
               >
-                {RAAS_CONTENT.title}
-              </h2>
-              <p className="mx-auto max-w-3xl text-lg sm:text-xl text-gray-600 text-pretty leading-relaxed">
-                {RAAS_CONTENT.subtitle}
+                Material
+                <br />
+                <span className="text-primary">Movement</span>
+              </h3>
+
+              <p className="text-lg sm:text-xl leading-relaxed text-gray-600 mb-8 max-w-xl">
+                Advanced sensors and autonomous navigation streamline logistics operations with speed and reliability. Optimized efficiency, reduced manual labor, increased productivity.
               </p>
-            </div>
-          </FadeIn>
 
-          <div className="flex flex-col lg:flex-row gap-20">
-            {/* Left Column: Text Content (Scrolls) */}
-            <div className="w-full lg:w-1/2">
-              <div className="space-y-0">
-                {RAAS_CONTENT.products.map((product, index) => (
-                  <ProductSection
-                    key={product.id}
-                    product={product}
-                    index={index}
-                    setActiveIndex={setActiveIndex}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Right Column: Sticky Video Content */}
-            <div className="hidden lg:block w-1/2 sticky top-0 h-screen">
-              <div className="h-full flex flex-col justify-center">
-                <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-gray-100 group transition-all duration-500 hover:shadow-[0_40px_80px_rgba(0,0,0,0.15)]">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeIndex}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.05 }}
-                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute inset-0"
-                    >
-                      <VideoPlayer
-                        videoId={RAAS_CONTENT.products[activeIndex].videoId}
-                        title={RAAS_CONTENT.products[activeIndex].title}
-                        className="h-full w-full rounded-none shadow-none"
-                      />
-                    </motion.div>
-                  </AnimatePresence>
-
-                  {/* Active Demo badge */}
-                  <div className="absolute top-6 left-6 z-20">
-                    <div className="px-3 py-1 rounded-full bg-white/80 backdrop-blur-sm border border-gray-100 text-[10px] font-bold tracking-widest uppercase text-gray-500 shadow-sm">
-                      Active Demo
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <Link
+                href="/offerings/material-movement"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-bold text-white uppercase tracking-wide transition-all duration-300 hover:bg-primary/90 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Explore Solution
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </motion.div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+
+      {/* Product 2 - Lawn Mower - Full Width Split Reversed */}
+      <div ref={product2Ref} className="relative w-full bg-[#fdfcf0]">
+        <div className="grid lg:grid-cols-2 min-h-[600px] lg:min-h-[800px]">
+          {/* Left - Content */}
+          <div className="relative flex items-center order-2 lg:order-1">
+            <motion.div
+              className="w-full px-8 sm:px-12 lg:px-16 xl:px-20 py-16 lg:py-20"
+              initial={{ opacity: 0, x: -100 }}
+              animate={product2Visible ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            >
+              <h3
+                className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl mb-5 leading-[1.2]"
+                style={{ fontFamily: "var(--font-dm-sans)" }}
+              >
+                Lawn
+                <br />
+                <span className="text-primary">Mower</span>
+              </h3>
+
+              <p className="text-lg sm:text-xl leading-relaxed text-gray-600 mb-8 max-w-xl">
+                Autonomous lawn care that lets you relax. Equipped with advanced sensors for safe, efficient operation. More cost-effective than traditional services.
+              </p>
+
+              <Link
+                href="/offerings/lawn-mower"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-bold text-white uppercase tracking-wide transition-all duration-300 hover:bg-primary/90 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Explore Solution
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right - Image */}
+          <motion.div
+            className="relative order-1 lg:order-2"
+            initial={{ opacity: 0, x: 100 }}
+            animate={product2Visible ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Image
+              src="/mmr-images/mmr-images-2.jpg"
+              alt="Lawn Mower robot"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-[#fdfcf0]/60 via-transparent to-transparent" />
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Product 3 - Wall Finishing - Full Width Split */}
+      <div ref={product3Ref} className="relative w-full bg-white">
+        <div className="grid lg:grid-cols-2 min-h-[600px] lg:min-h-[800px]">
+          {/* Left - Image */}
+          <motion.div
+            className="relative order-2 lg:order-1"
+            initial={{ opacity: 0, x: -100 }}
+            animate={product3Visible ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Image
+              src="/mmr-images/mmr-images-3.jpg"
+              alt="Wall Finishing robot"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-transparent to-transparent" />
+          </motion.div>
+
+          {/* Right - Content */}
+          <div className="relative flex items-center order-1 lg:order-2">
+            <motion.div
+              className="w-full px-8 sm:px-12 lg:px-16 xl:px-20 py-16 lg:py-20"
+              initial={{ opacity: 0, x: 100 }}
+              animate={product3Visible ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            >
+              <h3
+                className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl mb-5 leading-[1.2]"
+                style={{ fontFamily: "var(--font-dm-sans)" }}
+              >
+                Wall
+                <br />
+                <span className="text-primary">Finishing</span>
+              </h3>
+
+              <p className="text-lg sm:text-xl leading-relaxed text-gray-600 mb-8 max-w-xl">
+                Automated sanding and putty application with precision movement. Delivers uniformity, consistency, and reduces material waste for superior quality finishes.
+              </p>
+
+              <Link
+                href="/offerings/wall-finishing"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-bold text-white uppercase tracking-wide transition-all duration-300 hover:bg-primary/90 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Explore Solution
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

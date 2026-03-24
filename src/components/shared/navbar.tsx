@@ -27,7 +27,12 @@ import {
 
 import { useHasMounted } from "@/hooks/use-has-mounted";
 
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+} from "framer-motion";
 
 export function Navbar() {
   const { scrollY } = useScroll();
@@ -40,7 +45,7 @@ export function Navbar() {
   const backgroundColor = useTransform(
     scrollY,
     [0, 200],
-    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.85)"],
+    ["rgba(253, 252, 240, 0)", "rgba(253, 252, 240, 0.9)"],
   );
   const boxShadow = useTransform(
     scrollY,
@@ -98,7 +103,7 @@ export function Navbar() {
                     {item.items ? (
                       <>
                         <NavigationMenuTrigger
-                          className="bg-transparent text-gray-800 hover:text-gray-900 data-[state=open]:text-gray-900"
+                          className="bg-transparent text-gray-800 hover:text-gray-900 data-[state=open]:text-gray-900 text-base"
                           id={`nav-trigger-${item.title.toLowerCase()}`}
                         >
                           {item.title}
@@ -125,7 +130,7 @@ export function Navbar() {
                           href={item.href!}
                           className={cn(
                             navigationMenuTriggerStyle(),
-                            "bg-transparent text-gray-800 hover:text-gray-900",
+                            "bg-transparent text-gray-800 hover:text-gray-900 text-base",
                           )}
                         >
                           {item.title}
@@ -144,7 +149,7 @@ export function Navbar() {
             <Button
               variant="ghost"
               asChild
-              className="text-gray-700 hover:text-gray-900"
+              className="text-gray-700 hover:text-gray-900 text-base"
             >
               <Link href={NAV_CONFIG.actions.signIn} target="_blank">
                 Sign In
@@ -152,7 +157,7 @@ export function Navbar() {
             </Button>
             <Button
               asChild
-              className="bg-[#17471e] hover:bg-[#122a16] text-white font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="bg-[#7ccd54] hover:bg-[#6bbd44] text-white font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               <Link href={NAV_CONFIG.actions.contact}>Contact Us</Link>
             </Button>
@@ -197,7 +202,7 @@ function MobileNav({ scrolled }: { scrolled: boolean }) {
       <SheetContent
         id="mobile-menu-content"
         side="right"
-        className="w-[300px] sm:w-[400px] bg-white"
+        className="w-75 sm:w-100 bg-white"
       >
         <SheetHeader>
           <SheetTitle className="text-left">
@@ -268,7 +273,7 @@ function MobileNav({ scrolled }: { scrolled: boolean }) {
             </Button>
             <Button
               asChild
-              className="w-full bg-[#1a3a1f] hover:bg-[#122a16] text-white font-semibold"
+              className="w-full bg-[#7ccd54] hover:bg-[#6bbd44] text-white font-semibold"
             >
               <Link
                 href={NAV_CONFIG.actions.contact}
@@ -302,7 +307,7 @@ const ListItem = ({
           ref={ref}
           href={href}
           className={cn(
-            "group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-50",
+            "group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
             className,
           )}
           {...props}

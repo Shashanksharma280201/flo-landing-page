@@ -100,13 +100,13 @@ export function VideoPlayer({
               isBackground ? 1 : 0
             }&loop=1&playlist=${videoId}&controls=${
               isBackground ? 0 : 1
-            }&rel=0&playsinline=1`}
+            }&rel=0&playsinline=1&vq=hd1080&quality=highres&hd=1`}
             title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
             className={cn(
               "h-full w-full border-0",
-              isBackground && "pointer-events-none scale-150"
+              isBackground && "pointer-events-none scale-125"
             )}
           />
         )}

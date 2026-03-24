@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { useScroll, useTransform, motion, type Variants } from "framer-motion";
 import { HERO_CONTENT } from "@/lib/constants";
-import { VideoPlayer } from "@/components/shared/video-player";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -11,7 +11,9 @@ interface HeroProps {
   badge?: string;
   title?: string;
   subtitle?: string;
-  videoId?: string;
+  videoSrc?: string;
+  ctaText?: string;
+  ctaHref?: string;
 }
 
 // ─── Motion variants ──────────────────────────────────────────────────────────
@@ -46,10 +48,12 @@ const itemVariants: Variants = {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function Hero({
-  badge = "Now Deploying Across India",
+  badge,
   title = HERO_CONTENT.title,
   subtitle = HERO_CONTENT.subtitle,
-  videoId = "KMTNnYjulQE",
+  videoSrc = "/hero-video.mp4",
+  ctaText = HERO_CONTENT.cta.primary.text,
+  ctaHref = HERO_CONTENT.cta.primary.href,
 }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -58,51 +62,42 @@ export function Hero({
     offset: ["start start", "end start"],
   });
 
-  // Video: Expands as the user scrolls down the first 40% of the section
-  const videoScale = useTransform(scrollYProgress, [0, 0.4], [0.9, 1]);
-  const videoBorderRadius = useTransform(scrollYProgress, [0, 0.4], ["20px", "12px"]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const mediaScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.04]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 bg-background min-h-[100dvh] flex flex-col items-center pt-32 pb-20 overflow-hidden"
+      className="relative z-10 min-h-[95dvh] overflow-hidden bg-white"
     >
-      {/* Ambient Glow & Grid */}
-      <div className="absolute inset-0 pointer-events-none select-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(124,205,84,0.22) 1.2px, transparent 1.2px)",
-            backgroundSize: "28px 28px",
-            maskImage: "radial-gradient(ellipse 65% 55% at 50% 10%, #000 60%, transparent 100%)",
-            WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 10%, #000 60%, transparent 100%)",
-          }}
-        />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[100px]" />
-      </div>
-
-      {/* Text content */}
       <motion.div
-        className="relative z-20 w-full text-center px-4 mb-12"
+        className="absolute inset-0"
+        style={{ y: mediaY, scale: mediaScale }}
       >
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-cover"
+        >
+          <source src={videoSrc} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/* Left to right gradient - white fading to transparent to show video on right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 via-35% to-white/10" />
+      </motion.div>
+
+      <div className="relative z-10 flex min-h-[90dvh] w-full items-end pb-20 pt-28 px-8 sm:px-12 lg:px-20 xl:px-24 sm:items-center sm:pb-0">
         <motion.div
-          className="max-w-4xl mx-auto"
+          className="relative z-20 w-full max-w-4xl"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          {badge && (
-            <motion.div variants={itemVariants} className="mb-6">
-              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-primary border border-primary/20 uppercase">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                {badge}
-              </span>
-            </motion.div>
-          )}
-
           <h1
-            className="text-3xl font-medium tracking-tight text-gray-900 sm:text-5xl lg:text-6xl text-balance leading-[1.2] mb-5"
-            style={{ fontFamily: "var(--font-space-grotesk)", fontWeight: 500 }}
+            className="mb-6 text-4xl leading-[1.15] tracking-tight text-gray-900 sm:text-5xl lg:text-6xl xl:text-7xl font-bold"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
             aria-label={title}
           >
             {title.split(" ").map((word, i) => (
@@ -113,7 +108,7 @@ export function Hero({
                 className={
                   word.toLowerCase() === "autonomous" ||
                   word.toLowerCase() === "possible"
-                    ? "font-semibold text-primary inline-block"
+                    ? "inline-block text-primary"
                     : "inline-block"
                 }
               >
@@ -125,36 +120,26 @@ export function Hero({
           {subtitle && (
             <motion.p
               variants={itemVariants}
-              className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto mb-8"
+              className="mb-10 max-w-2xl text-xl leading-relaxed text-gray-700 sm:text-2xl font-light"
+              style={{ fontFamily: "var(--font-inter)" }}
             >
               {subtitle}
             </motion.p>
           )}
-        </motion.div>
-      </motion.div>
 
-      {/* Video Expansion (Scroll-driven) */}
-      <motion.div
-        className="relative w-[92%] lg:w-[70vw] will-change-transform"
-        style={{
-          scale: videoScale,
-          borderRadius: videoBorderRadius,
-        }}
-      >
-        {/* Shadow Layer */}
-        <div 
-          className="absolute inset-0 rounded-[inherit] shadow-[0_25px_60px_-12px_rgba(0,0,0,0.18),0_0_0_1px_rgba(0,0,0,0.05)] pointer-events-none"
-        />
-        
-        <div className="relative overflow-hidden rounded-[inherit] aspect-video bg-gray-100">
-          <VideoPlayer
-            videoId={videoId}
-            title="Flo Mobility Autonomous Robots"
-            className="h-full w-full"
-            priority
-          />
-        </div>
-      </motion.div>
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <Link
+              href={ctaHref}
+              className="inline-flex items-center justify-center rounded-full bg-primary px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-2xl hover:scale-105 uppercase tracking-wide"
+            >
+              {ctaText}
+            </Link>
+            <span className="text-base text-gray-700 max-w-xs leading-relaxed font-medium">
+              Built for high-throughput construction and industrial environments.
+            </span>
+          </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }
