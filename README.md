@@ -6,7 +6,7 @@ This is a [Next.js](https://nextjs.org) project for Flo Mobility's corporate web
 
 - Node.js 18+
 - npm or yarn
-- MongoDB database (for blog functionality)
+- MongoDB database (optional - only for blog functionality)
 
 ## Getting Started
 
@@ -25,9 +25,9 @@ npm install
 yarn install
 ```
 
-### 3. Set up environment variables
+### 3. Set up environment variables (Optional - for blog functionality)
 
-Copy the example environment file:
+If you want to use the blog feature, copy the example environment file:
 
 ```bash
 cp .env.example .env.local
@@ -39,7 +39,9 @@ Then edit `.env.local` and add your MongoDB connection string:
 DB_URI=your_mongodb_connection_string
 ```
 
-**Note:** You can get a free MongoDB connection string from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+**Note:**
+- You can get a free MongoDB connection string from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- The site will run without `DB_URI`, but blog pages will show no posts
 
 ### 4. Run the development server
 
@@ -121,7 +123,9 @@ yarn build
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `DB_URI` | MongoDB connection string | Yes |
+| `DB_URI` | MongoDB connection string | Optional (blog only) |
+
+**Note:** The site builds and runs without `DB_URI`. Blog pages will show "no posts" if database is not configured.
 
 ## Learn More
 

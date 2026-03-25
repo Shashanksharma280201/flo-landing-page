@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.DB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error('Please define the DB_URI environment variable inside .env.local');
+// Allow build to continue without DB_URI (will fail at runtime if blog features are used)
+if (!MONGODB_URI && process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV === 'production') {
+  console.warn('Warning: DB_URI not set. Blog functionality will not work.');
 }
 
 /**
@@ -28,6 +29,11 @@ if (!cached) {
 }
 
 async function dbConnect() {
+  // Check if DB_URI is defined
+  if (!MONGODB_URI) {
+    throw new Error('Please define the DB_URI environment variable. Get a free MongoDB Atlas connection string at https://www.mongodb.com/cloud/atlas');
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
@@ -37,7 +43,7 @@ async function dbConnect() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       return mongoose;
     });
   }

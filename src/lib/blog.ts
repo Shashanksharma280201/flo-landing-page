@@ -4,14 +4,20 @@ import { BlogPost } from '@/types';
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
+    // Check if DB_URI is configured before attempting connection
+    if (!process.env.DB_URI) {
+      console.warn('DB_URI not configured. Blog functionality is disabled.');
+      return null;
+    }
+
     await dbConnect();
-    const post = await BlogPostModel.findOne({ 
-      slug, 
-      status: 'published' 
+    const post = await BlogPostModel.findOne({
+      slug,
+      status: 'published'
     }).lean<BlogPost>();
-    
+
     if (!post) return null;
-    
+
     // Convert _id and dates to strings to match the interface and ensure serialization
     return {
       ...post,
@@ -28,6 +34,12 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 
 export async function getAllPosts(): Promise<BlogPost[]> {
   try {
+    // Check if DB_URI is configured before attempting connection
+    if (!process.env.DB_URI) {
+      console.warn('DB_URI not configured. Blog functionality is disabled.');
+      return [];
+    }
+
     await dbConnect();
     const posts = await BlogPostModel.find({ status: 'published' })
       .sort({ publishedAt: -1 })

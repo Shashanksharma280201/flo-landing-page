@@ -68,24 +68,25 @@ export function Hero({
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 min-h-[95dvh] overflow-hidden bg-white"
+      className="relative z-10 min-h-[95dvh] overflow-hidden bg-[#f5e6b3]"
     >
       <motion.div
         className="absolute inset-0"
         style={{ y: mediaY, scale: mediaScale }}
       >
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="h-full w-full object-cover"
-        >
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        {/* Left to right gradient - white fading to transparent to show video on right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 via-35% to-white/10" />
+        {/* Video container - 75% width, positioned on right */}
+        <div className="absolute top-0 right-0 h-full w-3/4">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="h-full w-full object-cover"
+          >
+            <source src={videoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </motion.div>
 
       <div className="relative z-10 flex min-h-[90dvh] w-full items-end pb-20 pt-28 px-8 sm:px-12 lg:px-20 xl:px-24 sm:items-center sm:pb-0">
