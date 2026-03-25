@@ -68,25 +68,24 @@ export function Hero({
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 min-h-[95dvh] overflow-hidden bg-[#f5e6b3]"
+      className="relative z-10 min-h-[95dvh] overflow-hidden bg-white"
     >
       <motion.div
         className="absolute inset-0"
         style={{ y: mediaY, scale: mediaScale }}
       >
-        {/* Video container - 75% width, positioned on right */}
-        <div className="absolute top-0 right-0 h-full w-3/4">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="h-full w-full object-cover"
-          >
-            <source src={videoSrc} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-cover"
+        >
+          <source src={videoSrc} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/* Gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 via-35% to-white/10" />
       </motion.div>
 
       <div className="relative z-10 flex min-h-[90dvh] w-full items-end pb-20 pt-28 px-8 sm:px-12 lg:px-20 xl:px-24 sm:items-center sm:pb-0">
@@ -97,7 +96,7 @@ export function Hero({
           animate="visible"
         >
           <h1
-            className="mb-6 text-4xl leading-[1.15] tracking-tight text-gray-900 sm:text-5xl lg:text-6xl xl:text-7xl font-bold"
+            className="mb-6 text-5xl leading-[1.1] tracking-tight text-gray-900 sm:text-6xl lg:text-7xl xl:text-8xl font-bold"
             style={{ fontFamily: "var(--font-dm-sans)" }}
             aria-label={title}
           >
@@ -121,8 +120,8 @@ export function Hero({
           {subtitle && (
             <motion.p
               variants={itemVariants}
-              className="mb-10 max-w-2xl text-xl leading-relaxed text-gray-700 sm:text-2xl font-light"
-              style={{ fontFamily: "var(--font-inter)" }}
+              className="mb-10 max-w-2xl text-xl leading-relaxed text-gray-700 sm:text-2xl font-normal"
+              style={{ fontFamily: "var(--font-dm-sans)" }}
             >
               {subtitle}
             </motion.p>
@@ -132,10 +131,11 @@ export function Hero({
             <Link
               href={ctaHref}
               className="inline-flex items-center justify-center rounded-full bg-primary px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-2xl hover:scale-105 uppercase tracking-wide"
+              style={{ fontFamily: "var(--font-dm-sans)" }}
             >
               {ctaText}
             </Link>
-            <span className="text-base text-gray-700 max-w-xs leading-relaxed font-medium">
+            <span className="text-base text-gray-700 max-w-xs leading-relaxed font-medium" style={{ fontFamily: "var(--font-dm-sans)" }}>
               Built for high-throughput construction and industrial environments.
             </span>
           </motion.div>

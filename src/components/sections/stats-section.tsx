@@ -26,7 +26,7 @@ const STATS = [
 
 export function StatsSection() {
   return (
-    <section className="relative bg-[#1a3a1f] py-12 lg:py-16 overflow-hidden">
+    <section className="relative bg-[#1a3a1f] py-20 lg:py-24 overflow-hidden">
       {/* MagicUI glowing dots — full coverage on dark bg */}
       <MagicDotPattern
         glow
@@ -38,25 +38,24 @@ export function StatsSection() {
 
       {/* Ambient green glow — top center */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-[#7ccd54]/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* Bottom fade into next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-[--background] pointer-events-none" />
 
-      <div className="relative z-10 w-full px-8 sm:px-12 lg:px-16 xl:px-20">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 max-w-7xl mx-auto">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {STATS.map((stat, index) => (
             <div
               key={index}
-              className="relative bg-white/5 border border-white/10 rounded-2xl p-6 lg:p-8 hover:border-[#7ccd54]/50 hover:bg-white/10 transition-all duration-300 group overflow-hidden"
+              className="bg-white/5 border border-white/8 rounded-xl p-5 sm:p-7 lg:p-8 hover:border-[#7ccd54]/40 hover:bg-white/8 transition-all duration-300 group"
             >
-              {/* Subtle gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#7ccd54]/0 to-[#7ccd54]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              <div className="relative flex flex-col items-center text-center">
+              <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
                 <div
-                  className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-2 group-hover:text-[#7ccd54] transition-colors duration-300"
-                  style={{ fontFamily: "var(--font-dm-sans)" }}
+                  className="text-[clamp(2.5rem,3.5vw+1rem,3.5rem)] font-semibold text-white"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   <Counter end={stat.value} suffix={stat.suffix} />
                 </div>
-                <div className="text-xs sm:text-sm lg:text-base text-gray-400 font-medium uppercase tracking-wide">
+                <div className="text-sm text-gray-400 font-medium">
                   {stat.label}
                 </div>
               </div>

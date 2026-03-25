@@ -5,16 +5,13 @@ This guide will walk you through deploying the Flo Mobility landing page to Verc
 ## Pre-Deployment Checklist
 
 ✅ **Build successful locally** - Run `npm run build` to ensure no errors
+✅ **Environment variables configured** - `.env.local` created with `DB_URI`
+✅ **MongoDB database ready** - Have your MongoDB Atlas connection string
 ✅ **Code committed to Git** - All changes committed and pushed to GitHub
-⚠️ **MongoDB database (Optional)** - Required only if you want blog functionality
-   - Site will build and deploy without DB_URI
-   - Blog pages will show "no posts" message without database
 
 ## Step-by-Step Vercel Deployment
 
-### 1. Prepare MongoDB Database (Optional - for Blog Functionality)
-
-**Note:** If you don't need the blog feature, you can skip this step and deploy without DB_URI.
+### 1. Prepare MongoDB Database
 
 1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 2. Create a free account (if you don't have one)
@@ -47,14 +44,13 @@ git push origin main
    - **Build Command:** `npm run build` (auto-detected)
    - **Output Directory:** `.next` (auto-detected)
 
-5. **Add Environment Variables (Optional for blog functionality):**
+5. **Add Environment Variables:**
    - Click **"Environment Variables"**
-   - If you want blog functionality, add:
+   - Add variable:
      - **Name:** `DB_URI`
      - **Value:** Your MongoDB connection string
      - **Environment:** Production, Preview, Development (select all)
    - Click **"Add"**
-   - **Note:** You can skip this if you don't need the blog feature
 
 6. Click **"Deploy"**
 
@@ -146,11 +142,9 @@ npm install framer-motion
 
 ## Environment Variables Reference
 
-| Variable | Purpose | Required | Example |
-|----------|---------|----------|---------|
-| `DB_URI` | MongoDB connection for blog system | Optional | `mongodb+srv://user:pass@cluster.mongodb.net/db` |
-
-**Note:** The site will build and deploy successfully without `DB_URI`. The blog pages will simply show no posts if the database is not configured.
+| Variable | Purpose | Example |
+|----------|---------|---------|
+| `DB_URI` | MongoDB connection for blog system | `mongodb+srv://user:pass@cluster.mongodb.net/db` |
 
 ## Deployment URLs
 
