@@ -165,7 +165,7 @@ export default function ChannelPartnerPage() {
         />
         <div className="container relative z-10 mx-auto px-4">
           <div className="text-center mb-16 max-w-3xl mx-auto">
-            <div className="inline-block rounded-full bg-[#fdfcf0] px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
+            <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
               Who It's For
             </div>
             <h2
@@ -212,7 +212,7 @@ export default function ChannelPartnerPage() {
       </section>
 
       {/* ── 3. BENEFITS ── */}
-      <section id="benefits" className="bg-[#fdfcf0] overflow-hidden">
+      <section id="benefits" className="bg-white overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
 
@@ -333,7 +333,7 @@ export default function ChannelPartnerPage() {
       </section>
 
       {/* ── 5. APPLY FORM ── */}
-      <section id="apply" className="bg-[#fdfcf0] py-24 lg:py-32">
+      <section id="apply" className="bg-white py-24 lg:py-32">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-stretch">
 

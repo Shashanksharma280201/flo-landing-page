@@ -2,7 +2,7 @@ import { LayoutDashboard, LineChart } from "lucide-react";
 
 export function FleetControlShowcase() {
   return (
-    <section className="bg-[#fdfcf0] py-24 lg:py-32 overflow-hidden">
+    <section className="bg-white py-24 lg:py-32 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         <div className="flex flex-col gap-24 lg:gap-32">
 

@@ -84,8 +84,8 @@ export function Hero({
           <source src={videoSrc} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        {/* Gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 via-35% to-white/10" />
+        {/* Left to right gradient - white fading to transparent to show video on right */}
+        <div className="absolute inset-0 bg-linear-to-r from-white via-white/70 via-35% to-transparent" />
       </motion.div>
 
       <div className="relative z-10 flex min-h-[90dvh] w-full items-end pb-20 pt-28 px-8 sm:px-12 lg:px-20 xl:px-24 sm:items-center sm:pb-0">
@@ -96,8 +96,11 @@ export function Hero({
           animate="visible"
         >
           <h1
-            className="mb-6 text-5xl leading-[1.1] tracking-tight text-gray-900 sm:text-6xl lg:text-7xl xl:text-8xl font-bold"
-            style={{ fontFamily: "var(--font-dm-sans)" }}
+            className="mb-6 leading-[1.15] tracking-tight text-gray-900 font-bold"
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontSize: "clamp(1.75rem, 4vw + 1rem, 3rem)",
+            }}
             aria-label={title}
           >
             {title.split(" ").map((word, i) => (
@@ -120,23 +123,26 @@ export function Hero({
           {subtitle && (
             <motion.p
               variants={itemVariants}
-              className="mb-10 max-w-2xl text-xl leading-relaxed text-gray-700 sm:text-2xl font-normal"
-              style={{ fontFamily: "var(--font-dm-sans)" }}
+              className="mb-10 max-w-2xl text-[clamp(1.125rem,0.6vw+1rem,1.5rem)] leading-relaxed text-gray-700 font-light"
+              style={{ fontFamily: "var(--font-inter)" }}
             >
               {subtitle}
             </motion.p>
           )}
 
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
+          >
             <Link
               href={ctaHref}
               className="inline-flex items-center justify-center rounded-full bg-primary px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-2xl hover:scale-105 uppercase tracking-wide"
-              style={{ fontFamily: "var(--font-dm-sans)" }}
             >
               {ctaText}
             </Link>
-            <span className="text-base text-gray-700 max-w-xs leading-relaxed font-medium" style={{ fontFamily: "var(--font-dm-sans)" }}>
-              Built for high-throughput construction and industrial environments.
+            <span className="text-base text-gray-700 max-w-xs leading-relaxed font-medium">
+              Built for high-throughput construction and industrial
+              environments.
             </span>
           </motion.div>
         </motion.div>

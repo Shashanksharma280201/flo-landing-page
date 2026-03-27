@@ -82,7 +82,7 @@ export function MaterialMovementProcess() {
       </section>
 
       {/* ── Use Cases ── */}
-      <section className="bg-[#fdfcf0] overflow-hidden">
+      <section className="bg-white overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
 

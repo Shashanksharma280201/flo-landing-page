@@ -189,7 +189,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── 2. MISSION + PHOTOS ─────────────────────────────────────────────── */}
-      <section className="bg-[#fdfcf0] overflow-hidden">
+      <section className="bg-white overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
 
@@ -292,7 +292,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── 4. CORE TEAM ────────────────────────────────────────────────────── */}
-      <section className="bg-[#fdfcf0] py-24 lg:py-32 overflow-hidden">
+      <section className="bg-white py-24 lg:py-32 overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="text-center mb-16 max-w-2xl mx-auto">
             <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
@@ -322,7 +322,7 @@ export default function AboutPage() {
       <section className="bg-white py-24 lg:py-32 overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="text-center mb-16 max-w-2xl mx-auto">
-            <div className="inline-block rounded-full bg-[#fdfcf0] px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
+            <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
               Partners
             </div>
             <h2

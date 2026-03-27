@@ -2,198 +2,40 @@
 
 import Image from "next/image";
 import { CUSTOMERS } from "@/lib/constants";
-import { useEffect, useRef, useState } from "react";
+
+const LOGOS = [...CUSTOMERS, ...CUSTOMERS, ...CUSTOMERS];
 
 export function CustomersSection() {
-  const customersCol1Ref = useRef<HTMLDivElement>(null);
-  const customersCol2Ref = useRef<HTMLDivElement>(null);
-
-  const [customersHovered, setCustomersHovered] = useState(false);
-
-  // Create staggered layout - alternate card heights for masonry effect
-  const customersCol1 = CUSTOMERS.filter((_, i) => i % 2 === 0);
-  const customersCol2 = CUSTOMERS.filter((_, i) => i % 2 === 1);
-
-  // Duplicate for infinite scroll
-  const duplicatedCustomersCol1 = [...customersCol1, ...customersCol1, ...customersCol1, ...customersCol1];
-  const duplicatedCustomersCol2 = [...customersCol2, ...customersCol2, ...customersCol2, ...customersCol2];
-
-  // Customers Column 1 - Scroll Down
-  useEffect(() => {
-    const container = customersCol1Ref.current;
-    if (!container) return;
-
-    let animationFrameId: number;
-    const speed = customersHovered ? 0.15 : 0.8;
-
-    const scroll = () => {
-      const firstChild = container.children[0];
-      const cardHeight = firstChild ? firstChild.getBoundingClientRect().height : 0;
-      const gap = parseFloat(window.getComputedStyle(container).gap) || 0;
-      const singleSetHeight = customersCol1.length * (cardHeight + gap);
-
-      container.scrollTop += speed;
-
-      if (container.scrollTop >= singleSetHeight) {
-        container.scrollTop -= singleSetHeight;
-      }
-
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    animationFrameId = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [customersHovered, customersCol1.length]);
-
-  // Customers Column 2 - Scroll Up
-  useEffect(() => {
-    const container = customersCol2Ref.current;
-    if (!container) return;
-
-    let animationFrameId: number;
-    const speed = customersHovered ? 0.15 : 0.8;
-
-    const scroll = () => {
-      const firstChild = container.children[0];
-      const cardHeight = firstChild ? firstChild.getBoundingClientRect().height : 0;
-      const gap = parseFloat(window.getComputedStyle(container).gap) || 0;
-      const singleSetHeight = customersCol2.length * (cardHeight + gap);
-
-      container.scrollTop -= speed;
-
-      if (container.scrollTop <= 0) {
-        container.scrollTop += singleSetHeight;
-      }
-
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    animationFrameId = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [customersHovered, customersCol2.length]);
-
   return (
-    <section className="relative overflow-hidden bg-[#e6d89f] py-20 lg:py-28">
-      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0">
-        {/* LEFT SIDE - Text Content */}
-        <div className="lg:col-span-5 flex items-center justify-center lg:justify-end px-8 sm:px-12 lg:px-16 xl:px-20">
-          <div className="max-w-xl">
-            <div className="inline-block mb-6">
-              <div className="h-1 w-16 bg-primary mb-4"></div>
-              <span className="text-sm font-bold uppercase tracking-widest text-gray-600">
-                Trusted Worldwide
-              </span>
-            </div>
-
-            <h2
-              className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl mb-8 leading-[1.1]"
-              style={{ fontFamily: "var(--font-dm-sans)" }}
+    <section className="relative overflow-hidden bg-white py-10 sm:py-12 lg:py-14">
+      <div className="w-full">
+        <div className="mb-5 text-center sm:mb-6 lg:mb-8">
+          <div className="inline-block">
+            <span
+              className="font-bold tracking-[0.22em] text-black"
+              style={{ fontSize: "clamp(1.65rem, 3vw + 1rem, 2rem)" }}
             >
-              Our
-              <br />
-              <span className="text-primary">Customers</span>
-            </h2>
-
-            <p className="text-xl text-gray-700 font-normal leading-relaxed mb-8">
-              Industry leaders who trust our autonomous robotics solutions to transform their operations.
-            </p>
-
-            <div className="flex items-center gap-4">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gray-900" style={{ fontFamily: "var(--font-dm-sans)" }}>15+</div>
-                <div className="text-sm text-gray-600 font-medium">Partners</div>
-              </div>
-              <div className="h-12 w-px bg-gray-300"></div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gray-900" style={{ fontFamily: "var(--font-dm-sans)" }}>50+</div>
-                <div className="text-sm text-gray-600 font-medium">Robots</div>
-              </div>
-              <div className="h-12 w-px bg-gray-300"></div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gray-900" style={{ fontFamily: "var(--font-dm-sans)" }}>200+</div>
-                <div className="text-sm text-gray-600 font-medium">Projects</div>
-              </div>
-            </div>
+              Our Customers
+            </span>
           </div>
         </div>
 
-        {/* RIGHT SIDE - Scrolling Cards - 2 Columns */}
-        <div className="lg:col-span-7 relative h-[500px] lg:h-[700px] px-8 lg:px-12">
-          {/* Top Fade */}
-          <div className="pointer-events-none absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#e6d89f] via-[#e6d89f]/80 to-transparent z-10" />
-          {/* Bottom Fade */}
-          <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#e6d89f] via-[#e6d89f]/80 to-transparent z-10" />
-
-          <style>
-            {`
-              .no-scrollbar::-webkit-scrollbar {
-                display: none;
-              }
-            `}
-          </style>
-
-          <div
-            className="flex gap-6 h-full justify-center"
-            onMouseEnter={() => setCustomersHovered(true)}
-            onMouseLeave={() => setCustomersHovered(false)}
-          >
-            {/* Column 1 - Scrolling Down */}
-            <div
-              ref={customersCol1Ref}
-              className="no-scrollbar flex flex-col gap-6 overflow-y-scroll h-full"
-              style={{
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-                width: "250px",
-              }}
-            >
-              {duplicatedCustomersCol1.map((customer, index) => (
-                <div
-                  key={`customers-col1-${customer.name}-${index}`}
-                  className="flex-shrink-0"
-                  style={{ width: "250px", height: "250px" }}
-                >
-                  <div className="relative w-full h-full overflow-hidden rounded-2xl bg-white shadow-md transition-shadow duration-300">
-                    <Image
-                      src={customer.logo}
-                      alt={`${customer.name} logo`}
-                      fill
-                      quality={100}
-                      className="object-contain p-8"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Column 2 - Scrolling Up */}
-            <div
-              ref={customersCol2Ref}
-              className="no-scrollbar flex flex-col gap-6 overflow-y-scroll h-full"
-              style={{
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-                width: "250px",
-              }}
-            >
-              {duplicatedCustomersCol2.map((customer, index) => (
-                <div
-                  key={`customers-col2-${customer.name}-${index}`}
-                  className="flex-shrink-0"
-                  style={{ width: "250px", height: "250px" }}
-                >
-                  <div className="relative w-full h-full overflow-hidden rounded-2xl bg-white shadow-md transition-shadow duration-300">
-                    <Image
-                      src={customer.logo}
-                      alt={`${customer.name} logo`}
-                      fill
-                      quality={100}
-                      className="object-contain p-8"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="relative w-full overflow-hidden">
+          <div className="flex animate-marquee-reverse items-center gap-4 whitespace-nowrap py-0 sm:gap-5">
+            {LOGOS.map((customer, index) => (
+              <div
+                key={`${customer.name}-${index}`}
+                className="relative flex h-20 w-44 shrink-0 items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm sm:h-24 sm:w-52"
+              >
+                <Image
+                  src={customer.logo}
+                  alt={`${customer.name} logo`}
+                  fill
+                  quality={100}
+                  className="object-cover p-2"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

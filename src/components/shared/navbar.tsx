@@ -45,7 +45,7 @@ export function Navbar() {
   const backgroundColor = useTransform(
     scrollY,
     [0, 200],
-    ["rgba(253, 252, 240, 0)", "rgba(253, 252, 240, 0.9)"],
+    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.9)"],
   );
   const boxShadow = useTransform(
     scrollY,

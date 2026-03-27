@@ -70,7 +70,7 @@ export function LawnMaintenanceMetrics() {
 
         {/* Section header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="inline-block rounded-full bg-[#fdfcf0] px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
+          <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
             Technical Specs
           </div>
           <h2

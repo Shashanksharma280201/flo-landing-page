@@ -1,8 +1,5 @@
 "use client";
 
-import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
-import { MagicDotPattern } from "@/components/ui/magicui-dot-pattern";
-
 const testimonials = [
   {
     quote:
@@ -42,43 +39,42 @@ const testimonials = [
   },
 ];
 
+const TESTIMONIALS = [...testimonials, ...testimonials, ...testimonials];
+
 export function TestimonialsSection() {
   return (
-    <section className="relative bg-transparent py-16 sm:py-24 lg:py-32 overflow-hidden">
-      {/* Static dot pattern — full coverage, radial fade from center */}
-      <MagicDotPattern
-        width={32}
-        height={32}
-        cr={1.2}
-        className="text-[#7ccd54]/[0.40] [mask-image:radial-gradient(ellipse_90%_80%_at_50%_50%,#000_40%,transparent_100%)]"
-      />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-14 lg:mb-20">
-          <div className="inline-block rounded-full bg-[#fdfcf0] px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-700 mb-4 sm:mb-6 border border-[#7ccd54]/20 uppercase shadow-sm">
-            Testimonials
+    <section className="relative overflow-hidden bg-white py-10 sm:py-12 lg:py-14">
+      <div className="w-full">
+        <div className="mb-5 text-center sm:mb-6 lg:mb-8">
+          <div className="inline-block">
+            <span
+              className="font-bold uppercase tracking-[0.22em] text-black"
+              style={{ fontSize: "clamp(1.65rem, 3vw + 1rem, 2rem)" }}
+            >
+              What Our customers Say
+            </span>
           </div>
-          <h2
-            className="text-2xl font-medium tracking-tight text-gray-900 sm:text-4xl lg:text-5xl mb-3 sm:mb-4"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            What Our Customers Say
-          </h2>
-          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-            Trusted by industry leaders who are transforming their operations with autonomous robotics
-          </p>
         </div>
 
-        {/* Moving Cards */}
-        <div className="relative">
-          <InfiniteMovingCards
-            items={testimonials}
-            direction="right"
-            speed="slow"
-            pauseOnHover={true}
-            className="mx-auto"
-          />
+        <div className="relative w-full overflow-hidden">
+          <div className="flex animate-marquee items-stretch gap-4 whitespace-nowrap py-0 sm:gap-5">
+            {TESTIMONIALS.map((item, index) => (
+              <article
+                key={`${item.name}-${index}`}
+                className="flex w-88 shrink-0 flex-col justify-between rounded-2xl border border-neutral-200 bg-white px-6 py-5 shadow-sm sm:w-104"
+              >
+                <p className="whitespace-normal text-[0.95rem] leading-7 text-gray-700">
+                  {item.quote}
+                </p>
+                <div className="mt-5 whitespace-normal">
+                  <p className="text-sm font-semibold text-gray-900">
+                    {item.name}
+                  </p>
+                  <p className="text-sm text-[#5ba83d]">{item.title}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

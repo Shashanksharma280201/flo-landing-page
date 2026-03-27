@@ -141,7 +141,7 @@ export default function CareersPage() {
       </section>
 
       {/* ── 2. OPEN ROLES ── */}
-      <section id="roles" className="bg-[#fdfcf0] py-24 lg:py-32 overflow-hidden scroll-mt-20">
+      <section id="roles" className="bg-white py-24 lg:py-32 overflow-hidden scroll-mt-20">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16 max-w-2xl mx-auto">
             <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
@@ -205,7 +205,7 @@ export default function CareersPage() {
       <section className="bg-white py-24 lg:py-32 overflow-hidden">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16 max-w-2xl mx-auto">
-            <div className="inline-block rounded-full bg-[#fdfcf0] px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
+            <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
               Why Flo
             </div>
             <h2
@@ -248,7 +248,7 @@ export default function CareersPage() {
       </section>
 
       {/* ── 4. APPLY FORM ── */}
-      <section id="apply" className="bg-[#fdfcf0] py-24 lg:py-32 scroll-mt-20">
+      <section id="apply" className="bg-white py-24 lg:py-32 scroll-mt-20">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-stretch">
 

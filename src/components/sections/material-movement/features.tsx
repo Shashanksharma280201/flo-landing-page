@@ -48,7 +48,7 @@ const features = [
 
 export function MaterialMovementFeatures() {
   return (
-    <section id="features" className="bg-[#fdfcf0] py-24 lg:py-32 overflow-hidden">
+    <section id="features" className="bg-white py-24 lg:py-32 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
 
         {/* Section header */}

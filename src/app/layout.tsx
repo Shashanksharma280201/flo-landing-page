@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${dmSans.variable} bg-[#fdfcf0] antialiased font-sans text-pretty`}
+        className={`${inter.variable} ${dmSans.variable} bg-white antialiased font-sans text-pretty`}
       >
         <ScrollProgress />
         <Navbar />
