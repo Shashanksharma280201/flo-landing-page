@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { MagicDotPattern } from "@/components/ui/magicui-dot-pattern";
+import { AlternatingTimeline } from "@/components/sections/about/alternating-timeline";
 
 export const metadata = {
   title: "About Us | Flo Mobility",
@@ -10,31 +11,6 @@ export const metadata = {
 };
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
-
-const MISSION_VALUES = [
-  {
-    title: "Autonomous by design",
-    description:
-      "Every product we build works without human supervision from day one — real autonomy, not remote control.",
-  },
-  {
-    title: "Safety at every layer",
-    description:
-      "Human safety is the hardest constraint on every design decision we make, not an afterthought.",
-  },
-  {
-    title: "Partnerships over transactions",
-    description:
-      "We build long-term relationships with clients and partners — success is measured in deployments, not demos.",
-  },
-];
-
-const STATS = [
-  { value: "200+", label: "Sites deployed" },
-  { value: "15+", label: "Enterprise clients" },
-  { value: "3", label: "Industry verticals" },
-  { value: "2020", label: "Year founded" },
-];
 
 const CORE_TEAM = [
   {
@@ -188,170 +164,168 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── 2. MISSION + PHOTOS ─────────────────────────────────────────────── */}
-      <section className="bg-white overflow-hidden">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+      {/* ── 2. ALTERNATING TIMELINE ────────────────────────────────────────── */}
+      <AlternatingTimeline />
 
-            {/* Left — mission text + values */}
-            <div className="py-20 lg:py-28 lg:pr-16 xl:pr-20">
-              <div className="mb-12">
-                <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
-                  Mission
-                </div>
-                <h2
-                  className="text-3xl font-medium tracking-tight text-gray-900 sm:text-4xl mb-3"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  Built on principles that don't bend.
-                </h2>
-                <p className="text-gray-600 leading-relaxed">
-                  We believe the best autonomous systems are the ones that earn
-                  trust — from operators on the ground to executives in the
-                  boardroom.
-                </p>
-              </div>
+      {/* ── 3. LEADERSHIP & PARTNERS ────────────────────────────────────────── */}
+      <section className="bg-gradient-to-b from-gray-50 to-white py-24 lg:py-32 xl:py-40 overflow-hidden">
+        <div className="relative w-full px-6 sm:px-8 lg:px-16 xl:px-24">
 
-              <div className="divide-y divide-gray-100">
-                {MISSION_VALUES.map((v, i) => (
-                  <div key={i} className="py-6 flex gap-5 items-start">
-                    <span
-                      className="text-xs font-semibold text-[#7ccd54]/60 w-6 shrink-0 mt-0.5"
-                      style={{ fontFamily: "var(--font-space-grotesk)" }}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <h3
-                        className="text-sm font-semibold text-gray-900 mb-1"
-                        style={{ fontFamily: "var(--font-space-grotesk)" }}
-                      >
-                        {v.title}
-                      </h3>
-                      <p className="text-sm text-gray-500 leading-relaxed">
-                        {v.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right — photo grid */}
-            <div className="grid grid-rows-2 min-h-[480px] lg:min-h-0 gap-1">
-              <div className="relative overflow-hidden">
-                <Image
-                  src="/about/showcase.jpg"
-                  alt="Flo Mobility robotics showcase"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0f1f0f]/30 to-transparent" />
-              </div>
-              <div className="relative overflow-hidden">
-                <Image
-                  src="/about/g20.jpg"
-                  alt="Flo Mobility at G20 Summit, Gandhinagar 2023"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-tl from-[#0f1f0f]/30 to-transparent" />
-                <div className="absolute bottom-5 left-5">
-                  <span className="text-xs font-semibold text-white/70 uppercase tracking-widest">
-                    G20 Summit — Gandhinagar, 2023
-                  </span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. BY THE NUMBERS ───────────────────────────────────────────────── */}
-      <section className="bg-white py-20 lg:py-24 overflow-hidden">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-            {STATS.map((stat) => (
-              <div
-                key={stat.label}
-                className="bg-white px-8 py-10 text-center"
+          {/* Leadership Section */}
+          <div className="mb-20 lg:mb-32">
+            {/* Section header */}
+            <div className="text-center mb-16 lg:mb-20 max-w-5xl mx-auto">
+              <h2
+                className="text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-gray-900 mb-8 leading-[1.1]"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
               >
+                The team driving <span className="text-[#7ccd54]">the mission.</span>
+              </h2>
+              <p className="text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                Serial founders, operators, and engineers who've built and scaled
+                technology businesses across India and beyond.
+              </p>
+            </div>
+
+            {/* Leadership Cards - Horizontal Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto">
+              {CORE_TEAM.map((member) => (
                 <div
-                  className="text-4xl font-semibold text-gray-900 mb-1 sm:text-5xl"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                  key={member.name}
+                  className="group relative flex flex-col rounded-xl bg-white overflow-hidden hover:shadow-lg transition-all duration-300"
                 >
-                  {stat.value}
+                  {/* Compact portrait photo */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  </div>
+
+                  {/* Info */}
+                  <div className="p-6 lg:p-8">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div>
+                        <h3
+                          className="text-xl lg:text-2xl font-semibold text-gray-900 mb-1"
+                          style={{ fontFamily: "var(--font-space-grotesk)" }}
+                        >
+                          {member.name}
+                        </h3>
+                        <p className="text-sm font-semibold text-[#7ccd54] uppercase tracking-wide">
+                          {member.title}
+                        </p>
+                      </div>
+                      {member.linkedin && (
+                        <a
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="shrink-0 text-gray-400 hover:text-[#7ccd54] transition-colors"
+                          aria-label={`${member.name} on LinkedIn`}
+                        >
+                          <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                    <p className="text-sm lg:text-base text-gray-600 leading-relaxed">
+                      {member.description}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-sm text-gray-500">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. CORE TEAM ────────────────────────────────────────────────────── */}
-      <section className="bg-white py-24 lg:py-32 overflow-hidden">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <div className="text-center mb-16 max-w-2xl mx-auto">
-            <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
-              Leadership
+              ))}
             </div>
-            <h2
-              className="text-3xl font-medium tracking-tight text-gray-900 sm:text-4xl lg:text-5xl mb-4"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
-            >
-              The team driving the mission.
-            </h2>
-            <p className="text-gray-600 leading-relaxed">
-              Serial founders, operators, and engineers who've built and scaled
-              technology businesses across India and beyond.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {CORE_TEAM.map((member) => (
-              <PersonCard key={member.name} {...member} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. CHANNEL PARTNERS ─────────────────────────────────────────────── */}
-      <section className="bg-white py-24 lg:py-32 overflow-hidden">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <div className="text-center mb-16 max-w-2xl mx-auto">
-            <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
-              Partners
+          {/* Partners Section */}
+          <div>
+            {/* Section header */}
+            <div className="text-center mb-16 lg:mb-20 max-w-5xl mx-auto">
+              <h2
+                className="text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-gray-900 mb-8 leading-[1.1]"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+              >
+                Trusted <span className="text-[#7ccd54]">partners.</span>
+              </h2>
+              <p className="text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                Our channel partners bring deep industry expertise and local market
+                presence — expanding Flo's reach one deployment at a time.
+              </p>
             </div>
-            <h2
-              className="text-3xl font-medium tracking-tight text-gray-900 sm:text-4xl lg:text-5xl mb-4"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
-            >
-              Trusted partners driving regional growth.
-            </h2>
-            <p className="text-gray-600 leading-relaxed">
-              Our channel partners bring deep industry expertise and local market
-              presence — expanding Flo's reach one deployment at a time.
-            </p>
+
+            {/* Partner Cards - Horizontal Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto">
+              {CHANNEL_PARTNERS.map((partner) => (
+                <div
+                  key={partner.name}
+                  className="group relative flex flex-col rounded-xl bg-white overflow-hidden hover:shadow-lg transition-all duration-300"
+                >
+                  {/* Compact portrait photo */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={partner.image}
+                      alt={partner.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  </div>
+
+                  {/* Info */}
+                  <div className="p-6 lg:p-8">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div>
+                        <h3
+                          className="text-xl lg:text-2xl font-semibold text-gray-900 mb-1"
+                          style={{ fontFamily: "var(--font-space-grotesk)" }}
+                        >
+                          {partner.name}
+                        </h3>
+                        <p className="text-sm font-semibold text-[#7ccd54] uppercase tracking-wide">
+                          {partner.title}
+                        </p>
+                      </div>
+                      {partner.linkedin && (
+                        <a
+                          href={partner.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="shrink-0 text-gray-400 hover:text-[#7ccd54] transition-colors"
+                          aria-label={`${partner.name} on LinkedIn`}
+                        >
+                          <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                    <p className="text-sm lg:text-base text-gray-600 leading-relaxed">
+                      {partner.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <div className="mt-12 lg:mt-16 text-center">
+              <Link
+                href="/channel-partner"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#7ccd54] text-gray-900 font-semibold text-base lg:text-lg hover:bg-[#5ba83d] transition-colors duration-200"
+              >
+                Become a channel partner
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {CHANNEL_PARTNERS.map((partner) => (
-              <PersonCard key={partner.name} {...partner} />
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link
-              href="/channel-partner"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 text-sm font-semibold text-gray-700 hover:border-[#7ccd54]/50 hover:text-[#5ba83d] transition-colors duration-200"
-            >
-              Become a channel partner
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
         </div>
       </section>
 

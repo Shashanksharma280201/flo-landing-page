@@ -3,184 +3,188 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu } from "lucide-react";
-
-import { cn } from "@/lib/utils";
+import { Menu, X } from "lucide-react";
 import { NAV_CONFIG } from "@/lib/constants";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-
-import { useHasMounted } from "@/hooks/use-has-mounted";
-
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-} from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
 export function Navbar() {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
-  // Interpolate values based on scroll position (0 to 200px) — wider range = smoother
-  const width = useTransform(scrollY, [0, 200], ["100%", "75%"]);
-  const marginTop = useTransform(scrollY, [0, 200], ["0px", "16px"]);
-  const borderRadius = useTransform(scrollY, [0, 200], ["0px", "24px"]);
-  const backgroundColor = useTransform(
-    scrollY,
-    [0, 200],
-    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.9)"],
-  );
-  const boxShadow = useTransform(
-    scrollY,
-    [0, 200],
-    [
-      "0 0 0 rgba(0,0,0,0)",
-      "0 10px 30px -10px rgba(0,0,0,0.1), 0 0 20px -5px rgba(124, 205, 84, 0.3)",
-    ],
-  );
-  const backdropFilter = useTransform(
-    scrollY,
-    [0, 200],
-    ["blur(0px)", "blur(16px)"],
-  );
-
-  // Track scroll threshold to toggle text colour
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 80);
+    setScrolled(latest > 50);
   });
 
-  const hasMounted = useHasMounted();
-
   return (
-    <motion.header
-      className="fixed top-0 left-0 right-0 z-50 mx-auto"
-      style={{
-        width,
-        marginTop,
-        borderRadius,
-        backgroundColor,
-        boxShadow,
-        backdropFilter,
-        WebkitBackdropFilter: backdropFilter, // Safari support
-      }}
-    >
-      <div className="max-w-7xl mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-10">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image
-              src="/logo.webp"
-              alt="flo mobility logo"
-              width={120}
-              height={50}
-              priority
-              className="h-20 w-auto object-contain"
-            />
-          </Link>
+    <>
+      <motion.header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-[#1a3a1f]/95 backdrop-blur-xl shadow-lg"
+            : "bg-black/20 backdrop-blur-md"
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="flex h-20 items-center justify-between">
+            {/* Logo */}
+            <Link href="/" className="flex items-center relative z-50">
+              <Image
+                src="/logo.webp"
+                alt="flo mobility logo"
+                width={140}
+                height={60}
+                priority
+                className="h-16 w-auto object-contain"
+              />
+            </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex">
-            <NavigationMenu id="main-nav">
-              <NavigationMenuList id="main-nav-list">
-                {NAV_CONFIG.mainNav.map((item) => (
-                  <NavigationMenuItem key={item.title}>
-                    {item.items ? (
-                      <>
-                        <NavigationMenuTrigger
-                          className="bg-transparent text-gray-800 hover:text-gray-900 data-[state=open]:text-gray-900 text-base"
-                          id={`nav-trigger-${item.title.toLowerCase()}`}
-                        >
-                          {item.title}
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent
-                          id={`nav-content-${item.title.toLowerCase()}`}
-                        >
-                          <ul className="grid w-100 gap-3 p-4 md:w-125 md:grid-cols-2 lg:w-150">
-                            {item.items.map((subItem) => (
-                              <ListItem
-                                key={subItem.title}
-                                title={subItem.title}
-                                href={subItem.href}
-                              >
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-8">
+              {NAV_CONFIG.mainNav.map((item) => (
+                <div key={item.title} className="relative group">
+                  {item.items ? (
+                    <>
+                      <button className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium">
+                        {item.title}
+                      </button>
+                      {/* Dropdown */}
+                      <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                        <div className="bg-white rounded-xl shadow-2xl p-4 min-w-[280px] border border-gray-100">
+                          {item.items.map((subItem) => (
+                            <Link
+                              key={subItem.title}
+                              href={subItem.href}
+                              className="block px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                            >
+                              <div className="font-semibold text-gray-900 text-sm mb-1">
+                                {subItem.title}
+                              </div>
+                              <div className="text-xs text-gray-500 leading-relaxed">
                                 {subItem.description}
-                              </ListItem>
-                            ))}
-                          </ul>
-                        </NavigationMenuContent>
-                      </>
-                    ) : (
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href={item.href!}
-                          className={cn(
-                            navigationMenuTriggerStyle(),
-                            "bg-transparent text-gray-800 hover:text-gray-900 text-base",
-                          )}
-                        >
-                          {item.title}
-                        </Link>
-                      </NavigationMenuLink>
-                    )}
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
-        </div>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href!}
+                      className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium"
+                    >
+                      {item.title}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </nav>
 
-        <div className="flex items-center gap-4">
-          <div className="hidden items-center gap-2 md:flex">
-            <Button
-              variant="ghost"
-              asChild
-              className="text-gray-700 hover:text-gray-900 text-base"
-            >
-              <Link href={NAV_CONFIG.actions.signIn} target="_blank">
-                Sign In
-              </Link>
-            </Button>
-            <Button
-              asChild
-              className="bg-[#7ccd54] hover:bg-[#6bbd44] text-white font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-            >
-              <Link href={NAV_CONFIG.actions.contact}>Contact Us</Link>
-            </Button>
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className="md:hidden">
-            {hasMounted ? (
-              <MobileNav scrolled={scrolled} />
-            ) : (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden text-gray-800"
+            {/* Desktop Actions */}
+            <div className="hidden lg:flex items-center gap-4">
+              <Link
+                href={NAV_CONFIG.actions.fleet}
+                target="_blank"
+                className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium"
               >
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            )}
+                Fleet
+              </Link>
+              <Link
+                href={NAV_CONFIG.actions.contact}
+                className="px-6 py-2.5 rounded-full bg-[#7ccd54] hover:bg-[#5ba83d] text-gray-900 font-semibold text-sm transition-all duration-200 hover:scale-105 shadow-lg"
+              >
+                Contact Us
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden text-white p-2 relative z-50"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
           </div>
         </div>
-      </div>
-    </motion.header>
+      </motion.header>
+
+      {/* Mobile Menu */}
+      <motion.div
+        className={`fixed inset-0 z-40 lg:hidden ${
+          mobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
+        initial={false}
+        animate={{
+          opacity: mobileMenuOpen ? 1 : 0,
+        }}
+      >
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+
+        {/* Menu Content */}
+        <motion.div
+          className="absolute top-0 right-0 h-full w-80 bg-[#1a3a1f] shadow-2xl overflow-y-auto"
+          initial={{ x: "100%" }}
+          animate={{ x: mobileMenuOpen ? 0 : "100%" }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+        >
+          <div className="p-8 pt-24">
+            <nav className="flex flex-col gap-6">
+              {NAV_CONFIG.mainNav.map((item) => (
+                <div key={item.title}>
+                  <div className="text-gray-400 text-xs uppercase tracking-widest mb-3 font-semibold">
+                    {item.title}
+                  </div>
+                  {item.items ? (
+                    <div className="flex flex-col gap-2 pl-4 border-l-2 border-[#7ccd54]/30">
+                      {item.items.map((subItem) => (
+                        <Link
+                          key={subItem.title}
+                          href={subItem.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium py-2"
+                        >
+                          {subItem.title}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </nav>
+
+            {/* Mobile Actions */}
+            <div className="mt-8 flex flex-col gap-3 pt-6 border-t border-white/10">
+              <Link
+                href={NAV_CONFIG.actions.fleet}
+                target="_blank"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full px-6 py-3 rounded-full border border-white/20 text-white text-center font-semibold hover:bg-white/10 transition-colors duration-200"
+              >
+                Fleet
+              </Link>
+              <Link
+                href={NAV_CONFIG.actions.contact}
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full px-6 py-3 rounded-full bg-[#7ccd54] hover:bg-[#5ba83d] text-gray-900 text-center font-semibold transition-all duration-200"
+              >
+                Contact Us
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </>
   );
 }
 
@@ -193,7 +197,7 @@ function MobileNav({ scrolled }: { scrolled: boolean }) {
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden text-gray-800 hover:text-gray-900"
+          className="md:hidden text-white hover:text-[#7ccd54]"
         >
           <Menu className="h-6 w-6" />
           <span className="sr-only">Toggle menu</span>
@@ -218,7 +222,7 @@ function MobileNav({ scrolled }: { scrolled: boolean }) {
         <div className="flex flex-col gap-4 py-8">
           {NAV_CONFIG.mainNav.map((item) => (
             <div key={item.title} className="flex flex-col gap-2">
-              <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+              <h4 className="text-lg font-bold text-gray-400 uppercase tracking-widest">
                 {item.title}
               </h4>
               {item.items ? (
@@ -264,11 +268,11 @@ function MobileNav({ scrolled }: { scrolled: boolean }) {
               className="w-full border-gray-200 text-gray-700 hover:bg-gray-50"
             >
               <Link
-                href={NAV_CONFIG.actions.signIn}
+                href={NAV_CONFIG.actions.fleet}
                 target="_blank"
                 onClick={() => setOpen(false)}
               >
-                Sign In
+                Fleet
               </Link>
             </Button>
             <Button

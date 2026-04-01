@@ -95,32 +95,8 @@ export function RaasSection() {
               </h3>
 
               <p className="mb-8 max-w-xl text-[clamp(0.95rem,0.3vw+0.9rem,1.1rem)] leading-relaxed text-gray-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                euismod, nunc vel tincidunt lacinia, nisl nunc aliquam nunc,
-                vitae aliquam nisl nunc vel nisl. Integer feugiat, arcu non
-                suscipit aliquam, est massa posuere sapien, at luctus sem justo
-                nec lorem. Vivamus id magna ut ante congue gravida. Curabitur
-                luctus, nisl sed facilisis interdum, augue augue gravida mi, ut
-                tristique neque velit id libero. Suspendisse potenti. Donec
-                aliquet, velit et bibendum volutpat, mauris sapien hendrerit
-                nisi, nec posuere lorem urna vel justo. Praesent dictum erat ac
-                tortor vulputate, nec ultrices eros tristique. Nam laoreet
-                pulvinar eros, a cursus ipsum consequat sed. Quisque sit amet
-                lectus id velit laoreet placerat. Pellentesque habitant morbi
-                tristique senectus et netus et malesuada fames ac turpis
-                egestas. Morbi posuere, turpis in facilisis tristique, dolor
-                urna tristique lorem, ut aliquet lorem tellus nec risus. Nulla
-                facilisi. Aliquam erat volutpat. Vestibulum ante ipsum primis in
-                faucibus orci luctus et ultrices posuere cubilia curae; Integer
-                porttitor tincidunt urna, vitae convallis justo mattis vel.
-                Donec at purus id augue tempor aliquam. Sed a arcu non lorem
-                malesuada efficitur. Integer in justo quis sapien gravida
-                facilisis. Duis euismod, velit id varius faucibus, augue nulla
-                tempus nibh, sed tincidunt risus risus non sem. Nulla facilisi.
-                Cras nec justo vitae magna gravida dictum. Curabitur sed urna
-                sem. Aenean feugiat volutpat massa, a suscipit velit tincidunt
-                in. Morbi nec sapien at odio tincidunt tincidunt. Proin sed
-                volutpat mauris.
+                With advanced sensors and autonomous navigation, this efficient and adaptable robot streamlines logistics operations with speed and reliability.
+                Experience optimized efficiency, reduced manual labor, and increased productivity with the Material Movement Bot.
               </p>
 
               <Link
@@ -165,30 +141,9 @@ export function RaasSection() {
               </h3>
 
               <p className="mb-8 max-w-xl text-[clamp(0.95rem,0.3vw+0.9rem,1.1rem)] leading-relaxed text-gray-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                posuere, nunc at scelerisque fermentum, lectus sem fermentum
-                nibh, sed cursus turpis sapien nec libero. Integer lacinia
-                turpis non massa interdum, at fermentum ipsum luctus. Mauris
-                vehicula, arcu vitae luctus tincidunt, risus velit iaculis
-                ipsum, id gravida lorem purus vitae arcu. Sed dignissim, sapien
-                eget ultrices gravida, lacus sem interdum mauris, ac vulputate
-                odio purus vitae velit. Vivamus sagittis eros nec nisi porta,
-                vel efficitur lectus viverra. Integer non arcu vitae odio
-                tincidunt hendrerit. Suspendisse potenti. Donec vel sem in augue
-                tincidunt dictum. Praesent auctor, justo non malesuada
-                tincidunt, lorem mi facilisis lorem, ut porta neque risus id
-                nisl. Nam non magna sed justo tristique aliquet. Integer
-                ultricies, sem in convallis gravida, sapien libero posuere
-                lorem, sit amet ultrices purus odio eu nisl. Cras eu lectus
-                posuere, feugiat nibh sed, cursus mauris. Vestibulum ante ipsum
-                primis in faucibus orci luctus et ultrices posuere cubilia
-                curae; Sed vitae lorem sed sapien posuere blandit. Pellentesque
-                habitant morbi tristique senectus et netus et malesuada fames ac
-                turpis egestas. Donec accumsan eros eu sem feugiat, sed
-                ullamcorper sem placerat. In hac habitasse platea dictumst.
-                Curabitur faucibus, nibh et suscipit maximus, nunc nisi feugiat
-                erat, sed feugiat augue orci sed nisl. Integer quis ante sit
-                amet sapien iaculis convallis.
+                Our lawn mowing robot will take care of your lawn, so you can relax and enjoy your free time. Efficient and safe.
+                The robot is equipped with sensors that prevent it from colliding with objects or getting stuck.
+                The cost is less expensive than hiring a traditional lawn service.
               </p>
 
               <Link

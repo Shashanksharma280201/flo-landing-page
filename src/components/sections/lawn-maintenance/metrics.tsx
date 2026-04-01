@@ -27,31 +27,23 @@ function SpecTable({
   rows: { label: string; value: string }[];
 }) {
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+    <div className="rounded-xl border border-gray-200 bg-white overflow-hidden">
       {/* Table header */}
-      <div className="px-6 py-4 border-b border-gray-100">
+      <div className="px-8 lg:px-10 py-6 border-b border-gray-200 bg-gray-50">
         <h3
-          className="text-sm font-semibold text-gray-900 uppercase tracking-wider"
+          className="text-lg lg:text-xl font-semibold text-gray-900 uppercase tracking-wider"
           style={{ fontFamily: "var(--font-space-grotesk)" }}
         >
           {title}
         </h3>
       </div>
       {/* Rows */}
-      <div className="divide-y divide-gray-50">
+      <div className="divide-y divide-gray-100">
         {rows.map((row, i) => (
-          <div key={row.label} className="flex items-center justify-between px-6 py-4 gap-4">
-            <div className="flex items-center gap-3 min-w-0">
-              <span
-                className="text-xs font-semibold text-[#7ccd54]/50 shrink-0 w-5"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <dt className="text-sm text-gray-500 truncate">{row.label}</dt>
-            </div>
+          <div key={row.label} className="group flex items-center justify-between px-8 lg:px-10 py-5 lg:py-6 gap-6 hover:bg-[#7ccd54]/25 transition-colors duration-300 cursor-pointer">
+            <dt className="text-base lg:text-lg text-gray-600">{row.label}</dt>
             <dd
-              className="text-sm font-semibold text-gray-900 text-right shrink-0"
+              className="text-base lg:text-lg font-semibold text-gray-900 text-right shrink-0"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
               {row.value}
@@ -65,27 +57,24 @@ function SpecTable({
 
 export function LawnMaintenanceMetrics() {
   return (
-    <section className="bg-white py-24 lg:py-32 overflow-hidden">
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+    <section className="bg-white py-16 lg:py-20 xl:py-24 overflow-hidden">
+      <div className="relative w-full px-6 sm:px-8 lg:px-16 xl:px-24">
 
         {/* Section header */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
-            Technical Specs
-          </div>
+        <div className="text-center mb-20 lg:mb-28 max-w-5xl mx-auto">
           <h2
-            className="text-3xl font-medium tracking-tight text-gray-900 sm:text-4xl lg:text-5xl mb-4"
+            className="text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight text-gray-900 mb-8 leading-[1.1]"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
-            Engineered for high-performance turf management.
+            Engineered for high-performance <span className="text-[#7ccd54]">turf management.</span>
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed">
+          <p className="text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
             Industrial-grade reliability across every operational parameter.
           </p>
         </div>
 
         {/* Two spec tables */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 max-w-[1600px] mx-auto">
           <SpecTable title="Performance" rows={PERFORMANCE} />
           <SpecTable title="Navigation & Control" rows={NAVIGATION} />
         </div>

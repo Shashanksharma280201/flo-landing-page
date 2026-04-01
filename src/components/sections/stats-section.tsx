@@ -13,9 +13,9 @@ const STATS = [
     label: "Hours Saved",
   },
   {
-    value: 40,
-    suffix: "%",
-    label: "Cost Reduction",
+    value: 4000,
+    suffix: "Km",
+    label: "Autonommous Distance Covered",
   },
   {
     value: 200,
@@ -26,7 +26,7 @@ const STATS = [
 
 export function StatsSection() {
   return (
-    <section className="relative overflow-hidden bg-white py-20 lg:py-24">
+    <section className="relative overflow-hidden bg-white py-20 lg:py-14">
       <MagicDotPattern
         glow
         width={32}

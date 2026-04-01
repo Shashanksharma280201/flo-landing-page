@@ -28,43 +28,39 @@ export function LawnMaintenanceHero() {
       <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-[#7ccd54]/8 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[200px] bg-[#7ccd54]/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="container relative z-10 mx-auto px-4 lg:px-8 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10 lg:gap-14 items-center">
+      <div className="relative z-10 w-full px-6 sm:px-8 lg:px-16 xl:px-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 xl:gap-28 items-center">
 
           {/* ── Left: Text ── */}
-          <div className="space-y-8">
-            <div className="inline-block rounded-full bg-white/5 px-4 py-1.5 text-xs font-semibold tracking-wider text-[#7ccd54] border border-[#7ccd54]/20 uppercase">
-              Autonomous Lawn Maintenance
-            </div>
-
+          <div className="space-y-10">
             <h1
-              className="text-3xl font-medium tracking-tight text-white sm:text-4xl lg:text-5xl text-balance leading-[1.15]"
+              className="text-4xl font-medium tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl text-balance leading-[1.15]"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
               The most reliable hand{" "}
               <span className="text-[#7ccd54]">on your lawn.</span>
             </h1>
 
-            <p className="text-lg text-gray-300 leading-relaxed max-w-xl">
+            <p className="text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-2xl">
               Precise, efficient, and fully autonomous. Flo's robotic mower
               handles professional turf management across any terrain — so your
               team can focus on higher-value work.
             </p>
 
             {/* Key stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+            <div className="grid grid-cols-2 gap-5 pt-2">
               {STATS.map((s) => (
                 <div
                   key={s.label}
-                  className="border border-white/10 rounded-xl px-3 py-3 bg-white/5 text-center"
+                  className="border border-white/10 rounded-xl px-4 py-4 bg-white/5"
                 >
                   <div
-                    className="text-lg font-semibold text-[#7ccd54] leading-tight"
+                    className="text-2xl lg:text-3xl font-semibold text-[#7ccd54] leading-tight"
                     style={{ fontFamily: "var(--font-space-grotesk)" }}
                   >
                     {s.value}
                   </div>
-                  <div className="text-[11px] text-gray-400 mt-0.5 leading-tight">
+                  <div className="text-sm lg:text-base text-gray-400 mt-2 leading-tight">
                     {s.label}
                   </div>
                 </div>
@@ -72,17 +68,17 @@ export function LawnMaintenanceHero() {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 pt-2">
+            <div className="flex flex-wrap gap-5 pt-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#7ccd54] text-gray-900 font-semibold hover:bg-[#5ba83d] transition-colors duration-200"
+                className="inline-flex items-center gap-3 px-9 py-5 rounded-full bg-[#7ccd54] text-gray-900 font-semibold text-base lg:text-lg hover:bg-[#5ba83d] transition-colors duration-200"
               >
                 Request a Demo
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 href="#features"
-                className="px-7 py-3.5 rounded-full border border-white/20 text-white font-semibold hover:bg-white/5 transition-colors duration-200"
+                className="px-9 py-5 rounded-full border border-white/20 text-white font-semibold text-base lg:text-lg hover:bg-white/5 transition-colors duration-200"
               >
                 Explore Features
               </Link>
@@ -90,11 +86,13 @@ export function LawnMaintenanceHero() {
           </div>
 
           {/* ── Right: Video thumbnail ── */}
-          <div className="rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
-            <VideoPlayer
-              videoId="T4maYrTt6Xg"
-              title="Flo Autonomous Lawn Mower"
-            />
+          <div className="relative">
+            <div className="rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
+              <VideoPlayer
+                videoId="NDvQAb3qPzI"
+                title="Flo Autonomous Lawn Mower"
+              />
+            </div>
           </div>
 
         </div>

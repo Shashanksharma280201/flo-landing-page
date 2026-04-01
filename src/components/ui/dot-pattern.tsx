@@ -9,16 +9,17 @@ interface DotPatternProps {
 
 export function DotPattern({
   className,
-  dotSize = 1,
+  dotSize = 10,
   dotColor = "rgba(0, 0, 0, 0.1)",
   gap = 20,
 }: DotPatternProps) {
   return (
     <div
-      className={cn("absolute inset-0 -z-10", className)}
+      className={cn("absolute inset-0", className)}
       style={{
-        backgroundImage: `radial-gradient(circle, ${dotColor} ${dotSize}px, transparent ${dotSize}px)`,
+        backgroundImage: `radial-gradient(circle, ${dotColor} 1px, transparent 1px)`,
         backgroundSize: `${gap}px ${gap}px`,
+        zIndex: 0,
       }}
     />
   );

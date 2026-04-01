@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/shared/navbar";
-import { ScrollProgress } from "@/components/shared/scroll-progress";
 import { Footer } from "@/components/shared/footer";
 
 const inter = Inter({
@@ -33,7 +32,6 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${dmSans.variable} bg-white antialiased font-sans text-pretty`}
       >
-        <ScrollProgress />
         <Navbar />
         <main className="grow">{children}</main>
         <Footer />

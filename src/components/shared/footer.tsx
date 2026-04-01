@@ -2,278 +2,227 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Linkedin, Youtube, Mail, MapPin, Phone, Send, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+  ExternalLink
+} from "lucide-react";
+import { CUSTOMERS } from "@/lib/constants";
 
-const FOOTER_LINKS = {
-  offerings: [
+const FOOTER_NAVIGATION = {
+  pages: [
+    { name: "Home", href: "/" },
     { name: "Material Movement", href: "/offerings/material-movement" },
     { name: "Lawn Maintenance", href: "/offerings/lawn-maintenance" },
     { name: "Fleet Control", href: "/offerings/fleet-control" },
-  ],
-  company: [
-    { name: "About Us", href: "/about" },
-    { name: "Blog", href: "/blogs" },
+    { name: "About", href: "/about" },
     { name: "Careers", href: "/careers" },
-    { name: "Contact", href: "/contact" },
   ],
-  legal: [
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" },
-    { name: "Cookie Policy", href: "/cookies" },
+  social: [
+    { name: "LinkedIn", href: "https://www.linkedin.com/company/flomobility/" },
+    { name: "Instagram", href: "https://www.instagram.com/flomobility/" },
+    { name: "Youtube", href: "https://www.youtube.com/@flomobility" },
+    { name: "Facebook", href: "https://www.facebook.com/flomobility" },
   ],
-  socials: [
-    {
-      name: "Facebook",
-      href: "https://www.facebook.com/flomobility",
-      icon: Facebook,
-    },
-    {
-      name: "Instagram",
-      href: "https://www.instagram.com/flomobility/",
-      icon: Instagram,
-    },
-    {
-      name: "LinkedIn",
-      href: "https://www.linkedin.com/company/flomobility/",
-      icon: Linkedin,
-    },
-    {
-      name: "Youtube",
-      href: "https://www.youtube.com/@flomobility",
-      icon: Youtube,
-    },
-  ],
-};
-
-const CONTACT_INFO = {
-  email: "contact@flomobility.ai",
-  phone: "+91 (080) 1234-5678",
-  address: "HSR Layout, Bengaluru, Karnataka, India",
 };
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
-
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Basic email validation
-    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setStatus("success");
-      setEmail("");
-      setTimeout(() => setStatus("idle"), 3000);
-    } else {
-      setStatus("error");
-      setTimeout(() => setStatus("idle"), 3000);
-    }
-  };
-
   return (
-    <footer className="relative flex flex-col overflow-hidden border-t border-neutral-200 bg-gradient-to-b from-white via-neutral-50/50 to-white">
-      {/* Newsletter Section */}
-      <div className="relative border-b border-neutral-200/80 bg-gradient-to-r from-[#7ccd54]/5 via-white to-[#7ccd54]/5">
-        <div className="px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-12 sm:py-16 w-full">
-          <div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left max-w-[1600px] mx-auto">
-            <div className="max-w-xl">
-              <h2 className="text-2xl font-bold text-neutral-900 sm:text-3xl">
-                Stay Updated with Flo
+    <footer className="relative w-full overflow-hidden bg-gradient-to-b from-white to-[#c8ff3d] py-8 sm:py-12 lg:py-20">
+      {/* Main Footer Container */}
+      <div className="w-full px-6 sm:px-8 lg:px-12">
+        <div className="relative rounded-[3rem] bg-[#1a1f1a] overflow-hidden min-h-[750px] lg:min-h-[900px]">
+
+          {/* Main Content */}
+          <div className="relative z-10 h-full flex flex-col px-6 sm:px-12 lg:px-16 xl:px-24 pt-10 lg:pt-16 pb-36 lg:pb-44">
+
+            {/* Tagline at Top */}
+            <div className="text-center mb-4 lg:mb-6">
+              <h2
+                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight"
+                style={{ fontFamily: "var(--font-dm-sans)" }}
+              >
+                <span className="text-white">ALWAYS </span>
+                <span className="text-[#c8ff3d]">MOVING</span>
+                <br />
+                <span className="text-white">THE </span>
+                <span className="text-[#c8ff3d]">FUTURE</span>
+                <span className="text-white">.</span>
               </h2>
-              <p className="mt-2 text-base text-neutral-600">
-                Get the latest news on autonomous solutions, product updates, and industry insights delivered to your inbox.
-              </p>
             </div>
 
-            <form onSubmit={handleNewsletterSubmit} className="w-full max-w-md">
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <div className="relative flex-1">
-                  <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="h-12 w-full rounded-lg border border-neutral-300 bg-white pl-10 pr-4 text-sm text-neutral-900 placeholder:text-neutral-500 focus:border-[#7ccd54] focus:outline-none focus:ring-2 focus:ring-[#7ccd54]/20 transition-all"
-                    disabled={status === "loading"}
-                  />
+            {/* Three Column Layout with Large Robot */}
+            <div className="flex-1 grid grid-cols-1 lg:grid-cols-[240px_1fr_240px] gap-8 lg:gap-12 xl:gap-16 items-start">
+
+              {/* Left Column - Pages */}
+              <div className="flex flex-col space-y-4 lg:space-y-6 lg:pt-12 lg:h-full">
+                <div className="text-[0.6rem] font-bold uppercase tracking-[0.24em] text-gray-500">
+                  Pages
                 </div>
-                <motion.button
-                  type="submit"
-                  disabled={status === "loading"}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group h-12 flex items-center justify-center gap-2 rounded-lg bg-[#7ccd54] px-6 text-sm font-semibold text-white transition-all hover:bg-[#6bbd44] hover:shadow-lg hover:shadow-[#7ccd54]/20 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {status === "loading" ? (
-                    "Subscribing..."
-                  ) : status === "success" ? (
-                    "Subscribed!"
-                  ) : (
-                    <>
-                      Subscribe
-                      <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                    </>
-                  )}
-                </motion.button>
+                <nav className="flex flex-col space-y-2.5 lg:space-y-3.5">
+                  {FOOTER_NAVIGATION.pages.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className="text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wide text-white hover:text-[#c8ff3d] transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/contact"
+                    className="text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wide text-[#c8ff3d] hover:text-white transition-colors"
+                  >
+                    Store
+                  </Link>
+                </nav>
               </div>
-              {status === "error" && (
-                <p className="mt-2 text-xs text-red-600">Please enter a valid email address</p>
-              )}
-              {status === "success" && (
-                <p className="mt-2 text-xs text-green-600">Thanks for subscribing!</p>
-              )}
-            </form>
-          </div>
-        </div>
-      </div>
 
-      {/* Main Footer Content */}
-      <div className="relative z-10 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-12 sm:py-16 w-full">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 max-w-[1600px] mx-auto">
-          {/* Brand & Contact Section */}
-          <div className="lg:col-span-4">
-            <Link href="/" className="inline-block">
-              <Image
-                src="/logo.webp"
-                alt="Flo Mobility"
-                width={180}
-                height={60}
-                unoptimized
-                className="h-14 w-auto object-contain"
-              />
-            </Link>
-            <p className="mt-4 text-sm leading-relaxed text-neutral-600 max-w-sm">
-              Pioneering autonomous solutions for material movement, lawn maintenance, and fleet control. Building the future of mobility, one robot at a time.
-            </p>
+              {/* Center Column - Large Robot Image with Flo Mobility Text */}
+              <div className="flex items-end justify-center lg:-mt-12">
+                <div className="relative w-full">
+                  {/* Flo Mobility Text Behind Robot - Layered Design */}
+                  <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none overflow-hidden">
+                    {/* Bottom Layer - Gradient Glow */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <h3
+                        className="text-5xl sm:text-6xl lg:text-7xl xl:text-9xl font-black uppercase tracking-[-0.02em] select-none whitespace-nowrap"
+                        style={{
+                          fontFamily: "var(--font-dm-sans)",
+                          background: "linear-gradient(180deg, rgba(200,255,61,0.12) 0%, rgba(200,255,61,0.03) 100%)",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text",
+                          filter: "blur(2px)"
+                        }}
+                      >
+                        FLO MOBILITY
+                      </h3>
+                    </div>
 
-            <div className="mt-6 space-y-3">
-              <a
-                href={`mailto:${CONTACT_INFO.email}`}
-                className="group flex items-start gap-3 text-sm text-neutral-600 transition-colors hover:text-[#7ccd54]"
-              >
-                <Mail className="h-5 w-5 mt-0.5 flex-shrink-0 transition-colors group-hover:text-[#7ccd54]" />
-                <span>{CONTACT_INFO.email}</span>
-              </a>
+                    {/* Middle Layer - Outline */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <h3
+                        className="text-5xl sm:text-6xl lg:text-7xl xl:text-9xl font-black uppercase tracking-[-0.02em] select-none whitespace-nowrap"
+                        style={{
+                          fontFamily: "var(--font-dm-sans)",
+                          WebkitTextStroke: "1px rgba(200,255,61,0.1)",
+                          WebkitTextFillColor: "transparent"
+                        }}
+                      >
+                        FLO MOBILITY
+                      </h3>
+                    </div>
 
-              <a
-                href={`tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`}
-                className="group flex items-start gap-3 text-sm text-neutral-600 transition-colors hover:text-[#7ccd54]"
-              >
-                <Phone className="h-5 w-5 mt-0.5 flex-shrink-0 transition-colors group-hover:text-[#7ccd54]" />
-                <span>{CONTACT_INFO.phone}</span>
-              </a>
+                    {/* Top Layer - Solid with Gradient */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <h3
+                        className="text-5xl sm:text-6xl lg:text-7xl xl:text-9xl font-black uppercase tracking-[-0.02em] select-none whitespace-nowrap"
+                        style={{
+                          fontFamily: "var(--font-dm-sans)",
+                          background: "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(200,255,61,0.08) 100%)",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text"
+                        }}
+                      >
+                        FLO MOBILITY
+                      </h3>
+                    </div>
+                  </div>
 
-              <div className="flex items-start gap-3 text-sm text-neutral-600">
-                <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0 text-neutral-400" />
-                <span>{CONTACT_INFO.address}</span>
+                  {/* Robot Image */}
+                  <div className="relative w-full h-[450px] lg:h-[550px] xl:h-[700px] z-10">
+                    <Image
+                      src="/mmr-images/mmr-robot-new.png"
+                      alt="Flo Mobility Autonomous Robot"
+                      fill
+                      className="object-contain object-bottom drop-shadow-[0_0_120px_rgba(200,255,61,0.7)]"
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 70vw, 60vw"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column - Social */}
+              <div className="flex flex-col space-y-4 lg:space-y-6 lg:text-right lg:pt-12 lg:h-full">
+                <div className="text-[0.6rem] font-bold uppercase tracking-[0.24em] text-gray-500">
+                  Follow On
+                </div>
+                <nav className="flex flex-col space-y-2.5 lg:space-y-3.5">
+                  {FOOTER_NAVIGATION.social.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wide text-white hover:text-[#c8ff3d] transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  ))}
+                </nav>
               </div>
             </div>
+          </div>
 
-            {/* Social Links */}
-            <div className="mt-6">
-              <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-3">
-                Follow Us
-              </p>
-              <div className="flex items-center gap-3">
-                {FOOTER_LINKS.socials.map((link) => (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={link.name}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-all hover:bg-[#7ccd54] hover:text-white hover:shadow-lg hover:shadow-[#7ccd54]/20"
+          {/* Bottom Bar - Positioned at bottom of SVG */}
+          <div className="absolute bottom-0 left-0 right-0 z-10 px-6 sm:px-12 lg:px-16 xl:px-24 pb-8 lg:pb-12 pt-4">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-8">
+
+              {/* Customer Logos - Left */}
+              <div className="flex flex-wrap items-center gap-3 lg:gap-6 justify-center lg:justify-start">
+                {CUSTOMERS.slice(0, 6).map((customer) => (
+                  <div
+                    key={customer.name}
+                    className="relative h-5 lg:h-6 w-12 lg:w-14 opacity-40 hover:opacity-80 transition-opacity"
                   >
-                    <link.icon className="h-4 w-4" aria-hidden="true" />
-                  </motion.a>
+                    <Image
+                      src={customer.logo}
+                      alt={customer.name}
+                      fill
+                      className="object-contain brightness-0 invert"
+                      sizes="56px"
+                    />
+                  </div>
                 ))}
               </div>
-            </div>
-          </div>
 
-          {/* Navigation Links */}
-          <div className="lg:col-span-8">
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:gap-12">
-              <div className="flex flex-col gap-4">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-900">
-                  Offerings
-                </h3>
-                <div className="flex flex-col gap-3">
-                  {FOOTER_LINKS.offerings.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className="group flex items-center gap-2 text-sm text-neutral-600 transition-colors hover:text-[#7ccd54]"
-                    >
-                      <ArrowRight className="h-3 w-3 opacity-0 -ml-5 transition-all group-hover:opacity-100 group-hover:ml-0" />
-                      <span className="transition-transform group-hover:translate-x-1">{link.name}</span>
-                    </Link>
-                  ))}
-                </div>
+              {/* CTA Button - Center */}
+              <div className="flex justify-center">
+                <Link
+                  href="/contact"
+                  className="group relative inline-flex items-center gap-2 px-6 lg:px-8 py-3 lg:py-4 rounded-full bg-[#c8ff3d] text-black font-bold uppercase tracking-[0.1em] text-xs lg:text-sm hover:bg-[#b8ef2d] transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-[0_0_30px_rgba(200,255,61,0.6)]"
+                >
+                  <span>Business Enquiries</span>
+                  <ExternalLink className="h-3.5 lg:h-4 w-3.5 lg:w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
 
-              <div className="flex flex-col gap-4">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-900">
-                  Company
-                </h3>
-                <div className="flex flex-col gap-3">
-                  {FOOTER_LINKS.company.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className="group flex items-center gap-2 text-sm text-neutral-600 transition-colors hover:text-[#7ccd54]"
-                    >
-                      <ArrowRight className="h-3 w-3 opacity-0 -ml-5 transition-all group-hover:opacity-100 group-hover:ml-0" />
-                      <span className="transition-transform group-hover:translate-x-1">{link.name}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-900">
-                  Legal
-                </h3>
-                <div className="flex flex-col gap-3">
-                  {FOOTER_LINKS.legal.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className="group flex items-center gap-2 text-sm text-neutral-600 transition-colors hover:text-[#7ccd54]"
-                    >
-                      <ArrowRight className="h-3 w-3 opacity-0 -ml-5 transition-all group-hover:opacity-100 group-hover:ml-0" />
-                      <span className="transition-transform group-hover:translate-x-1">{link.name}</span>
-                    </Link>
-                  ))}
-                </div>
+              {/* Legal Links - Right */}
+              <div className="flex items-center gap-4 lg:gap-6 justify-center lg:justify-end">
+                <Link
+                  href="/privacy"
+                  className="text-xs lg:text-sm font-bold uppercase tracking-[0.1em] text-[#c8ff3d] hover:text-white transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  href="/terms"
+                  className="text-xs lg:text-sm font-bold uppercase tracking-[0.1em] text-[#c8ff3d] hover:text-white transition-colors"
+                >
+                  Terms
+                </Link>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col items-center gap-4 border-t border-neutral-200 pt-8 sm:flex-row sm:justify-between">
-          <p className="text-xs text-neutral-500">
-            © {new Date().getFullYear()} Flo Mobility. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6 text-xs text-neutral-500">
-            <Link href="/privacy" className="transition-colors hover:text-neutral-900">
-              Privacy
-            </Link>
-            <Link href="/terms" className="transition-colors hover:text-neutral-900">
-              Terms
-            </Link>
-            <Link href="/cookies" className="transition-colors hover:text-neutral-900">
-              Cookies
-            </Link>
+            {/* Copyright */}
+            <div className="mt-4 lg:mt-6 text-center text-[0.6rem] lg:text-[0.65rem] text-gray-500">
+              © {new Date().getFullYear()} Flo Mobility. All rights reserved.
+            </div>
           </div>
         </div>
       </div>

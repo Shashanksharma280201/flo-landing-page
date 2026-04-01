@@ -41,20 +41,16 @@ export const NAV_CONFIG = {
         },
       ],
     },
-    {
-      title: "Channel Partner",
-      href: "/channel-partner",
-    },
   ],
   actions: {
-    signIn: "https://fleet.flomobility.com",
+    fleet: "https://fleet.flomobility.com",
     contact: "/contact",
   },
 };
 
 export const HERO_CONTENT = {
-  title: "Designing Autonomous Solutions that unlock What's Possible",
-  subtitle: "Transform construction sites with intelligent robots that enhance productivity, safety, and efficiency",
+  title: "Robots for Construction",
+  subtitle: "Enabling contractors to build smarter, faster, and safer",
   cta: {
     primary: { text: "Explore Solutions", href: "#raas" },
   },

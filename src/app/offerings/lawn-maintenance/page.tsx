@@ -14,10 +14,10 @@ export default function LawnMaintenancePage() {
     <div className="flex flex-col">
       {/* 1. Hero — dark forest green, 2-col, video thumbnail */}
       <LawnMaintenanceHero />
-      {/* 2. Capabilities — cream, 6 numbered feature cards */}
-      <LawnMaintenanceFeatures />
-      {/* 3. Tech Specs — white, two clean numbered tables */}
+      {/* 2. Tech Specs — white, two clean numbered tables */}
       <LawnMaintenanceMetrics />
+      {/* 3. Capabilities — cream, 6 numbered feature cards */}
+      <LawnMaintenanceFeatures />
       {/* 4. Build Quality + CTA — cream stat visual + dark CTA */}
       <LawnMaintenanceSpecs />
     </div>
