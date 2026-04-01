@@ -46,38 +46,29 @@ export function Navbar() {
             <nav className="hidden lg:flex items-center gap-8">
               {NAV_CONFIG.mainNav.map((item) => (
                 <div key={item.title} className="relative group">
-                  {item.items ? (
-                    <>
-                      <button className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium">
-                        {item.title}
-                      </button>
-                      {/* Dropdown */}
-                      <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                        <div className="bg-white rounded-xl shadow-2xl p-4 min-w-[280px] border border-gray-100">
-                          {item.items.map((subItem) => (
-                            <Link
-                              key={subItem.title}
-                              href={subItem.href}
-                              className="block px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                            >
-                              <div className="font-semibold text-gray-900 text-sm mb-1">
-                                {subItem.title}
-                              </div>
-                              <div className="text-xs text-gray-500 leading-relaxed">
-                                {subItem.description}
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
+                  <button className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium">
+                    {item.title}
+                  </button>
+                  {/* Dropdown */}
+                  {item.items && (
+                    <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                      <div className="bg-white rounded-xl shadow-2xl p-4 min-w-[280px] border border-gray-100">
+                        {item.items.map((subItem) => (
+                          <Link
+                            key={subItem.title}
+                            href={subItem.href}
+                            className="block px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                          >
+                            <div className="font-semibold text-gray-900 text-sm mb-1">
+                              {subItem.title}
+                            </div>
+                            <div className="text-xs text-gray-500 leading-relaxed">
+                              {subItem.description}
+                            </div>
+                          </Link>
+                        ))}
                       </div>
-                    </>
-                  ) : (
-                    <Link
-                      href={item.href!}
-                      className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium"
-                    >
-                      {item.title}
-                    </Link>
+                    </div>
                   )}
                 </div>
               ))}
@@ -188,143 +179,3 @@ export function Navbar() {
   );
 }
 
-function MobileNav({ scrolled }: { scrolled: boolean }) {
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild id="mobile-menu-trigger">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden text-white hover:text-[#7ccd54]"
-        >
-          <Menu className="h-6 w-6" />
-          <span className="sr-only">Toggle menu</span>
-        </Button>
-      </SheetTrigger>
-      <SheetContent
-        id="mobile-menu-content"
-        side="right"
-        className="w-75 sm:w-100 bg-white"
-      >
-        <SheetHeader>
-          <SheetTitle className="text-left">
-            <Image
-              src="/logo.webp"
-              alt="flo mobility logo"
-              width={100}
-              height={32}
-              className="h-8 w-auto object-contain"
-            />
-          </SheetTitle>
-        </SheetHeader>
-        <div className="flex flex-col gap-4 py-8">
-          {NAV_CONFIG.mainNav.map((item) => (
-            <div key={item.title} className="flex flex-col gap-2">
-              <h4 className="text-lg font-bold text-gray-400 uppercase tracking-widest">
-                {item.title}
-              </h4>
-              {item.items ? (
-                <div className="flex flex-col gap-1 pl-4 border-l border-gray-100">
-                  {item.items.map((subItem) => (
-                    <Link
-                      key={subItem.title}
-                      href={subItem.href}
-                      onClick={() => setOpen(false)}
-                      className="py-2 text-base font-medium text-gray-700 transition-colors hover:text-primary"
-                    >
-                      {subItem.title}
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <Link
-                  href={item.href!}
-                  onClick={() => setOpen(false)}
-                  className="py-1 text-base font-medium text-gray-700 transition-colors hover:text-primary"
-                >
-                  {item.title}
-                </Link>
-              )}
-            </div>
-          ))}
-          <div className="flex flex-col gap-2 pt-4">
-            <Button
-              variant="outline"
-              asChild
-              className="w-full border-gray-200 text-gray-700 hover:bg-gray-50"
-            >
-              <Link
-                href="/offerings/fleet-control"
-                onClick={() => setOpen(false)}
-              >
-                Fleet Control
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              asChild
-              className="w-full border-gray-200 text-gray-700 hover:bg-gray-50"
-            >
-              <Link
-                href={NAV_CONFIG.actions.fleet}
-                target="_blank"
-                onClick={() => setOpen(false)}
-              >
-                Fleet
-              </Link>
-            </Button>
-            <Button
-              asChild
-              className="w-full bg-[#7ccd54] hover:bg-[#6bbd44] text-white font-semibold"
-            >
-              <Link
-                href={NAV_CONFIG.actions.contact}
-                onClick={() => setOpen(false)}
-              >
-                Contact Us
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </SheetContent>
-    </Sheet>
-  );
-}
-
-const ListItem = ({
-  className,
-  title,
-  children,
-  href,
-  ref,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof Link> & {
-  title: string;
-  ref?: React.Ref<HTMLAnchorElement>;
-}) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <Link
-          ref={ref}
-          href={href}
-          className={cn(
-            "group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-            className,
-          )}
-          {...props}
-        >
-          <div className="text-sm font-semibold leading-none text-gray-900">
-            {title}
-          </div>
-          <p className="line-clamp-2 text-sm leading-snug text-gray-500">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
-    </li>
-  );
-};
-ListItem.displayName = "ListItem";
