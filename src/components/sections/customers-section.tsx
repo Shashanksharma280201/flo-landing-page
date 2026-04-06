@@ -23,7 +23,7 @@ export function CustomersSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white py-16 sm:py-20 lg:py-28">
+    <section className="relative z-10 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white py-16 sm:py-20 lg:py-28">
       {/* Background decoration */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-full max-w-7xl -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7ccd54]/5 blur-[120px]" />
 

@@ -60,7 +60,7 @@ export function Hero({
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen overflow-hidden bg-black"
+      className="relative z-20 min-h-screen overflow-hidden bg-black"
     >
       {/* Background Video - Clear and visible */}
       <motion.div

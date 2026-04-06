@@ -28,8 +28,8 @@ export function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="flex h-20 items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="flex h-16 sm:h-20 items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center relative z-50">
               <Image
@@ -38,7 +38,7 @@ export function Navbar() {
                 width={140}
                 height={60}
                 priority
-                className="h-16 w-auto object-contain"
+                className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
               />
             </Link>
 
@@ -46,30 +46,39 @@ export function Navbar() {
             <nav className="hidden lg:flex items-center gap-8">
               {NAV_CONFIG.mainNav.map((item) => (
                 <div key={item.title} className="relative group">
-                  <button className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium">
-                    {item.title}
-                  </button>
-                  {/* Dropdown */}
-                  {item.items && (
-                    <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                      <div className="bg-white rounded-xl shadow-2xl p-4 min-w-[280px] border border-gray-100">
-                        {item.items.map((subItem) => (
-                          <Link
-                            key={subItem.title}
-                            href={subItem.href}
-                            className="block px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                          >
-                            <div className="font-semibold text-gray-900 text-sm mb-1">
-                              {subItem.title}
-                            </div>
-                            <div className="text-xs text-gray-500 leading-relaxed">
-                              {subItem.description}
-                            </div>
-                          </Link>
-                        ))}
+                  {item.items ? (
+                    <>
+                      <button className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium">
+                        {item.title}
+                      </button>
+                      {/* Dropdown */}
+                      <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                        <div className="bg-white rounded-xl shadow-2xl p-4 min-w-[280px] border border-gray-100">
+                          {item.items.map((subItem) => (
+                            <Link
+                              key={subItem.title}
+                              href={subItem.href}
+                              className="block px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                            >
+                              <div className="font-semibold text-gray-900 text-sm mb-1">
+                                {subItem.title}
+                              </div>
+                              <div className="text-xs text-gray-500 leading-relaxed">
+                                {subItem.description}
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    </>
+                  ) : 'href' in item && item.href ? (
+                    <Link
+                      href={item.href}
+                      className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium"
+                    >
+                      {item.title}
+                    </Link>
+                  ) : null}
                 </div>
               ))}
             </nav>

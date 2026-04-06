@@ -26,7 +26,7 @@ const STATS = [
 
 export function StatsSection() {
   return (
-    <section className="relative overflow-hidden bg-white py-20 lg:py-14">
+    <section className="relative z-10 overflow-hidden bg-white py-20 lg:py-14">
       <MagicDotPattern
         glow
         width={32}
