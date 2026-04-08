@@ -32,7 +32,7 @@ VISUAL DIRECTION & COLOR:
 
 IMPLEMENTATION DETAILS:
 
-Please use image from the folder /home/shanks/Videos/flo-landing-page/ezgif-30ffbcdc2420e927-jpg folder
+Please use image from the folder /home/shanks/Videos/flo-landing-page/public/frames scroll animation ending 2 without text_frames_60fps folder
 1. The Sticky Canvas
 - Create a component called `robot-scroll.tsx`.
 - The outer container should be h-[400vh] to allow extended scroll time.
@@ -44,7 +44,7 @@ Please use image from the folder /home/shanks/Videos/flo-landing-page/ezgif-30ff
 - The canvas must be perfectly centered and fill the viewport.
 
 2. Scroll Logic
-- Load a sequence of 43 images generated from an image splitter.
+- Load a sequence of 1516 images generated from an image splitter.
 - Naming convention:
   `ezgif-frame-001.jpg`
 - Use useScroll from Framer Motion to map scroll progress (0 → 1)

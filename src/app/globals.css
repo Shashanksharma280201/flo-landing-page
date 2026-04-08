@@ -272,3 +272,46 @@
   100% { background-position: 0% 100%; }
 }
 .animate-scan-line { animation: scan-line 8s linear infinite; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PAGE LOADER — Hero reveal classes
+   Used by useRevealOnLoad hook. Add .reveal-word to each <span> wrapping a
+   word in the hero headline, and .fade-up to subtitles / CTAs.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Wrap each word in a clipping container */
+.reveal-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom; /* prevent descender clipping */
+}
+
+/* The inner span starts below the clipping boundary */
+.reveal-word span {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition:
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity   0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Triggered by useRevealOnLoad — lifts each word into view */
+.reveal-word.revealed span {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Fade-up for subtitles, CTAs, and secondary elements */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity   0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-up.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}

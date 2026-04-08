@@ -3,6 +3,7 @@ import { Inter, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
+import { PageLoaderProvider } from "@/components/PageLoader/PageLoaderProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,8 +31,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${dmSans.variable} bg-white antialiased font-sans text-pretty`}
+        className={`${inter.variable} ${dmSans.variable} bg-[#f5f5f5] antialiased font-sans text-pretty`}
       >
+        {/* Cinematic page loader — unmounts itself after animation */}
+        <PageLoaderProvider />
         <Navbar />
         <main className="grow">{children}</main>
         <Footer />

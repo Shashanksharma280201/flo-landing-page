@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { NAV_CONFIG } from "@/lib/constants";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
@@ -18,52 +18,59 @@ export function Navbar() {
 
   return (
     <>
+      {/* Navbar Container - Centered and detached from top */}
       <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-[#1a3a1f]/95 backdrop-blur-xl shadow-lg"
-            : "bg-black/20 backdrop-blur-md"
-        }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[90%] lg:w-1/2 transition-all duration-300"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="flex h-16 sm:h-20 items-center justify-between">
+        <div
+          className={`transition-all duration-300 rounded-3xl px-6 sm:px-8 ${
+            scrolled
+              ? "bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20"
+              : "bg-gray-900/60 backdrop-blur-lg border border-white/10"
+          }`}
+        >
+          <div className="flex h-16 sm:h-18 items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center relative z-50">
               <Image
                 src="/logo.webp"
                 alt="flo mobility logo"
-                width={140}
-                height={60}
+                width={160}
+                height={70}
                 priority
                 className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
+                style={{
+                  filter: 'brightness(0) saturate(100%) invert(78%) sepia(22%) saturate(832%) hue-rotate(47deg) brightness(94%) contrast(87%)'
+                }}
               />
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-6">
               {NAV_CONFIG.mainNav.map((item) => (
                 <div key={item.title} className="relative group">
                   {item.items ? (
                     <>
-                      <button className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium">
+                      <button className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-sm font-medium flex items-center gap-1">
                         {item.title}
+                        <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
                       </button>
                       {/* Dropdown */}
                       <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                        <div className="bg-white rounded-xl shadow-2xl p-4 min-w-[280px] border border-gray-100">
+                        <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-4 min-w-[280px] border border-white/20">
                           {item.items.map((subItem) => (
                             <Link
                               key={subItem.title}
                               href={subItem.href}
-                              className="block px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                              className="block px-4 py-3 rounded-xl hover:bg-white/10 transition-colors duration-200"
                             >
-                              <div className="font-semibold text-gray-900 text-sm mb-1">
+                              <div className="font-semibold text-white text-sm mb-1">
                                 {subItem.title}
                               </div>
-                              <div className="text-xs text-gray-500 leading-relaxed">
+                              <div className="text-xs text-gray-400 leading-relaxed">
                                 {subItem.description}
                               </div>
                             </Link>
@@ -74,7 +81,7 @@ export function Navbar() {
                   ) : 'href' in item && item.href ? (
                     <Link
                       href={item.href}
-                      className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium"
+                      className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-sm font-medium"
                     >
                       {item.title}
                     </Link>
@@ -84,17 +91,17 @@ export function Navbar() {
             </nav>
 
             {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-3">
               <Link
                 href={NAV_CONFIG.actions.fleet}
                 target="_blank"
-                className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium"
+                className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-sm font-medium"
               >
                 Fleet
               </Link>
               <Link
                 href={NAV_CONFIG.actions.contact}
-                className="px-6 py-2.5 rounded-full bg-[#7ccd54] hover:bg-[#5ba83d] text-gray-900 font-semibold text-sm transition-all duration-200 hover:scale-105 shadow-lg"
+                className="px-5 py-2 rounded-full bg-[#7ccd54] hover:bg-[#5ba83d] text-gray-900 font-semibold text-sm transition-all duration-200 hover:scale-105 shadow-lg"
               >
                 Contact Us
               </Link>
