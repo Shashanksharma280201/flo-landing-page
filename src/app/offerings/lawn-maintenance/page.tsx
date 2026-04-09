@@ -244,7 +244,7 @@ function HeroSection() {
               {HERO_STATS.map((s, i) => (
                 <div
                   key={s.label}
-                  className={`py-6 pr-4 ${i < 3 ? "border-r" : ""}`}
+                  className={`py-6 px-4 text-center ${i < 3 ? "border-r" : ""}`}
                   style={{ borderColor: DIM }}
                 >
                   <div
