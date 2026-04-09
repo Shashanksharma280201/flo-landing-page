@@ -168,12 +168,14 @@ export function Navbar() {
         >
           <motion.div
             className="flex h-[60px] items-center justify-between px-5 rounded-2xl"
+            style={{
+              WebkitBackdropFilter: scrolled ? "blur(28px) saturate(180%)" : "blur(16px) saturate(140%)",
+            }}
             animate={{
               background: scrolled
                 ? "rgba(255,255,255,0.86)"
                 : "rgba(255,255,255,0.60)",
               backdropFilter: scrolled ? "blur(28px) saturate(180%)" : "blur(16px) saturate(140%)",
-              WebkitBackdropFilter: scrolled ? "blur(28px) saturate(180%)" : "blur(16px) saturate(140%)",
               boxShadow: scrolled
                 ? "0 8px 32px rgba(25,28,26,0.10), 0 1px 0 rgba(255,255,255,0.8) inset, 0 0 0 1px rgba(25,28,26,0.07)"
                 : "0 2px 16px rgba(25,28,26,0.06), 0 1px 0 rgba(255,255,255,0.7) inset, 0 0 0 1px rgba(25,28,26,0.06)",
