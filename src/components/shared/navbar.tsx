@@ -3,195 +3,368 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
 import { NAV_CONFIG } from "@/lib/constants";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
-export function Navbar() {
-  const { scrollY } = useScroll();
-  const [scrolled, setScrolled] = React.useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+// ─── Design tokens ────────────────────────────────────────────────────────────
+const GREEN  = "#7ccd54";
+const TEXT   = "#191c1a";
+const MUTED  = "rgba(25,28,26,0.55)";
+const DIM    = "rgba(25,28,26,0.15)";
+const BORDER = "rgba(25,28,26,0.10)";
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 50);
-  });
-
+// ─── Dropdown ─────────────────────────────────────────────────────────────────
+function Dropdown({ items }: { items: { title: string; href: string; description: string }[] }) {
   return (
-    <>
-      {/* Navbar Container - Centered and detached from top */}
-      <motion.header
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[90%] lg:w-1/2 transition-all duration-300"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div
-          className={`transition-all duration-300 rounded-3xl px-6 sm:px-8 ${
-            scrolled
-              ? "bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20"
-              : "bg-gray-900/60 backdrop-blur-lg border border-white/10"
-          }`}
-        >
-          <div className="flex h-16 sm:h-18 items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center relative z-50">
-              <Image
-                src="/logo.webp"
-                alt="flo mobility logo"
-                width={160}
-                height={70}
-                priority
-                className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
-                style={{
-                  filter: 'brightness(0) saturate(100%) invert(78%) sepia(22%) saturate(832%) hue-rotate(47deg) brightness(94%) contrast(87%)'
-                }}
-              />
-            </Link>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-6">
-              {NAV_CONFIG.mainNav.map((item) => (
-                <div key={item.title} className="relative group">
-                  {item.items ? (
-                    <>
-                      <button className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-sm font-medium flex items-center gap-1">
-                        {item.title}
-                        <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
-                      </button>
-                      {/* Dropdown */}
-                      <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                        <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-4 min-w-[280px] border border-white/20">
-                          {item.items.map((subItem) => (
-                            <Link
-                              key={subItem.title}
-                              href={subItem.href}
-                              className="block px-4 py-3 rounded-xl hover:bg-white/10 transition-colors duration-200"
-                            >
-                              <div className="font-semibold text-white text-sm mb-1">
-                                {subItem.title}
-                              </div>
-                              <div className="text-xs text-gray-400 leading-relaxed">
-                                {subItem.description}
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </>
-                  ) : 'href' in item && item.href ? (
-                    <Link
-                      href={item.href}
-                      className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-sm font-medium"
-                    >
-                      {item.title}
-                    </Link>
-                  ) : null}
-                </div>
-              ))}
-            </nav>
-
-            {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center gap-3">
-              <Link
-                href={NAV_CONFIG.actions.fleet}
-                target="_blank"
-                className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-sm font-medium"
-              >
-                Fleet
-              </Link>
-              <Link
-                href={NAV_CONFIG.actions.contact}
-                className="px-5 py-2 rounded-full bg-[#7ccd54] hover:bg-[#5ba83d] text-gray-900 font-semibold text-sm transition-all duration-200 hover:scale-105 shadow-lg"
-              >
-                Contact Us
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden text-white p-2 relative z-50"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-          </div>
-        </div>
-      </motion.header>
-
-      {/* Mobile Menu */}
+    <AnimatePresence>
       <motion.div
-        className={`fixed inset-0 z-40 lg:hidden ${
-          mobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"
-        }`}
-        initial={false}
-        animate={{
-          opacity: mobileMenuOpen ? 1 : 0,
-        }}
+        initial={{ opacity: 0, y: 8, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 8, scale: 0.97 }}
+        transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-full left-0 pt-3 z-50"
       >
-        {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-
-        {/* Menu Content */}
-        <motion.div
-          className="absolute top-0 right-0 h-full w-80 bg-[#1a3a1f] shadow-2xl overflow-y-auto"
-          initial={{ x: "100%" }}
-          animate={{ x: mobileMenuOpen ? 0 : "100%" }}
-          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="rounded-2xl shadow-xl overflow-hidden"
+          style={{
+            background: "#ffffff",
+            border: `1px solid ${BORDER}`,
+            minWidth: "320px",
+          }}
         >
-          <div className="p-8 pt-24">
-            <nav className="flex flex-col gap-6">
-              {NAV_CONFIG.mainNav.map((item) => (
-                <div key={item.title}>
-                  <div className="text-gray-400 text-xs uppercase tracking-widest mb-3 font-semibold">
-                    {item.title}
-                  </div>
-                  {item.items ? (
-                    <div className="flex flex-col gap-2 pl-4 border-l-2 border-[#7ccd54]/30">
-                      {item.items.map((subItem) => (
-                        <Link
-                          key={subItem.title}
-                          href={subItem.href}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="text-white hover:text-[#7ccd54] transition-colors duration-200 text-base font-medium py-2"
-                        >
-                          {subItem.title}
-                        </Link>
-                      ))}
-                    </div>
-                  ) : null}
+          {items.map((item, i) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex items-start gap-4 px-5 py-4 transition-colors duration-200 group"
+              style={{ borderBottom: i < items.length - 1 ? `1px solid ${BORDER}` : "none" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#f9f9f8"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+            >
+              {/* Index number */}
+              <span
+                className="text-[11px] font-bold mt-0.5 shrink-0 tabular-nums"
+                style={{ color: DIM, fontFamily: "var(--font-dm-sans)" }}
+              >
+                0{i + 1}
+              </span>
+              <div className="flex-1 min-w-0">
+                <div
+                  className="text-[13px] font-semibold mb-0.5 group-hover:text-[#7ccd54] transition-colors duration-200"
+                  style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                >
+                  {item.title}
                 </div>
-              ))}
-            </nav>
-
-            {/* Mobile Actions */}
-            <div className="mt-8 flex flex-col gap-3 pt-6 border-t border-white/10">
-              <Link
-                href={NAV_CONFIG.actions.fleet}
-                target="_blank"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full px-6 py-3 rounded-full border border-white/20 text-white text-center font-semibold hover:bg-white/10 transition-colors duration-200"
-              >
-                Fleet
-              </Link>
-              <Link
-                href={NAV_CONFIG.actions.contact}
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full px-6 py-3 rounded-full bg-[#7ccd54] hover:bg-[#5ba83d] text-gray-900 text-center font-semibold transition-all duration-200"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
-        </motion.div>
+                <div
+                  className="text-xs leading-relaxed"
+                  style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
+                >
+                  {item.description}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </motion.div>
-    </>
+    </AnimatePresence>
   );
 }
 
+// ─── NavItem with optional dropdown ───────────────────────────────────────────
+function NavItem({
+  item,
+  isActive,
+}: {
+  item: typeof NAV_CONFIG.mainNav[number];
+  isActive: boolean;
+}) {
+  const [open, setOpen] = React.useState(false);
+
+  if (!("items" in item) || !item.items) {
+    const href = "href" in item ? (item as { href: string }).href : "#";
+    return (
+      <Link
+        href={href}
+        className="text-sm font-semibold transition-colors duration-200"
+        style={{ color: isActive ? GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = GREEN; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? GREEN : TEXT; }}
+      >
+        {item.title}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button
+        className="flex items-center gap-1.5 text-sm font-semibold transition-colors duration-200"
+        style={{ color: isActive ? GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = GREEN; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? GREEN : TEXT; }}
+      >
+        {item.title}
+        <ChevronDown
+          className="transition-transform duration-200"
+          style={{ width: 14, height: 14, transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+        />
+      </button>
+      {open && <Dropdown items={item.items} />}
+    </div>
+  );
+}
+
+// ─── Main Navbar ───────────────────────────────────────────────────────────────
+export function Navbar() {
+  const pathname = usePathname();
+  const { scrollY } = useScroll();
+  const [scrolled, setScrolled] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileExpanded, setMobileExpanded] = React.useState<string | null>(null);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 48);
+  });
+
+  // Prevent body scroll when mobile menu open
+  React.useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+
+  return (
+    <>
+      {/* ── Desktop / tablet header ── */}
+      <motion.header
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          background: scrolled ? "rgba(255,255,255,0.94)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
+          borderBottom: scrolled ? `1px solid ${BORDER}` : "1px solid transparent",
+          boxShadow: scrolled ? "0 1px 20px rgba(25,28,26,0.06)" : "none",
+        }}
+      >
+        <div className="flex h-16 items-center justify-between px-8 md:px-14 lg:px-20 xl:px-28">
+
+          {/* Logo */}
+          <Link href="/" className="flex items-center shrink-0">
+            <Image
+              src="/logo.webp"
+              alt="FLO Mobility"
+              width={130}
+              height={56}
+              priority
+              className="h-8 w-auto object-contain"
+            />
+          </Link>
+
+          {/* Desktop nav */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {NAV_CONFIG.mainNav.map((item) => {
+              const active = "href" in item && item.href
+                ? isActive(item.href as string)
+                : item.items?.some((s) => isActive(s.href)) ?? false;
+              return <NavItem key={item.title} item={item} isActive={active} />;
+            })}
+          </nav>
+
+          {/* Desktop actions */}
+          <div className="hidden lg:flex items-center gap-6">
+            <Link
+              href={NAV_CONFIG.actions.fleet}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-sm font-semibold transition-colors duration-200"
+              style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = GREEN; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = TEXT; }}
+            >
+              Fleet
+              <ArrowUpRight style={{ width: 14, height: 14 }} />
+            </Link>
+            <Link
+              href={NAV_CONFIG.actions.contact}
+              className="inline-flex items-center px-5 py-2 rounded-full text-sm font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-md"
+              style={{ background: GREEN, fontFamily: "var(--font-dm-sans)" }}
+            >
+              Contact Us
+            </Link>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200"
+            style={{ color: TEXT }}
+            aria-label="Open menu"
+          >
+            <Menu style={{ width: 20, height: 20 }} />
+          </button>
+
+        </div>
+      </motion.header>
+
+      {/* ── Mobile menu overlay ── */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              className="fixed inset-0 z-50 lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              style={{ background: "rgba(25,28,26,0.35)", backdropFilter: "blur(4px)" }}
+              onClick={() => setMobileOpen(false)}
+            />
+
+            {/* Panel */}
+            <motion.div
+              key="panel"
+              className="fixed top-0 right-0 bottom-0 z-50 lg:hidden flex flex-col overflow-y-auto"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              style={{ width: "min(400px, 100vw)", background: "#ffffff", borderLeft: `1px solid ${BORDER}` }}
+            >
+              {/* Panel header */}
+              <div
+                className="flex items-center justify-between px-7 py-5 shrink-0"
+                style={{ borderBottom: `1px solid ${BORDER}` }}
+              >
+                <Image
+                  src="/logo.webp"
+                  alt="FLO Mobility"
+                  width={110}
+                  height={48}
+                  className="h-7 w-auto object-contain"
+                />
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center w-9 h-9 rounded-full transition-colors duration-200"
+                  style={{ background: "rgba(25,28,26,0.06)", color: TEXT }}
+                  aria-label="Close menu"
+                >
+                  <X style={{ width: 18, height: 18 }} />
+                </button>
+              </div>
+
+              {/* Panel nav links */}
+              <nav className="flex-1 px-7 py-6 flex flex-col gap-1">
+                {NAV_CONFIG.mainNav.map((item) => {
+                  const hasChildren = "items" in item && item.items && item.items.length > 0;
+                  const expanded = mobileExpanded === item.title;
+
+                  return (
+                    <div key={item.title}>
+                      {hasChildren ? (
+                        <>
+                          <button
+                            className="w-full flex items-center justify-between py-4 text-xl font-bold transition-colors duration-200"
+                            style={{ color: expanded ? GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
+                            onClick={() => setMobileExpanded(expanded ? null : item.title)}
+                          >
+                            {item.title}
+                            <ChevronDown
+                              style={{
+                                width: 18, height: 18,
+                                transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+                                transition: "transform 0.2s",
+                                color: expanded ? GREEN : MUTED,
+                              }}
+                            />
+                          </button>
+                          <AnimatePresence>
+                            {expanded && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                                className="overflow-hidden"
+                              >
+                                <div
+                                  className="flex flex-col gap-0 rounded-xl mb-3 overflow-hidden"
+                                  style={{ background: "#f7f7f6", border: `1px solid ${BORDER}` }}
+                                >
+                                  {item.items!.map((sub, i) => (
+                                    <Link
+                                      key={sub.href}
+                                      href={sub.href}
+                                      onClick={() => setMobileOpen(false)}
+                                      className="flex items-center gap-3 px-5 py-4 transition-colors duration-200"
+                                      style={{
+                                        borderBottom: i < item.items!.length - 1 ? `1px solid ${BORDER}` : "none",
+                                        color: isActive(sub.href) ? GREEN : TEXT,
+                                        fontFamily: "var(--font-dm-sans)",
+                                      }}
+                                    >
+                                      <span className="text-[11px] font-bold" style={{ color: DIM }}>0{i + 1}</span>
+                                      <span className="text-[15px] font-semibold">{sub.title}</span>
+                                    </Link>
+                                  ))}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </>
+                      ) : "href" in item && item.href ? (
+                        <Link
+                          href={item.href as string}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center py-4 text-xl font-bold transition-colors duration-200"
+                          style={{ color: isActive(item.href as string) ? GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
+                        >
+                          {item.title}
+                        </Link>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </nav>
+
+              {/* Panel actions */}
+              <div className="px-7 pb-8 flex flex-col gap-3 shrink-0" style={{ borderTop: `1px solid ${BORDER}`, paddingTop: "24px" }}>
+                <Link
+                  href={NAV_CONFIG.actions.fleet}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center gap-2 py-3.5 rounded-full text-[15px] font-semibold border transition-all duration-200"
+                  style={{ color: TEXT, borderColor: DIM, fontFamily: "var(--font-dm-sans)" }}
+                >
+                  Fleet
+                  <ArrowUpRight style={{ width: 15, height: 15 }} />
+                </Link>
+                <Link
+                  href={NAV_CONFIG.actions.contact}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center py-3.5 rounded-full text-[15px] font-bold text-white transition-all duration-200"
+                  style={{ background: GREEN, fontFamily: "var(--font-dm-sans)" }}
+                >
+                  Contact Us
+                </Link>
+              </div>
+
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
