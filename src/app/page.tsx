@@ -34,7 +34,7 @@ function RevealText({
   const inView = useInView(ref, { once: true, margin: "-8% 0px" });
   return (
     <div ref={ref} className={className}>
-      <div style={{ overflow: "hidden", paddingBottom: "0.2em", marginBottom: "-0.2em" }}>
+      <div style={{ overflow: "hidden", paddingBottom: "0.35em", marginBottom: "-0.35em" }}>
         <motion.div
           initial={{ y: "110%", opacity: 0 }}
           animate={inView ? { y: "0%", opacity: 1 } : {}}

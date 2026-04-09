@@ -9,7 +9,8 @@ import { NAV_CONFIG } from "@/lib/constants";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
-const GREEN  = "#7ccd54";
+const GREEN       = "#7ccd54";   // brand green — used for CTA button only
+const ACTIVE_GREEN = "#2d7a1f";  // deep green — active link / hover / open indicator
 const TEXT   = "#191c1a";
 const MUTED  = "rgba(25,28,26,0.55)";
 const DIM    = "rgba(25,28,26,0.15)";
@@ -55,7 +56,7 @@ function Dropdown({ items }: { items: { title: string; href: string; description
               </span>
               <div className="flex-1 min-w-0">
                 <div
-                  className="text-[13px] font-semibold mb-0.5 group-hover:text-[#7ccd54] transition-colors duration-200"
+                  className="text-[13px] font-semibold mb-0.5 transition-colors duration-200 group-hover:text-[#2d7a1f]"
                   style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
                 >
                   {item.title}
@@ -88,24 +89,16 @@ function NavItem({
   if (!("items" in item) || !item.items) {
     const href = "href" in item ? (item as { href: string }).href : "#";
     return (
-      <div className="relative group">
+      <div className="relative">
         <Link
           href={href}
-          className="text-[13px] font-semibold transition-colors duration-200 pb-0.5"
-          style={{ color: isActive ? GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = GREEN; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? GREEN : TEXT; }}
+          className="flex items-center gap-1 text-[13px] font-semibold transition-colors duration-200"
+          style={{ color: isActive ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = ACTIVE_GREEN; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? ACTIVE_GREEN : TEXT; }}
         >
           {item.title}
         </Link>
-        {/* Underline draw animation */}
-        <motion.div
-          className="absolute bottom-0 left-0 h-px"
-          style={{ background: GREEN }}
-          initial={{ width: isActive ? "100%" : "0%" }}
-          whileHover={{ width: "100%" }}
-          transition={{ duration: 0.3, ease: EASE }}
-        />
       </div>
     );
   }
@@ -118,9 +111,9 @@ function NavItem({
     >
       <button
         className="flex items-center gap-1 text-[13px] font-semibold transition-colors duration-200"
-        style={{ color: isActive ? GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = GREEN; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? GREEN : TEXT; }}
+        style={{ color: isActive || open ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = ACTIVE_GREEN; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive || open ? ACTIVE_GREEN : TEXT; }}
       >
         {item.title}
         <motion.span
@@ -188,10 +181,10 @@ export function Navbar() {
               <Image
                 src="/logo.webp"
                 alt="FLO Mobility"
-                width={160}
-                height={64}
+                width={200}
+                height={80}
                 priority
-                className="h-10 w-auto object-contain"
+                className="h-14 w-auto object-contain"
               />
             </Link>
 
@@ -306,7 +299,7 @@ export function Navbar() {
                         <>
                           <button
                             className="w-full flex items-center justify-between py-4 text-xl font-bold transition-colors duration-200"
-                            style={{ color: expanded ? GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
+                            style={{ color: expanded ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
                             onClick={() => setMobileExpanded(expanded ? null : item.title)}
                           >
                             {item.title}
@@ -315,7 +308,7 @@ export function Navbar() {
                                 width: 18, height: 18,
                                 transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
                                 transition: "transform 0.2s",
-                                color: expanded ? GREEN : MUTED,
+                                color: expanded ? ACTIVE_GREEN : MUTED,
                               }}
                             />
                           </button>
@@ -340,7 +333,7 @@ export function Navbar() {
                                       className="flex items-center gap-3 px-5 py-4 transition-colors duration-200"
                                       style={{
                                         borderBottom: i < item.items!.length - 1 ? `1px solid ${BORDER}` : "none",
-                                        color: isActive(sub.href) ? GREEN : TEXT,
+                                        color: isActive(sub.href) ? ACTIVE_GREEN : TEXT,
                                         fontFamily: "var(--font-dm-sans)",
                                       }}
                                     >
@@ -358,7 +351,7 @@ export function Navbar() {
                           href={item.href as string}
                           onClick={() => setMobileOpen(false)}
                           className="flex items-center py-4 text-xl font-bold transition-colors duration-200"
-                          style={{ color: isActive(item.href as string) ? GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
+                          style={{ color: isActive(item.href as string) ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
                         >
                           {item.title}
                         </Link>

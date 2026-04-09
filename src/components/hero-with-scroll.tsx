@@ -245,7 +245,7 @@ function ScrollContent({
 
             {/* Headline — stacked with reveal animation per line */}
             <div className="mb-8">
-              <div className="overflow-hidden">
+              <div style={{ overflow: "hidden", paddingBottom: "0.35em", marginBottom: "-0.35em" }}>
                 <motion.h1
                   initial={{ y: "110%" }}
                   animate={{ y: "0%" }}
@@ -256,7 +256,7 @@ function ScrollContent({
                   Robots for
                 </motion.h1>
               </div>
-              <div className="overflow-hidden">
+              <div style={{ overflow: "hidden", paddingBottom: "0.35em", marginBottom: "-0.35em" }}>
                 <motion.h1
                   initial={{ y: "110%" }}
                   animate={{ y: "0%" }}
@@ -267,7 +267,7 @@ function ScrollContent({
                   Construction
                 </motion.h1>
               </div>
-              <div className="overflow-hidden">
+              <div style={{ overflow: "hidden", paddingBottom: "0.35em", marginBottom: "-0.35em" }}>
                 <motion.h1
                   initial={{ y: "110%" }}
                   animate={{ y: "0%" }}

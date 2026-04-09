@@ -34,12 +34,11 @@ export const NAV_CONFIG = {
           description:
             "Insights and updates from the world of autonomous mobility.",
         },
-        {
-          title: "Careers",
-          href: "/careers",
-          description: "Join our mission to redefine autonomous mobility.",
-        },
       ],
+    },
+    {
+      title: "Careers",
+      href: "/careers",
     },
   ],
   actions: {

@@ -1,551 +1,780 @@
 "use client";
 
+import React, { useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { motion, useInView } from "framer-motion";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { submitFormAction } from "@/app/actions/form-actions";
-import { MagicDotPattern } from "@/components/ui/magicui-dot-pattern";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
+import {
+  ArrowRight, ArrowUpRight,
+  DollarSign, Wrench, BarChart3,
+  Award, BookOpen, Megaphone, Headphones, Share2, Lightbulb,
+} from "lucide-react";
+
+// ─── Design tokens ────────────────────────────────────────────────────────────
+const BG      = "#ffffff";
+const BG2     = "#f5f5f5";
+const GREEN   = "#7ccd54";
+const TEXT    = "#191c1a";
+const MUTED   = "rgba(25,28,26,0.55)";
+const DIM     = "rgba(25,28,26,0.15)";
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+// ─── Animation primitives ─────────────────────────────────────────────────────
+
+function RevealText({
+  children, delay = 0, className = "",
+}: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
+  return (
+    <div ref={ref} className={className}>
+      <div style={{ overflow: "hidden", paddingBottom: "0.35em", marginBottom: "-0.35em" }}>
+        <motion.div
+          initial={{ y: "110%", opacity: 0 }}
+          animate={inView ? { y: "0%", opacity: 1 } : {}}
+          transition={{ duration: 1.0, delay, ease: EASE }}
+        >
+          {children}
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+function FadeUp({
+  children, delay = 0, className = "",
+}: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-6% 0px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ y: 40, opacity: 0 }}
+      animate={inView ? { y: 0, opacity: 1 } : {}}
+      transition={{ duration: 0.85, delay, ease: EASE }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function SectionRule({ label }: { label: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-5% 0px" });
+  return (
+    <motion.div
+      ref={ref}
+      className="flex items-center gap-5 mb-16"
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : {}}
+      transition={{ duration: 0.6 }}
+    >
+      <span className="text-[10px] font-bold tracking-[0.26em] uppercase whitespace-nowrap" style={{ color: DIM }}>
+        {label}
+      </span>
+      <motion.div
+        className="flex-1 h-px"
+        style={{ background: DIM }}
+        initial={{ scaleX: 0, originX: 0 }}
+        animate={inView ? { scaleX: 1 } : {}}
+        transition={{ duration: 1.2, delay: 0.1, ease: EASE }}
+      />
+    </motion.div>
+  );
+}
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const PARTNER_TYPES = [
   {
+    icon: DollarSign,
     tag: "Earn Commission",
     title: "Referral Partner",
-    description:
-      "Refer clients from your existing network to Flo Mobility. For every successful deployment, you earn a competitive referral commission — with zero operational overhead.",
+    description: "Refer clients from your existing network to Flo Mobility. For every successful deployment, you earn a competitive referral commission — with zero operational overhead.",
     perks: ["Up to 8% referral fee", "Simple referral portal", "Monthly payouts"],
   },
   {
+    icon: Wrench,
     tag: "Build Together",
     title: "System Integrator",
-    description:
-      "Embed our autonomous robots into your own engineering or construction solutions. Access our full API suite, technical docs, and dedicated integration support.",
+    description: "Embed our autonomous robots into your own engineering or construction solutions. Access our full API suite, technical docs, and dedicated integration support.",
     perks: ["API + SDK access", "Co-development support", "Joint go-to-market"],
   },
   {
+    icon: BarChart3,
     tag: "Scale Revenue",
     title: "Reseller Partner",
-    description:
-      "Become an authorised reseller of Flo's robot fleet in your region. Deploy, manage, and sell subscriptions to your clients with our full backing.",
+    description: "Become an authorised reseller of Flo's robot fleet in your region. Deploy, manage, and sell subscriptions to your clients with our full backing.",
     perks: ["Exclusive territory rights", "Volume pricing tiers", "Dedicated success manager"],
   },
 ];
 
 const BENEFITS = [
-  {
-    title: "Revenue Share",
-    description: "Competitive, transparent commissions on every deal you close or refer.",
-  },
-  {
-    title: "Technical Training",
-    description: "Full certification program covering robot deployment, operations, and maintenance.",
-  },
-  {
-    title: "Co-Marketing",
-    description: "Co-branded campaigns, case studies, and event sponsorships to amplify your reach.",
-  },
-  {
-    title: "Dedicated Support",
-    description: "A named partner success manager and priority access to our engineering team.",
-  },
-  {
-    title: "Lead Sharing",
-    description: "Inbound leads in your geography are routed directly to you first.",
-  },
-  {
-    title: "Early Access",
-    description: "Be first to demo new products and shape our roadmap through partner feedback.",
-  },
+  { icon: Award,       title: "Revenue Share",       description: "Competitive, transparent commissions on every deal you close or refer." },
+  { icon: BookOpen,    title: "Technical Training",   description: "Full certification program covering robot deployment, operations, and maintenance." },
+  { icon: Megaphone,   title: "Co-Marketing",         description: "Co-branded campaigns, case studies, and event sponsorships to amplify your reach." },
+  { icon: Headphones,  title: "Dedicated Support",    description: "A named partner success manager and priority access to our engineering team." },
+  { icon: Share2,      title: "Lead Sharing",         description: "Inbound leads in your geography are routed directly to you first." },
+  { icon: Lightbulb,   title: "Early Access",         description: "Be first to demo new products and shape our roadmap through partner feedback." },
 ];
 
 const STEPS = [
-  {
-    step: "01",
-    title: "Apply",
-    description:
-      "Fill out the partner application below. Our team reviews every submission within 3 business days.",
-  },
-  {
-    step: "02",
-    title: "Get Onboarded",
-    description:
-      "Complete a short onboarding — product training, portal access, and your partner agreement — and you're live.",
-  },
-  {
-    step: "03",
-    title: "Start Earning",
-    description:
-      "Refer, deploy, or resell. Track everything in your partner dashboard and receive your payouts monthly.",
-  },
+  { number: "01", title: "Apply",          body: "Fill out the partner application below. Our team reviews every submission within 3 business days." },
+  { number: "02", title: "Get Onboarded",  body: "Complete a short onboarding — product training, portal access, and your partner agreement — and you're live." },
+  { number: "03", title: "Start Earning",  body: "Refer, deploy, or resell. Track everything in your partner dashboard and receive your payouts monthly." },
 ];
 
-// ─── Submit button ─────────────────────────────────────────────────────────────
+// ─── Submit button ────────────────────────────────────────────────────────────
 
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button
+    <button
       type="submit"
-      size="lg"
-      className="w-full h-12 text-sm font-semibold tracking-wide rounded-lg"
       disabled={pending}
+      className="w-full h-12 rounded-full text-sm font-black uppercase tracking-wide transition-all duration-300 hover:scale-[1.02] disabled:opacity-60 disabled:scale-100"
+      style={{ background: GREEN, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
     >
       {pending ? "Submitting…" : "Submit Application"}
-    </Button>
+    </button>
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// ─── Section 1 — Hero ────────────────────────────────────────────────────────
 
-export default function ChannelPartnerPage() {
+function HeroSection() {
+  return (
+    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-28 pb-0" style={{ background: BG2 }}>
+      {/* Breadcrumb */}
+      <FadeUp className="mb-12">
+        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: DIM }}>
+          <Link href="/" className="hover:underline" style={{ color: DIM }}>Home</Link>
+          <span>/</span>
+          <span style={{ color: TEXT }}>Channel Partner</span>
+        </div>
+      </FadeUp>
+
+      <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center pb-0">
+        {/* Left — text */}
+        <div>
+          <FadeUp className="mb-8">
+            <div className="inline-flex items-center gap-2.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: GREEN }} />
+                <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: GREEN }} />
+              </span>
+              <span className="text-[10px] font-bold tracking-[0.26em] uppercase" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                Channel Partner Program
+              </span>
+            </div>
+          </FadeUp>
+
+          <div className="mb-8">
+            <RevealText>
+              <h1 className="text-[clamp(3rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                Grow together
+              </h1>
+            </RevealText>
+            <RevealText delay={0.06}>
+              <h1 className="text-[clamp(3rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
+                with Flo.
+              </h1>
+            </RevealText>
+          </div>
+
+          <FadeUp delay={0.2}>
+            <div className="w-16 h-px mb-8" style={{ background: DIM }} />
+          </FadeUp>
+
+          <FadeUp delay={0.25} className="mb-10">
+            <p className="text-lg leading-[1.85] max-w-lg" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+              Join our partner ecosystem and bring autonomous robotics to your clients — while building a new, recurring revenue stream for your business.
+            </p>
+          </FadeUp>
+
+          <FadeUp delay={0.35} className="flex flex-wrap gap-4 mb-14">
+            <a
+              href="#apply"
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:scale-105"
+              style={{ background: GREEN, color: "#fff", fontFamily: "var(--font-dm-sans)" }}
+            >
+              Become a Partner <ArrowRight className="w-4 h-4" />
+            </a>
+            <a
+              href="#benefits"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold border transition-all duration-300 hover:bg-white"
+              style={{ borderColor: DIM, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+            >
+              Explore Benefits <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </FadeUp>
+
+          {/* Stats strip */}
+          <FadeUp delay={0.4}>
+            <div className="grid grid-cols-3 border-t border-b" style={{ borderColor: DIM }}>
+              {[
+                { value: "8%",    label: "Referral Fee" },
+                { value: "3",     label: "Partner Tracks" },
+                { value: "< 3",   label: "Days Onboarding" },
+              ].map((s, i) => (
+                <div key={s.label} className={`py-6 pr-4 ${i < 2 ? "border-r" : ""}`} style={{ borderColor: DIM }}>
+                  <div className="text-[clamp(1.4rem,2.5vw,2.4rem)] font-black leading-none mb-1 tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                    {s.value}
+                  </div>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.18em] mt-1" style={{ color: MUTED }}>
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeUp>
+        </div>
+
+        {/* Right — image */}
+        <FadeUp delay={0.15} className="flex flex-col gap-6">
+          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border" style={{ borderColor: DIM }}>
+            <Image
+              src="/about/showcase.jpg"
+              alt="Flo Mobility autonomous robot"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6">
+              <div className="text-3xl font-black text-white tracking-[-0.03em]" style={{ fontFamily: "var(--font-dm-sans)" }}>200+</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
+                Active Deployments
+              </div>
+            </div>
+          </div>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+// ─── Section 2 — Partner Types ────────────────────────────────────────────────
+
+function PartnerTypeCell({ type, index }: { type: typeof PARTNER_TYPES[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current || !glowRef.current) return;
+    const r = ref.current.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    glowRef.current.style.background = `radial-gradient(ellipse 80% 80% at ${x}% ${y}%, ${GREEN}28 0%, transparent 65%)`;
+    glowRef.current.style.opacity = "1";
+  };
+  const onLeave = () => { if (glowRef.current) glowRef.current.style.opacity = "0"; };
+
+  return (
+    <motion.div
+      ref={ref}
+      className="relative flex flex-col p-10 border-r border-b overflow-hidden cursor-default"
+      style={{ borderColor: DIM }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: 0.05 * index, ease: EASE }}
+    >
+      <div ref={glowRef} className="absolute inset-0 pointer-events-none" style={{ opacity: 0, transition: "opacity 0.3s ease" }} />
+      <span className="text-[10px] font-bold tracking-[0.24em] uppercase mb-2 block" style={{ color: GREEN }}>
+        {type.tag}
+      </span>
+      <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-6 mt-4" style={{ background: `${GREEN}18` }}>
+        <type.icon className="w-5 h-5" style={{ color: GREEN }} />
+      </div>
+      <h3 className="text-xl font-black mb-3 leading-snug tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+        {type.title}
+      </h3>
+      <p className="text-sm leading-[1.85] mb-8 flex-1" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+        {type.description}
+      </p>
+      <ul className="space-y-2.5">
+        {type.perks.map((perk) => (
+          <li key={perk} className="flex items-center gap-3 text-sm font-semibold" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: GREEN }} />
+            {perk}
+          </li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+}
+
+function PartnerTypesSection() {
+  return (
+    <section className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
+      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-16">
+        <SectionRule label="Partnership Models" />
+        <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-end">
+          <div>
+            <RevealText className="mb-1">
+              <h2 className="text-[clamp(2.8rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                Find your
+              </h2>
+            </RevealText>
+            <RevealText delay={0.06}>
+              <h2 className="text-[clamp(2.8rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
+                partnership track.
+              </h2>
+            </RevealText>
+          </div>
+          <FadeUp delay={0.2} className="pb-2">
+            <p className="text-base leading-relaxed" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+              Three flexible models designed for different business types — pick the one that fits how you work.
+            </p>
+          </FadeUp>
+        </div>
+      </div>
+      <div className="w-full border-t border-l" style={{ borderColor: DIM }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {PARTNER_TYPES.map((t, i) => <PartnerTypeCell key={t.title} type={t} index={i} />)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Section 3 — Benefits ────────────────────────────────────────────────────
+
+function BenefitsSection() {
+  return (
+    <section id="benefits" className="w-full border-t" style={{ background: BG2, borderColor: DIM }}>
+      <div className="w-full border-b" style={{ borderColor: DIM }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          {/* Left — image */}
+          <div className="relative min-h-[420px] lg:min-h-[640px] border-r" style={{ borderColor: DIM }}>
+            <Image
+              src="/about/showcase.jpg"
+              alt="Flo Mobility autonomous robot in action"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute bottom-10 left-10 right-10">
+              <div className="text-4xl font-black text-white mb-1" style={{ fontFamily: "var(--font-dm-sans)" }}>200+</div>
+              <p className="text-sm text-white/70 font-medium">
+                Projects completed across construction, manufacturing &amp; logistics
+              </p>
+            </div>
+          </div>
+
+          {/* Right — benefits list */}
+          <div className="py-20 px-10 lg:px-16 xl:px-20" style={{ background: BG }}>
+            <SectionRule label="What You Get" />
+            <RevealText className="mb-1">
+              <h2 className="text-[clamp(2.2rem,4vw,5rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                Built for
+              </h2>
+            </RevealText>
+            <RevealText delay={0.06} className="mb-12">
+              <h2 className="text-[clamp(2.2rem,4vw,5rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
+                mutual growth.
+              </h2>
+            </RevealText>
+
+            <div className="divide-y" style={{ borderColor: DIM }}>
+              {BENEFITS.map((benefit, i) => (
+                <FadeUp key={benefit.title} delay={0.05 * i}>
+                  <div className="py-6 flex gap-5 items-start">
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ background: `${GREEN}14` }}>
+                      <benefit.icon className="w-4 h-4" style={{ color: GREEN }} />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-black mb-1.5" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                        {benefit.title}
+                      </h3>
+                      <p className="text-sm leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                        {benefit.description}
+                      </p>
+                    </div>
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Section 4 — How It Works ────────────────────────────────────────────────
+
+function StepRow({ step, i }: { step: typeof STEPS[0]; i: number }) {
+  const [hovered, setHovered] = React.useState(false);
+  return (
+    <FadeUp delay={0.1 + i * 0.1}>
+      <div
+        className="flex gap-8 py-12 border-b group cursor-default"
+        style={{ borderColor: DIM }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div
+          className="text-[5rem] font-black leading-none w-24 shrink-0 pt-1 tabular-nums transition-colors duration-500"
+          style={{ color: hovered ? GREEN : "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+        >
+          {step.number}
+        </div>
+        <div className="flex-1 pt-3">
+          <h3 className="text-2xl font-black mb-4" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+            {step.title}
+          </h3>
+          <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            {step.body}
+          </p>
+        </div>
+        <div className="flex items-start pt-5 shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1">
+          <ArrowUpRight className="w-5 h-5" style={{ color: GREEN }} />
+        </div>
+      </div>
+    </FadeUp>
+  );
+}
+
+function ProcessSection() {
+  return (
+    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 py-40 border-t" style={{ background: BG, borderColor: DIM }}>
+      <SectionRule label="How It Works" />
+      <div className="grid lg:grid-cols-[520px_1fr] gap-24 items-start">
+        <div className="lg:sticky lg:top-32">
+          <RevealText className="mb-1">
+            <h2 className="text-[clamp(2.8rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+              Earning in
+            </h2>
+          </RevealText>
+          <RevealText delay={0.05} className="mb-1">
+            <h2 className="text-[clamp(2.8rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
+              two weeks
+            </h2>
+          </RevealText>
+          <RevealText delay={0.1}>
+            <h2 className="text-[clamp(2.8rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+              flat.
+            </h2>
+          </RevealText>
+          <FadeUp delay={0.3} className="mt-8">
+            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+              From application to first payout in as little as two weeks. No complex procurement, no long onboarding cycles.
+            </p>
+          </FadeUp>
+        </div>
+        <div>
+          {STEPS.map((step, i) => <StepRow key={step.number} step={step} i={i} />)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Section 5 — Application Form ────────────────────────────────────────────
+
+function ApplicationForm() {
   const [state, formAction] = useActionState(submitFormAction, {
     success: false,
     message: "",
   });
 
   return (
-    <main className="flex flex-col">
+    <section id="apply" className="w-full border-t" style={{ background: BG2, borderColor: DIM }}>
+      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
 
-      {/* ── 1. HERO ── */}
-      <section className="relative bg-[#1a3a1f] py-28 lg:py-40 overflow-hidden">
-        <MagicDotPattern
-          glow
-          width={32}
-          height={32}
-          cr={1}
-          className="text-[#7ccd54]/[0.12] [mask-image:radial-gradient(ellipse_100%_100%_at_50%_50%,#000_40%,transparent_100%)]"
-        />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-[#7ccd54]/10 rounded-full blur-[120px] pointer-events-none" />
+          {/* Left info — 2/5 */}
+          <div className="lg:col-span-2 pr-0 lg:pr-16 border-b lg:border-b-0 lg:border-r pb-16 lg:pb-0" style={{ borderColor: DIM }}>
+            <SectionRule label="Apply Now" />
+            <RevealText className="mb-1">
+              <h2 className="text-[clamp(2.5rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                Ready to
+              </h2>
+            </RevealText>
+            <RevealText delay={0.06} className="mb-10">
+              <h2 className="text-[clamp(2.5rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
+                partner up?
+              </h2>
+            </RevealText>
 
-        <div className="container relative z-10 mx-auto px-4 text-center max-w-4xl">
-          <div className="inline-block rounded-full bg-white/5 px-4 py-1.5 text-xs font-semibold tracking-wider text-[#7ccd54] mb-8 border border-[#7ccd54]/20 uppercase">
-            Channel Partner Program
-          </div>
-          <h1
-            className="text-4xl font-medium tracking-tight text-white sm:text-5xl lg:text-6xl text-balance leading-[1.15] mb-6"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            Grow Together with{" "}
-            <span className="text-[#7ccd54]">Flo Mobility</span>
-          </h1>
-          <p className="text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto mb-10">
-            Join our partner ecosystem and bring autonomous robotics to your clients —
-            while building a new, recurring revenue stream for your business.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="#apply"
-              className="px-7 py-3.5 rounded-full bg-[#7ccd54] text-gray-900 font-semibold hover:bg-[#5ba83d] transition-colors duration-200"
-            >
-              Become a Partner
-            </a>
-            <a
-              href="#benefits"
-              className="px-7 py-3.5 rounded-full border border-white/20 text-white font-semibold hover:bg-white/8 transition-colors duration-200"
-            >
-              Explore Benefits
-            </a>
-          </div>
-        </div>
-      </section>
+            <FadeUp className="mb-12">
+              <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                Fill out the form and our partnerships team will be in touch within 3 business days.
+              </p>
+            </FadeUp>
 
-      {/* ── 2. PARTNER TYPES ── */}
-      <section className="relative bg-transparent py-24 lg:py-32 overflow-hidden">
-        <MagicDotPattern
-          width={28}
-          height={28}
-          cr={1.3}
-          className="text-[#7ccd54]/[0.55] [mask-image:radial-gradient(ellipse_100%_100%_at_50%_50%,#000_60%,transparent_100%)]"
-        />
-        <div className="container relative z-10 mx-auto px-4">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
-              Who It's For
-            </div>
-            <h2
-              className="text-3xl font-medium tracking-tight text-gray-900 sm:text-4xl lg:text-5xl mb-4"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
-            >
-              Find Your Partnership Model
-            </h2>
-            <p className="text-lg text-gray-600">
-              Three flexible tracks designed for different business types — pick the one that fits how you work.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {PARTNER_TYPES.map((type, i) => (
-              <div
-                key={i}
-                className="flex flex-col h-full p-8 rounded-2xl border border-gray-100 bg-white shadow-sm hover:shadow-md hover:border-[#7ccd54]/30 transition-shadow duration-200"
-              >
-                <span className="text-xs font-semibold tracking-wider uppercase text-[#7ccd54] block mb-3">
-                  {type.tag}
-                </span>
-                <h3
-                  className="text-xl font-medium text-gray-900 mb-4"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  {type.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed text-sm mb-6 flex-1">
-                  {type.description}
-                </p>
-                <ul className="space-y-2.5">
-                  {type.perks.map((perk, j) => (
-                    <li key={j} className="flex items-center gap-2.5 text-sm text-gray-700">
-                      <div className="h-1.5 w-1.5 rounded-full bg-[#7ccd54] shrink-0" />
-                      {perk}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. BENEFITS ── */}
-      <section id="benefits" className="bg-white overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-
-            {/* Left — image */}
-            <div className="relative min-h-[420px] lg:min-h-[700px]">
-              <Image
-                src="/about/showcase.jpg"
-                alt="Flo Mobility autonomous robot in action"
-                fill
-                className="object-cover"
-                priority
-              />
-              {/* Dark overlay with floating stat */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1f0f]/80 via-[#0f1f0f]/20 to-transparent" />
-              <div className="absolute bottom-10 left-10 right-10">
-                <p
-                  className="text-4xl font-semibold text-white mb-1"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  200+
-                </p>
-                <p className="text-sm text-gray-300 font-medium">
-                  Projects completed across construction, manufacturing &amp; logistics
-                </p>
-              </div>
-            </div>
-
-            {/* Right — benefits list */}
-            <div className="py-20 lg:py-24 lg:pl-16 xl:pl-20">
-              <div className="mb-12">
-                <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
-                  Benefits
-                </div>
-                <h2
-                  className="text-3xl font-medium tracking-tight text-gray-900 sm:text-4xl mb-3"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  Built for Mutual Growth
-                </h2>
-                <p className="text-gray-600">
-                  Everything you need to succeed — from day one.
-                </p>
-              </div>
-
-              <div className="divide-y divide-gray-100">
-                {BENEFITS.map((benefit, i) => (
-                  <div key={i} className="py-6 flex gap-5 items-start">
-                    <span
-                      className="text-xs font-semibold text-[#7ccd54]/60 w-6 shrink-0 mt-0.5"
-                      style={{ fontFamily: "var(--font-space-grotesk)" }}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <h3
-                        className="text-sm font-semibold text-gray-900 mb-1"
-                        style={{ fontFamily: "var(--font-space-grotesk)" }}
-                      >
-                        {benefit.title}
-                      </h3>
-                      <p className="text-sm text-gray-500 leading-relaxed">
-                        {benefit.description}
-                      </p>
-                    </div>
-                  </div>
+            <FadeUp>
+              <p className="text-[10px] font-bold tracking-[0.26em] uppercase mb-6" style={{ color: DIM }}>Prefer to talk first?</p>
+              <div className="space-y-0 divide-y" style={{ borderColor: DIM }}>
+                {[
+                  { label: "Call or WhatsApp", value: "+91 8446614346", href: "https://wa.me/918446614346" },
+                  { label: "Partner Enquiries", value: "contact@flomobility.com", href: "mailto:contact@flomobility.com" },
+                  { label: "Headquarters", value: "HSR Layout, Bengaluru, India", href: "https://maps.google.com/?q=HSR+Layout,+Bengaluru,+India" },
+                ].map((item) => (
+                  <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="block py-5 group">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1.5" style={{ color: DIM }}>{item.label}</p>
+                    <p className="text-sm font-semibold group-hover:underline underline-offset-2 transition-colors duration-200" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                      {item.value}
+                    </p>
+                  </a>
                 ))}
               </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. HOW IT WORKS ── */}
-      <section className="relative bg-[#1a3a1f] py-24 lg:py-32 overflow-hidden">
-        <MagicDotPattern
-          width={36}
-          height={36}
-          cr={1}
-          className="text-[#7ccd54]/[0.08] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_30%,transparent_100%)]"
-        />
-        <div className="container relative z-10 mx-auto px-4">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <div className="inline-block rounded-full bg-white/5 px-4 py-1.5 text-xs font-semibold tracking-wider text-[#7ccd54] mb-6 border border-[#7ccd54]/20 uppercase">
-              Process
-            </div>
-            <h2
-              className="text-3xl font-medium tracking-tight text-white sm:text-4xl lg:text-5xl mb-4"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
-            >
-              Simple to Get Started
-            </h2>
-            <p className="text-lg text-gray-400">
-              From application to first payout in as little as two weeks.
-            </p>
+            </FadeUp>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-5xl mx-auto">
-            {STEPS.map((s, i) => (
-              <div key={i} className="flex flex-col">
-                <span
-                  className="text-5xl font-semibold text-[#7ccd54]/30 leading-none mb-5 block"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+          {/* Right form — 3/5 */}
+          <div className="lg:col-span-3 pt-16 lg:pt-0 lg:pl-16">
+            {state.success ? (
+              <FadeUp>
+                <div
+                  className="rounded-2xl p-12 text-center flex flex-col items-center justify-center min-h-[400px]"
+                  style={{ background: "rgba(4 104 37 / 0.06)", border: `1px solid ${DIM}` }}
                 >
-                  {s.step}
-                </span>
-                <h3
-                  className="text-xl font-medium text-white mb-3"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  {s.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed text-sm">{s.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. APPLY FORM ── */}
-      <section id="apply" className="bg-white py-24 lg:py-32">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-stretch">
-
-            {/* Left — heading + contact info (2/5 width) — cream bg */}
-            <div className="lg:col-span-2 space-y-10">
-              {/* Heading block */}
-              <div>
-                <div className="inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-6 border border-gray-200 uppercase shadow-sm">
-                  Apply Now
-                </div>
-                <h2
-                  className="text-3xl font-medium tracking-tight text-gray-900 sm:text-4xl mb-4 text-balance"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  Ready to Partner with Us?
-                </h2>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Fill out the form and our partnerships team will be in touch within 3 business days.
-                </p>
-              </div>
-
-              {/* Contact info */}
-              <div>
-                <p
-                  className="text-base font-medium text-gray-900 mb-1"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  Prefer to talk first?
-                </p>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                  Reach our partnerships team directly — we're happy to walk you through the program before you apply.
-                </p>
-
-                <div className="divide-y divide-gray-100 border-y border-gray-100">
-                  {[
-                    { label: "Call or WhatsApp", value: "+91 8446614346", href: "https://wa.me/918446614346" },
-                    { label: "Partner Enquiries", value: "contact@flomobility.com", href: "mailto:contact@flomobility.com" },
-                    { label: "Headquarters", value: "HSR Layout, Bengaluru, Karnataka, India", href: "https://maps.google.com/?q=HSR+Layout,+Bengaluru,+India" },
-                  ].map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block py-5 group"
-                    >
-                      <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">
-                        {item.label}
-                      </p>
-                      <p className="text-sm font-medium text-gray-900 group-hover:text-[#5ba83d] transition-colors duration-200">
-                        {item.value}
-                      </p>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right — form (3/5 width) — dark green bg */}
-            <div className="lg:col-span-3 flex flex-col">
-              {state.success ? (
-                <div className="bg-[#1a3a1f] border border-[#7ccd54]/20 rounded-2xl p-12 text-center flex-1 flex flex-col items-center justify-center">
-                  <div className="w-10 h-0.5 bg-[#7ccd54] mx-auto mb-6" />
-                  <h3
-                    className="text-2xl font-medium text-white mb-3"
-                    style={{ fontFamily: "var(--font-space-grotesk)" }}
-                  >
+                  <div className="w-10 h-0.5 mb-6" style={{ background: GREEN }} />
+                  <h3 className="text-2xl font-black mb-3" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
                     Application Received
                   </h3>
-                  <p className="text-gray-400 text-sm max-w-sm mx-auto mb-8">
-                    {state.message ||
-                      "Thank you. Our partnerships team will review your application and be in touch within 3 business days."}
+                  <p className="text-sm leading-[1.85] max-w-sm mx-auto mb-8" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                    {state.message || "Thank you. Our partnerships team will review your application and be in touch within 3 business days."}
                   </p>
                   <button
                     onClick={() => window.location.reload()}
-                    className="text-sm font-medium text-[#7ccd54] underline underline-offset-4 hover:text-[#5ba83d] transition-colors"
+                    className="text-sm font-bold underline underline-offset-4 transition-colors"
+                    style={{ color: GREEN, fontFamily: "var(--font-dm-sans)" }}
                   >
                     Submit another application
                   </button>
                 </div>
-              ) : (
-                <div className="bg-[#1a3a1f] rounded-2xl p-8 flex-1">
-                  <form action={formAction} className="space-y-5">
-                    <input type="hidden" name="formType" value="partner" />
+              </FadeUp>
+            ) : (
+              <FadeUp>
+                <form action={formAction} className="space-y-6">
+                  <input type="hidden" name="formType" value="partner" />
 
-                    {/* Name */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div className="space-y-1.5">
-                        <Label htmlFor="firstName" className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                          First Name <span className="text-[#7ccd54]">*</span>
-                        </Label>
-                        <Input
-                          id="firstName"
-                          name="firstName"
-                          placeholder="John"
-                          required
-                          className="h-11 rounded-lg border-white/10 bg-white/5 text-white placeholder:text-gray-500 focus:border-[#7ccd54]/60 focus:ring-0 text-sm"
+                  {/* Name */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {[
+                      { id: "firstName", name: "firstName", label: "First Name", placeholder: "John", required: true, type: "text" },
+                      { id: "lastName",  name: "lastName",  label: "Last Name",  placeholder: "Doe",  required: true, type: "text" },
+                    ].map((field) => (
+                      <div key={field.id} className="space-y-2">
+                        <label htmlFor={field.id} className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                          {field.label} {field.required && <span style={{ color: GREEN }}>*</span>}
+                        </label>
+                        <input
+                          id={field.id}
+                          name={field.name}
+                          type={field.type}
+                          placeholder={field.placeholder}
+                          required={field.required}
+                          className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors"
+                          style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                          onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
+                          onBlur={(e) => { e.currentTarget.style.borderColor = DIM; }}
                         />
                       </div>
-                      <div className="space-y-1.5">
-                        <Label htmlFor="lastName" className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                          Last Name <span className="text-[#7ccd54]">*</span>
-                        </Label>
-                        <Input
-                          id="lastName"
-                          name="lastName"
-                          placeholder="Doe"
-                          required
-                          className="h-11 rounded-lg border-white/10 bg-white/5 text-white placeholder:text-gray-500 focus:border-[#7ccd54]/60 focus:ring-0 text-sm"
-                        />
-                      </div>
-                    </div>
+                    ))}
+                  </div>
 
-                    {/* Company */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="company" className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                        Company Name <span className="text-[#7ccd54]">*</span>
-                      </Label>
-                      <Input
-                        id="company"
-                        name="company"
-                        placeholder="Your company"
-                        required
-                        className="h-11 rounded-lg border-white/10 bg-white/5 text-white placeholder:text-gray-500 focus:border-[#7ccd54]/60 focus:ring-0 text-sm"
+                  {/* Company */}
+                  <div className="space-y-2">
+                    <label htmlFor="company" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                      Company Name <span style={{ color: GREEN }}>*</span>
+                    </label>
+                    <input
+                      id="company" name="company" placeholder="Your company" required
+                      className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors"
+                      style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = DIM; }}
+                    />
+                  </div>
+
+                  {/* Email + Phone */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-2">
+                      <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                        Work Email <span style={{ color: GREEN }}>*</span>
+                      </label>
+                      <input
+                        id="email" name="email" type="email" placeholder="john@company.com" required
+                        className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors"
+                        style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                        onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
+                        onBlur={(e) => { e.currentTarget.style.borderColor = DIM; }}
                       />
                     </div>
-
-                    {/* Email + Phone */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div className="space-y-1.5">
-                        <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                          Work Email <span className="text-[#7ccd54]">*</span>
-                        </Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          placeholder="john@company.com"
-                          required
-                          className="h-11 rounded-lg border-white/10 bg-white/5 text-white placeholder:text-gray-500 focus:border-[#7ccd54]/60 focus:ring-0 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1.5">
-                        <Label htmlFor="phone" className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                          Phone Number
-                        </Label>
-                        <Input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          placeholder="+91 00000 00000"
-                          className="h-11 rounded-lg border-white/10 bg-white/5 text-white placeholder:text-gray-500 focus:border-[#7ccd54]/60 focus:ring-0 text-sm"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Partnership type */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="partnerType" className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                        Partnership Type <span className="text-[#7ccd54]">*</span>
-                      </Label>
-                      <select
-                        id="partnerType"
-                        name="partnerType"
-                        required
-                        className="w-full h-11 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:border-[#7ccd54]/60 transition-colors"
-                      >
-                        <option value="" className="bg-[#1a3a1f]">Select a partnership type…</option>
-                        <option value="Referral Partner" className="bg-[#1a3a1f]">Referral Partner</option>
-                        <option value="System Integrator" className="bg-[#1a3a1f]">System Integrator</option>
-                        <option value="Reseller Partner" className="bg-[#1a3a1f]">Reseller Partner</option>
-                        <option value="Other" className="bg-[#1a3a1f]">Other / Not sure yet</option>
-                      </select>
-                    </div>
-
-                    {/* Message */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="message" className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                        Tell Us About Your Business <span className="text-[#7ccd54]">*</span>
-                      </Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        placeholder="Briefly describe your business, your clients, and why you'd like to partner with Flo Mobility…"
-                        required
-                        className="min-h-[130px] rounded-lg border-white/10 bg-white/5 text-white placeholder:text-gray-500 focus:border-[#7ccd54]/60 focus:ring-0 resize-none text-sm p-3"
+                    <div className="space-y-2">
+                      <label htmlFor="phone" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                        Phone Number
+                      </label>
+                      <input
+                        id="phone" name="phone" type="tel" placeholder="+91 00000 00000"
+                        className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors"
+                        style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                        onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
+                        onBlur={(e) => { e.currentTarget.style.borderColor = DIM; }}
                       />
                     </div>
+                  </div>
 
-                    {state.message && !state.success && (
-                      <p className="text-sm text-red-400 border border-red-400/20 bg-red-400/5 rounded-lg px-4 py-3">
-                        {state.message}
-                      </p>
-                    )}
+                  {/* Partnership type */}
+                  <div className="space-y-2">
+                    <label htmlFor="partnerType" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                      Partnership Type <span style={{ color: GREEN }}>*</span>
+                    </label>
+                    <select
+                      id="partnerType" name="partnerType" required
+                      className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors appearance-none"
+                      style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = DIM; }}
+                    >
+                      <option value="">Select a partnership type…</option>
+                      <option value="Referral Partner">Referral Partner</option>
+                      <option value="System Integrator">System Integrator</option>
+                      <option value="Reseller Partner">Reseller Partner</option>
+                      <option value="Other">Other / Not sure yet</option>
+                    </select>
+                  </div>
 
-                    <SubmitButton />
+                  {/* Message */}
+                  <div className="space-y-2">
+                    <label htmlFor="message" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                      Tell Us About Your Business <span style={{ color: GREEN }}>*</span>
+                    </label>
+                    <textarea
+                      id="message" name="message" required
+                      placeholder="Briefly describe your business, your clients, and why you'd like to partner with Flo Mobility…"
+                      className="w-full min-h-[130px] rounded-xl border px-4 py-3 text-sm outline-none transition-colors resize-none"
+                      style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = DIM; }}
+                    />
+                  </div>
 
-                    <p className="text-xs text-center text-gray-500">
-                      By submitting, you agree to our{" "}
-                      <Link href="/privacy" className="text-[#7ccd54] hover:underline">
-                        privacy policy
-                      </Link>
-                      .
+                  {state.message && !state.success && (
+                    <p className="text-sm rounded-xl px-4 py-3" style={{ color: "#ef4444", background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.2)" }}>
+                      {state.message}
                     </p>
-                  </form>
-                </div>
-              )}
-            </div>
+                  )}
+
+                  <SubmitButton />
+
+                  <p className="text-xs text-center" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                    By submitting, you agree to our{" "}
+                    <Link href="/privacy" className="underline underline-offset-2" style={{ color: TEXT }}>
+                      privacy policy
+                    </Link>
+                    .
+                  </p>
+                </form>
+              </FadeUp>
+            )}
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-    </main>
+// ─── Section 6 — CTA ─────────────────────────────────────────────────────────
+
+function CTASection() {
+  return (
+    <section className="w-full relative overflow-hidden py-48 px-8 md:px-16 lg:px-24 xl:px-32 border-t" style={{ background: BG, borderColor: DIM }}>
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `linear-gradient(${GREEN}18 1px, transparent 1px), linear-gradient(90deg, ${GREEN}18 1px, transparent 1px)`,
+            backgroundSize: "80px 80px",
+          }}
+        />
+        <div
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-[140px]"
+          style={{ background: `${GREEN}18` }}
+        />
+      </div>
+
+      <div className="relative text-center">
+        <FadeUp>
+          <p className="text-[11px] font-black tracking-[0.32em] uppercase mb-12" style={{ color: MUTED }}>
+            Start earning today
+          </p>
+        </FadeUp>
+        <RevealText className="mb-1">
+          <h2 className="text-[clamp(3.5rem,10vw,13rem)] font-black leading-[0.83] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+            Your network,
+          </h2>
+        </RevealText>
+        <RevealText delay={0.05} className="mb-1">
+          <h2 className="text-[clamp(3.5rem,10vw,13rem)] font-black leading-[0.83] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
+            our technology,
+          </h2>
+        </RevealText>
+        <RevealText delay={0.1} className="mb-20">
+          <h2 className="text-[clamp(3.5rem,10vw,13rem)] font-black leading-[0.83] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+            shared revenue.
+          </h2>
+        </RevealText>
+
+        <FadeUp delay={0.3}>
+          <p className="text-lg leading-relaxed mb-12 max-w-xl mx-auto" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            Join the Flo partner network and build a new recurring revenue stream for your business — with full support from day one.
+          </p>
+        </FadeUp>
+
+        <FadeUp delay={0.4} className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#apply"
+            className="inline-flex items-center justify-center gap-2.5 px-12 py-5 rounded-full text-sm font-black transition-all duration-300 hover:scale-105 shadow-lg"
+            style={{ background: GREEN, color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
+          >
+            Apply Now <ArrowRight className="w-4 h-4" />
+          </a>
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full text-sm font-bold border transition-all duration-300 hover:bg-[#f5f5f5]"
+            style={{ borderColor: DIM, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+          >
+            Talk to Our Team
+          </Link>
+        </FadeUp>
+
+        <FadeUp delay={0.5} className="mt-16 flex flex-wrap items-center justify-center gap-8">
+          {["Up to 8% Commission", "3 Partnership Tracks", "< 3 Days Onboarding", "Monthly Payouts"].map((t) => (
+            <div key={t} className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>
+              <span className="w-1 h-1 rounded-full" style={{ background: GREEN }} />
+              {t}
+            </div>
+          ))}
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+export default function ChannelPartnerPage() {
+  return (
+    <div className="w-full" style={{ color: TEXT, background: BG2 }}>
+      <HeroSection />
+      <PartnerTypesSection />
+      <BenefitsSection />
+      <ProcessSection />
+      <ApplicationForm />
+      <CTASection />
+    </div>
   );
 }
