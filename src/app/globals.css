@@ -129,7 +129,7 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth removed — Lenis handles smooth scrolling */
   }
 
   body {
@@ -236,6 +236,46 @@
   margin-top: 0.75rem;
   color: var(--muted-foreground);
   font-size: 0.875rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Performance — will-change hints for animated elements
+   Framer Motion sets will-change automatically on motion values; these are for
+   CSS-animated elements only (tickers, float).
+   ───────────────────────────────────────────────────────────────────────────── */
+.animate-proof-ticker,
+.animate-testi-1,
+.animate-testi-2,
+.animate-marquee,
+.animate-marquee-reverse,
+.animate-scroll {
+  will-change: transform;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Accessibility — respect prefers-reduced-motion
+   Disables all CSS animations/transitions for users who prefer no motion.
+   Framer Motion reads this via its own reducer — see LazyMotion docs.
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep elements visible — remove initial hidden states */
+  .reveal-word span {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+  }
+  .fade-up {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
 }
 
 /* Floating Blurred Objects Animation */

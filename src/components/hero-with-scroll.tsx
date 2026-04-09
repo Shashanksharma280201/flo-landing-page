@@ -253,7 +253,7 @@ function ScrollContent({
                   className="font-black leading-[0.86] tracking-[-0.04em]"
                   style={{ fontSize: "clamp(3rem, 6.5vw, 8rem)", color: "#191c1a", fontFamily: "var(--font-dm-sans)" }}
                 >
-                  Building
+                  Robots for
                 </motion.h1>
               </div>
               <div className="overflow-hidden">
@@ -264,7 +264,7 @@ function ScrollContent({
                   className="font-black leading-[0.86] tracking-[-0.04em]"
                   style={{ fontSize: "clamp(3rem, 6.5vw, 8rem)", color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
                 >
-                  the Future
+                  Construction
                 </motion.h1>
               </div>
               <div className="overflow-hidden">
@@ -281,7 +281,7 @@ function ScrollContent({
                     fontFamily: "var(--font-dm-sans)",
                   }}
                 >
-                  with Machines
+                  Sites.
                 </motion.h1>
               </div>
             </div>
@@ -303,7 +303,7 @@ function ScrollContent({
               className="text-[14px] leading-[1.85] mb-7"
               style={{ color: "rgba(25,28,26,0.50)", fontFamily: "var(--font-dm-sans)", maxWidth: "300px" }}
             >
-              Autonomous robots for India's most demanding sites — delivering 24/7 uptime, 500kg payload, and measurable ROI from day one.
+              Enabling contractors to build smarter, faster and safer — with autonomous robots deployed across India's most demanding construction sites.
             </motion.p>
 
             {/* CTA buttons */}

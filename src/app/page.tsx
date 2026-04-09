@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { HeroWithScroll } from "@/components/hero-with-scroll";
 import { StatsSection } from "@/components/sections/stats-section";
 import { ArrowRight, CheckCircle2, ArrowUpRight } from "lucide-react";
@@ -99,6 +99,74 @@ function SectionRule({ label }: { label: string }) {
   );
 }
 
+// ─── MagneticButton — pulls toward cursor within proximity radius ─────────────
+function MagneticButton({
+  children,
+  className = "",
+  style = {},
+  href,
+  onClick,
+  strength = 0.35,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  href?: string;
+  onClick?: () => void;
+  strength?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 300, damping: 25, mass: 0.5 });
+  const springY = useSpring(y, { stiffness: 300, damping: 25, mass: 0.5 });
+
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
+    x.set((e.clientX - cx) * strength);
+    y.set((e.clientY - cy) * strength);
+  }, [x, y, strength]);
+
+  const onLeave = useCallback(() => {
+    x.set(0);
+    y.set(0);
+  }, [x, y]);
+
+  const content = (
+    <motion.div
+      ref={ref}
+      style={{ x: springX, y: springY, display: "inline-flex" }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={className}
+    >
+      <div style={style} className="w-full h-full" onClick={onClick}>
+        {children}
+      </div>
+    </motion.div>
+  );
+
+  if (href) {
+    return (
+      <motion.div
+        ref={ref}
+        style={{ x: springX, y: springY, display: "inline-flex" }}
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+      >
+        <Link href={href} className={className} style={style}>
+          {children}
+        </Link>
+      </motion.div>
+    );
+  }
+
+  return content;
+}
+
 // ─── Section 1 — Proof ticker ─────────────────────────────────────────────────
 
 const METRICS = [
@@ -186,13 +254,21 @@ function MissionSection() {
             — hauling materials, maintaining grounds, and running 24/7 without
             breaks. Robot-as-a-Service for India's most demanding construction sites.
           </p>
-          <Link
+          <MagneticButton
             href="/contact"
-            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:gap-4"
+            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wide group"
             style={{ color: GREEN_D }}
           >
-            See how it works <ArrowUpRight className="w-4 h-4" />
-          </Link>
+            See how it works
+            <motion.span
+              className="inline-flex"
+              animate={{ x: 0, y: 0 }}
+              whileHover={{ x: 2, y: -2 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ArrowUpRight className="w-4 h-4" />
+            </motion.span>
+          </MagneticButton>
         </FadeUp>
       </div>
 
@@ -233,16 +309,16 @@ const PRODUCTS = [
     number: "01",
     tag: "Material Movement",
     title: "500–700 kg. Zero driver. Full speed.",
-    body: "With advanced sensors and autonomous navigation, this adaptable robot streamlines last-mile logistics on construction sites with speed and reliability.",
+    body: "With advanced sensors and autonomous navigation, this efficient and adaptable robot streamlines logistics operations with speed and reliability. Experience optimized efficiency, reduced manual labor, and increased productivity with the Material Movement Bot.",
     stats: [
       { value: "500–700 kg", label: "Payload" },
       { value: "24/7", label: "Operation" },
       { value: "<1 day", label: "Commissioning" },
     ],
     points: [
-      "Real-time route tracking and fleet visibility",
-      "GPS-independent indoor + outdoor navigation",
-      "Compatible with existing site workflows",
+      "Driverless Operation — eliminates human error and optimizes performance",
+      "Electric Power Train — efficient and sustainable with instant torque",
+      "Swappable batteries — minimize downtime by seamlessly swapping batteries",
     ],
     image: "/mmr-images/mmr-images-1.jpg",
     href: "/offerings/material-movement",
@@ -253,7 +329,7 @@ const PRODUCTS = [
     number: "02",
     tag: "Lawn Maintenance",
     title: "Precision grounds. Zero labour cost.",
-    body: "Our lawn mowing robot delivers consistent, safe, and cost-effective grounds maintenance. Runs autonomously across any terrain — day or night.",
+    body: "Our lawn mowing robot will take care of your lawn, so you can relax and enjoy your free time. Efficient and safe — equipped with sensors that prevent collisions and getting stuck. The cost is less than hiring a traditional lawn service.",
     stats: [
       { value: "GPS", label: "Boundary Mapping" },
       { value: "360°", label: "Sensor Coverage" },
@@ -273,7 +349,7 @@ const PRODUCTS = [
     number: "03",
     tag: "Wall Finishing",
     title: "Uniform quality. Every surface. Every time.",
-    body: "Our wall finishing robot automates sanding and putty application with precision movement. Consistent quality at a fraction of traditional labour cost.",
+    body: "Our wall finishing robot automates sanding and putty application on walls. With precision movement, it brings uniformity and consistency in wall finishing, saves material wastage, reduces cost, and delivers a better quality finish.",
     stats: [
       { value: "100%", label: "Uniform Finish" },
       { value: "40%", label: "Cost Reduction" },
@@ -293,10 +369,31 @@ const PRODUCTS = [
 
 function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
   const ref = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-6% 0px" });
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
   const isFlip = product.flip;
+
+  // 3D tilt on content panel
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const rotateX = useSpring(tiltX, { stiffness: 200, damping: 28 });
+  const rotateY = useSpring(tiltY, { stiffness: 200, damping: 28 });
+
+  const onTiltMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const r = cardRef.current.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / r.width - 0.5;   // -0.5 to 0.5
+    const ny = (e.clientY - r.top)  / r.height - 0.5;
+    tiltX.set(-ny * 6);   // max ±6deg
+    tiltY.set(nx * 6);
+  }, [tiltX, tiltY]);
+
+  const onTiltLeave = useCallback(() => {
+    tiltX.set(0);
+    tiltY.set(0);
+  }, [tiltX, tiltY]);
 
   return (
     <div
@@ -304,24 +401,51 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
       className="grid lg:grid-cols-2 min-h-[680px] lg:min-h-[800px] w-full overflow-hidden border-b"
       style={{ borderColor: DIM }}
     >
-      {/* Image — parallax */}
-      <div className={`relative order-1 ${isFlip ? "lg:order-2" : "lg:order-1"} min-h-[360px] overflow-hidden`}>
+      {/* Image — parallax + magazine clip-path reveal */}
+      <motion.div
+        className={`relative order-1 ${isFlip ? "lg:order-2" : "lg:order-1"} min-h-[360px] overflow-hidden`}
+        initial={{ clipPath: isFlip ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)" }}
+        animate={inView ? { clipPath: "inset(0 0% 0 0%)" } : {}}
+        transition={{ duration: 1.2, delay: 0.05, ease: EASE }}
+      >
         <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
           <Image src={product.image} alt={product.tag} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
         </motion.div>
         {/* Subtle gradient overlay */}
         <div className={`absolute inset-0 ${isFlip ? "bg-gradient-to-l" : "bg-gradient-to-r"} from-black/30 via-black/10 to-transparent z-10`} />
-      </div>
+        {/* Product number — editorial overlay */}
+        <div
+          className="absolute bottom-8 left-8 z-20 text-[7rem] font-black leading-none select-none tabular-nums"
+          style={{ color: "rgba(255,255,255,0.12)", fontFamily: "var(--font-dm-sans)" }}
+          aria-hidden="true"
+        >
+          {product.number}
+        </div>
+      </motion.div>
 
-      {/* Content */}
+      {/* Content — 3D tilt */}
       <motion.div
+        ref={cardRef}
         className={`relative flex items-center order-2 ${isFlip ? "lg:order-1" : "lg:order-2"}`}
-        style={{ background: BG }}
+        style={{ background: BG, rotateX, rotateY, transformPerspective: 1200 }}
         initial={{ opacity: 0, x: isFlip ? -48 : 48 }}
         animate={inView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
+        onMouseMove={onTiltMove}
+        onMouseLeave={onTiltLeave}
       >
         <div className="px-10 sm:px-14 lg:px-16 xl:px-20 py-16 lg:py-24 w-full">
+          {/* Tag */}
+          <motion.div
+            className="flex items-center gap-2.5 mb-8"
+            initial={{ opacity: 0, x: -12 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
+          >
+            <div className="w-1.5 h-1.5 rounded-full" style={{ background: GREEN }} />
+            <span className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: MUTED }}>{product.tag}</span>
+          </motion.div>
+
           {/* Stats */}
           <motion.div
             className="flex mb-12 rounded-2xl overflow-hidden border"
@@ -390,14 +514,14 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.45, ease: EASE }}
           >
-            <Link
+            <MagneticButton
               href={product.href}
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wide transition-all duration-400 hover:scale-105"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wide"
               style={{ background: GREEN, color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
             >
               {product.cta}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
+            </MagneticButton>
           </motion.div>
         </div>
       </motion.div>
@@ -412,27 +536,21 @@ function ProductsSection() {
         <SectionRule label="Solutions" />
         <div className="grid lg:grid-cols-[1fr_380px] gap-16 items-end">
           <div>
-            <RevealText className="mb-1">
+            <RevealText>
               <h2
                 className="text-[clamp(2.8rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                style={{ fontFamily: "var(--font-dm-sans)" }}
               >
-                Robot-as-a-Service
-              </h2>
-            </RevealText>
-            <RevealText delay={0.06}>
-              <h2
-                className="text-[clamp(2.8rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
-              >
-                three solutions.
+                <span style={{ color: "rgba(4 104 37 / 0.86)" }}>Robot</span>
+                <span style={{ color: TEXT }}>-as-a-Service</span>
               </h2>
             </RevealText>
           </div>
           <FadeUp delay={0.2} className="pb-2">
             <p className="text-base leading-relaxed" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              Cutting-edge robots on a flexible subscription — automating material
-              handling, grounds maintenance, and wall finishing.
+              We offer cutting-edge robots on a flexible subscription basis, helping
+              you automate material handling and wall finishing activities, seamlessly
+              integrating with existing workflows.
             </p>
           </FadeUp>
         </div>
@@ -579,7 +697,68 @@ const STEPS = [
   { number: "03", title: "Scale Your Fleet", body: "Once the first unit proves ROI, adding more robots is seamless. Our Fleet Control platform gives you full visibility across all units from one dashboard." },
 ];
 
+function ProcessStep({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-12% 0px" });
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="flex gap-8 py-12 border-b group cursor-default relative"
+      style={{ borderColor: DIM }}
+      initial={{ opacity: 0, x: 32 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.75, delay: 0.08 * index, ease: EASE }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Progress dot on the line */}
+      <motion.div
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-[calc(100%+32px)] w-3 h-3 rounded-full hidden lg:block"
+        style={{ background: hovered ? GREEN : DIM }}
+        animate={{ scale: hovered ? 1.4 : 1, background: hovered ? GREEN : DIM }}
+        transition={{ duration: 0.3 }}
+      />
+
+      <motion.div
+        className="text-[5rem] font-black leading-none w-24 shrink-0 pt-1 tabular-nums"
+        style={{ fontFamily: "var(--font-dm-sans)" }}
+        animate={{ color: hovered ? GREEN : "rgba(4 104 37 / 0.86)" }}
+        transition={{ duration: 0.3 }}
+      >
+        {step.number}
+      </motion.div>
+      <div className="flex-1 pt-3">
+        <h3
+          className="text-2xl font-black mb-4"
+          style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+        >
+          {step.title}
+        </h3>
+        <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+          {step.body}
+        </p>
+      </div>
+      <motion.div
+        className="flex items-start pt-5 shrink-0"
+        animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : -8 }}
+        transition={{ duration: 0.25 }}
+      >
+        <ArrowUpRight className="w-5 h-5" style={{ color: GREEN }} />
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function ProcessSection() {
+  const stepsRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: stepsProgress } = useScroll({
+    target: stepsRef,
+    offset: ["start 80%", "end 30%"],
+  });
+  const lineHeight = useTransform(stepsProgress, [0, 1], ["0%", "100%"]);
+
   return (
     <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 py-40 border-t" style={{ background: BG2, borderColor: DIM }}>
       <SectionRule label="Process" />
@@ -617,37 +796,21 @@ function ProcessSection() {
           </FadeUp>
         </div>
 
-        <div>
+        {/* Steps with animated progress line */}
+        <div ref={stepsRef} className="relative">
+          {/* Vertical progress line */}
+          <div
+            className="absolute left-[-32px] top-0 bottom-0 w-px hidden lg:block"
+            style={{ background: DIM }}
+          >
+            <motion.div
+              className="absolute top-0 left-0 right-0 origin-top"
+              style={{ height: lineHeight, background: GREEN }}
+            />
+          </div>
+
           {STEPS.map((step, i) => (
-            <FadeUp key={step.number} delay={0.1 + i * 0.1}>
-              <div
-                className="flex gap-8 py-12 border-b group cursor-default"
-                style={{ borderColor: DIM }}
-              >
-                <div
-                  className="text-[5rem] font-black leading-none w-24 shrink-0 pt-1 tabular-nums transition-colors duration-500"
-                  style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = GREEN)}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(4 104 37 / 0.86)")}
-                >
-                  {step.number}
-                </div>
-                <div className="flex-1 pt-3">
-                  <h3
-                    className="text-2xl font-black mb-4 transition-colors duration-300"
-                    style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-                  >
-                    {step.title}
-                  </h3>
-                  <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-                    {step.body}
-                  </p>
-                </div>
-                <div className="flex items-start pt-5 shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1">
-                  <ArrowUpRight className="w-5 h-5" style={{ color: GREEN }} />
-                </div>
-              </div>
-            </FadeUp>
+            <ProcessStep key={step.number} step={step} index={i} />
           ))}
         </div>
       </div>
@@ -655,12 +818,153 @@ function ProcessSection() {
   );
 }
 
-// ─── Section 6 — Customers ────────────────────────────────────────────────────
+// ─── Section 6 — Believers ────────────────────────────────────────────────────
+
+const BELIEVERS = [
+  { name: "Blume Ventures",   logo: "/believers/Blume.png" },
+  { name: "DevX",             logo: "/believers/DevX.png" },
+  { name: "Venture Garage",   logo: "/believers/Venture-Garage.png" },
+  { name: "IISc",             logo: "/believers/IISC.png" },
+  { name: "LetsVenture",      logo: "/believers/Lets-Venture.png" },
+  { name: "JITO Angel Network",logo: "/believers/JITO.png" },
+];
+
+// Investor cell — same cursor-tracking glow as LogoCell, taller + richer
+function InvestorCell({ believer, index }: { believer: (typeof BELIEVERS)[0]; index: number }) {
+  const cellRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const inView  = useInView(cellRef, { once: true, margin: "-10% 0px" });
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cellRef.current || !glowRef.current) return;
+    const r = cellRef.current.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width)  * 100;
+    const y = ((e.clientY - r.top)  / r.height) * 100;
+    glowRef.current.style.background =
+      `radial-gradient(ellipse 90% 90% at ${x}% ${y}%, ${GREEN}38 0%, transparent 68%)`;
+    glowRef.current.style.opacity = "1";
+  };
+
+  const onLeave = () => {
+    if (glowRef.current) glowRef.current.style.opacity = "0";
+  };
+
+  return (
+    <motion.div
+      ref={cellRef}
+      className="relative flex flex-col items-center justify-center px-10 py-16 sm:py-20 border-r border-b cursor-default overflow-hidden group"
+      style={{ borderColor: DIM }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: 0.06 * index, ease: EASE }}
+    >
+      {/* cursor glow */}
+      <div
+        ref={glowRef}
+        className="absolute inset-0 pointer-events-none"
+        style={{ opacity: 0, transition: "opacity 0.3s ease" }}
+      />
+
+      {/* logo */}
+      <div className="relative h-20 sm:h-24 w-full max-w-[200px] z-10 transition-transform duration-500 group-hover:scale-105">
+        <Image
+          src={believer.logo}
+          alt={believer.name}
+          fill
+          className="object-contain"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+          quality={100}
+        />
+      </div>
+
+      {/* name */}
+      <p
+        className="relative z-10 mt-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-center"
+        style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
+      >
+        {believer.name}
+      </p>
+    </motion.div>
+  );
+}
+
+function BelieversSection() {
+  return (
+    <section id="investors" className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
+
+      {/* ── Header — same structure as CustomersSection ── */}
+      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-20">
+        <SectionRule label="Investors" />
+        <div className="grid lg:grid-cols-[1fr_440px] gap-16 items-end">
+          <div>
+            <RevealText className="mb-1">
+              <h2
+                className="text-[clamp(3rem,7vw,8.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              >
+                Fuelling our
+              </h2>
+            </RevealText>
+            <RevealText delay={0.06} className="mb-1">
+              <h2
+                className="text-[clamp(3rem,7vw,8.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
+                style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+              >
+                growth
+              </h2>
+            </RevealText>
+            <RevealText delay={0.12}>
+              <h2
+                className="text-[clamp(3rem,7vw,8.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              >
+                and innovation.
+              </h2>
+            </RevealText>
+          </div>
+
+          <FadeUp delay={0.3} className="pb-3">
+            <div className="w-px h-10 mb-8" style={{ background: GREEN }} />
+            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+              Backed by India's leading venture funds, accelerators,
+              and research institutions — fuelling FLO's mission to
+              automate construction at scale.
+            </p>
+          </FadeUp>
+        </div>
+      </div>
+
+      {/* ── Logo grid — border-grid, same as customers ── */}
+      <div className="w-full border-t border-l" style={{ borderColor: DIM }}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+          {BELIEVERS.map((b, i) => (
+            <InvestorCell key={b.name} believer={b} index={i} />
+          ))}
+        </div>
+      </div>
+
+      {/* ── Bottom caption ── */}
+      <div className="w-full border-t px-8 md:px-16 lg:px-24 xl:px-32 py-10" style={{ borderColor: DIM }}>
+        <FadeUp>
+          <p className="text-base text-center" style={{ color: DIM, fontFamily: "var(--font-dm-sans)" }}>
+            Supported by India's leading venture funds, accelerators, and research institutions
+          </p>
+        </FadeUp>
+      </div>
+
+    </section>
+  );
+}
+
+// ─── Section 7 — Customers ────────────────────────────────────────────────────
 
 const ALL_CUSTOMERS = [
   { name: "L&T",              logo: "/customers/LT.png" },
   { name: "PSP Projects",     logo: "/customers/PSP-Projects.png" },
   { name: "Sobha",            logo: "/customers/Sobha.png" },
+  { name: "Nissan",           logo: "/customers/nissan.png" },
   { name: "Capacite",         logo: "/customers/Capacite.png" },
   { name: "Total Environment",logo: "/customers/Total-environment-2.png" },
   { name: "Kolte Patil",      logo: "/customers/Kolte-Patil.png" },
@@ -668,6 +972,10 @@ const ALL_CUSTOMERS = [
   { name: "K2K",              logo: "/customers/K2K-infrastructure.png" },
   { name: "Everest Carbon",   logo: "/customers/Everest-carbon.png" },
   { name: "Emboss",           logo: "/customers/Emboss.png" },
+  { name: "Ati Motors",       logo: "/customers/Ati-motors.png" },
+  { name: "ICAR IIHR",        logo: "/customers/Icar-iihr.png" },
+  { name: "Hitech Group",     logo: "/customers/Hitech-1.png" },
+  { name: "Group 30",         logo: "/customers/Group-30.png" },
 ];
 
 // Logo cell with cursor-following green gradient (DOM refs — zero re-render cost)
@@ -709,7 +1017,7 @@ function LogoCell({ customer, index }: { customer: (typeof ALL_CUSTOMERS)[0]; in
       />
 
       {/* Logo — always full opacity, no fade */}
-      <div className="relative h-16 sm:h-20 w-full max-w-[200px] z-10">
+      <div className="relative h-20 sm:h-24 w-full max-w-[220px] z-10">
         <Image
           src={customer.logo}
           alt={customer.name}
@@ -789,7 +1097,7 @@ function CustomersSection() {
       <div className="w-full border-t px-8 md:px-16 lg:px-24 xl:px-32 py-10" style={{ borderColor: DIM }}>
         <FadeUp>
           <p className="text-base text-center" style={{ color: DIM, fontFamily: "var(--font-dm-sans)" }}>
-            Trusted by India's top construction and infrastructure companies
+            Trusted by industry leaders worldwide
           </p>
         </FadeUp>
       </div>
@@ -808,86 +1116,247 @@ const TESTIMONIALS = [
   { quote: "From deployment to daily operations, the entire experience has been seamless. The autonomous robots integrate perfectly with our existing workflows.", name: "Priya Sharma", role: "Site Supervisor", company: "Tata Projects" },
 ];
 
-function TestimonialsSection() {
-  const tri = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
+// Full editorial testimonial card (featured)
+function TestiCard({ t, index }: { t: (typeof TESTIMONIALS)[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
   return (
-    <section className="w-full py-36 overflow-hidden border-t" style={{ background: BG2, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 mb-20">
-        <SectionRule label="Testimonials" />
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-          <RevealText>
-            <h2
-              className="text-[clamp(2.5rem,5vw,6.5rem)] font-black leading-[0.88] tracking-[-0.04em]"
+    <motion.article
+      ref={ref}
+      className="flex flex-col rounded-2xl overflow-hidden border"
+      style={{ background: BG, borderColor: DIM }}
+      initial={{ opacity: 0, y: 32 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.75, delay: 0.08 * index, ease: EASE }}
+    >
+      {/* Green left accent bar — horizontal on card top */}
+      <div className="h-[3px] w-full shrink-0" style={{ background: `linear-gradient(to right, ${GREEN}, transparent 70%)` }} />
+
+      <div className="flex flex-col flex-1 p-8 sm:p-10">
+        {/* Large pull-quote mark */}
+        <div
+          className="text-[96px] font-black select-none leading-none mb-4"
+          style={{ color: `${GREEN}30`, fontFamily: "var(--font-dm-sans)", lineHeight: "0.7" }}
+          aria-hidden="true"
+        >
+          &ldquo;
+        </div>
+
+        {/* Quote body — large, high contrast */}
+        <p
+          className="text-[17px] sm:text-[18px] lg:text-[19px] leading-[1.85] flex-1 mb-10 font-medium"
+          style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+        >
+          {t.quote}
+        </p>
+
+        {/* Author row */}
+        <div className="flex items-center gap-4 pt-7 border-t" style={{ borderColor: DIM }}>
+          {/* Initials avatar */}
+          <div
+            className="w-12 h-12 rounded-full shrink-0 flex items-center justify-center text-[13px] font-black"
+            style={{ background: `${GREEN}1a`, color: GREEN_D, border: `1.5px solid ${GREEN}40`, fontFamily: "var(--font-dm-sans)" }}
+          >
+            {t.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p
+              className="text-[15px] font-bold leading-tight"
               style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
             >
-              What our customers say.
-            </h2>
-          </RevealText>
-          <FadeUp delay={0.3}>
-            <p className="text-base max-w-xs" style={{ color: DIM, fontFamily: "var(--font-dm-sans)" }}>
-              From construction giants to growing infrastructure companies.
+              {t.name}
             </p>
-          </FadeUp>
+            <p
+              className="text-[13px] mt-1 leading-tight"
+              style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
+            >
+              {t.role}
+              <span className="mx-1.5" style={{ color: DIM }}>·</span>
+              {t.company}
+            </p>
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+function TestimonialsSection() {
+  const featured = TESTIMONIALS.slice(0, 3);     // left col: 2 stacked, right col: 1 tall
+  const tickerItems = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
+
+  return (
+    <section className="w-full border-t overflow-hidden" style={{ background: BG2, borderColor: DIM }}>
+
+      {/* ── Top zone: editorial two-column layout ── */}
+      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-24">
+        <SectionRule label="Testimonials" />
+
+        <div className="grid lg:grid-cols-[420px_1fr] xl:grid-cols-[480px_1fr] gap-20 xl:gap-28 items-start">
+
+          {/* ── LEFT: sticky heading block ── */}
+          <div className="lg:sticky lg:top-32">
+            <RevealText className="mb-1">
+              <h2
+                className="text-[clamp(3rem,5.5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              >
+                What our
+              </h2>
+            </RevealText>
+            <RevealText delay={0.06} className="mb-1">
+              <h2
+                className="text-[clamp(3rem,5.5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]"
+                style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+              >
+                customers
+              </h2>
+            </RevealText>
+            <RevealText delay={0.12}>
+              <h2
+                className="text-[clamp(3rem,5.5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              >
+                say.
+              </h2>
+            </RevealText>
+
+            <FadeUp delay={0.3} className="mt-10">
+              <div className="w-px h-10 mb-7" style={{ background: GREEN }} />
+              <p
+                className="text-[17px] leading-[1.85]"
+                style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
+              >
+                From India's largest construction companies to growing infrastructure teams — real results from real deployments.
+              </p>
+            </FadeUp>
+
+            {/* Social proof metric */}
+            <FadeUp delay={0.42} className="mt-10">
+              <div
+                className="inline-flex items-center gap-5 px-7 py-5 rounded-2xl border"
+                style={{ background: BG, borderColor: DIM }}
+              >
+                <div>
+                  <div
+                    className="text-[2.8rem] font-black leading-none tabular-nums"
+                    style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                  >
+                    40%
+                  </div>
+                  <div
+                    className="text-[12px] font-semibold uppercase tracking-[0.2em] mt-1.5"
+                    style={{ color: MUTED }}
+                  >
+                    Avg. productivity gain
+                  </div>
+                </div>
+                <div className="w-px self-stretch" style={{ background: DIM }} />
+                <div>
+                  <div
+                    className="text-[2.8rem] font-black leading-none tabular-nums"
+                    style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                  >
+                    35%
+                  </div>
+                  <div
+                    className="text-[12px] font-semibold uppercase tracking-[0.2em] mt-1.5"
+                    style={{ color: MUTED }}
+                  >
+                    Cost reduction
+                  </div>
+                </div>
+              </div>
+            </FadeUp>
+          </div>
+
+          {/* ── RIGHT: stacked featured testimonial cards — single column, full width ── */}
+          <div className="flex flex-col gap-5">
+            <TestiCard t={featured[0]} index={0} />
+            <TestiCard t={featured[1]} index={1} />
+            <TestiCard t={featured[2]} index={2} />
+          </div>
         </div>
       </div>
 
-      {/* Row 1 */}
-      <div className="relative mb-4">
-        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: `linear-gradient(to right, ${BG2} 60%, transparent)` }} />
-        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: `linear-gradient(to left, ${BG2} 60%, transparent)` }} />
-        <div className="flex gap-4 whitespace-nowrap animate-testi-1">
-          {tri.map((t, i) => (
-            <article
-              key={i}
-              className="shrink-0 w-80 sm:w-[420px] whitespace-normal rounded-2xl p-7 flex flex-col gap-5 border"
-              style={{ background: BG, borderColor: DIM }}
-            >
-              <div className="flex gap-1">
-                {[...Array(5)].map((_, j) => <span key={j} className="text-xs" style={{ color: MUTED }}>★</span>)}
+      {/* ── Bottom zone: full-bleed infinite ticker ── */}
+      <div className="w-full border-t pb-20 pt-14 overflow-hidden" style={{ borderColor: DIM }}>
+        {/* Row 1 → */}
+        <div className="relative mb-5">
+          <div className="absolute left-0 top-0 bottom-0 w-40 z-10 pointer-events-none" style={{ background: `linear-gradient(to right, ${BG2} 40%, transparent)` }} />
+          <div className="absolute right-0 top-0 bottom-0 w-40 z-10 pointer-events-none" style={{ background: `linear-gradient(to left, ${BG2} 40%, transparent)` }} />
+          <div className="flex gap-4 whitespace-nowrap animate-testi-1">
+            {tickerItems.map((t, i) => (
+              <div
+                key={i}
+                className="shrink-0 w-[380px] sm:w-[440px] whitespace-normal flex flex-col gap-4 px-7 py-6 rounded-2xl border"
+                style={{ background: BG, borderColor: DIM }}
+              >
+                <p
+                  className="text-[15px] sm:text-[16px] leading-[1.75] font-medium"
+                  style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                >
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="flex items-center gap-3 pt-4 border-t" style={{ borderColor: DIM }}>
+                  <div
+                    className="w-9 h-9 rounded-full shrink-0 flex items-center justify-center text-[11px] font-black"
+                    style={{ background: `${GREEN}1a`, color: GREEN_D, fontFamily: "var(--font-dm-sans)" }}
+                  >
+                    {t.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[14px] font-bold" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{t.name}</span>
+                    <span className="mx-1.5 text-[13px]" style={{ color: DIM }}>·</span>
+                    <span className="text-[13px]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{t.company}</span>
+                  </div>
+                </div>
               </div>
-              <p className="text-[15px] leading-[1.85] flex-1" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              <div className="border-t pt-4 mt-auto" style={{ borderColor: DIM }}>
-                <p className="text-[15px] font-bold" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{t.name}</p>
-                <p className="text-sm mt-0.5" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{t.role}, {t.company}</p>
-              </div>
-            </article>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Row 2 — reverse */}
-      <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: `linear-gradient(to right, ${BG2} 60%, transparent)` }} />
-        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: `linear-gradient(to left, ${BG2} 60%, transparent)` }} />
-        <div className="flex gap-4 whitespace-nowrap animate-testi-2">
-          {[...tri].reverse().map((t, i) => (
-            <article
-              key={i}
-              className="shrink-0 w-80 sm:w-[420px] whitespace-normal rounded-2xl p-7 flex flex-col gap-5 border"
-              style={{ background: BG, borderColor: DIM }}
-            >
-              <div className="flex gap-1">
-                {[...Array(5)].map((_, j) => <span key={j} className="text-xs" style={{ color: MUTED }}>★</span>)}
+        {/* Row 2 ← reverse */}
+        <div className="relative">
+          <div className="absolute left-0 top-0 bottom-0 w-40 z-10 pointer-events-none" style={{ background: `linear-gradient(to right, ${BG2} 40%, transparent)` }} />
+          <div className="absolute right-0 top-0 bottom-0 w-40 z-10 pointer-events-none" style={{ background: `linear-gradient(to left, ${BG2} 40%, transparent)` }} />
+          <div className="flex gap-4 whitespace-nowrap animate-testi-2">
+            {[...tickerItems].reverse().map((t, i) => (
+              <div
+                key={i}
+                className="shrink-0 w-[380px] sm:w-[440px] whitespace-normal flex flex-col gap-4 px-7 py-6 rounded-2xl border"
+                style={{ background: BG, borderColor: DIM }}
+              >
+                <p
+                  className="text-[15px] sm:text-[16px] leading-[1.75] font-medium"
+                  style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                >
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="flex items-center gap-3 pt-4 border-t" style={{ borderColor: DIM }}>
+                  <div
+                    className="w-9 h-9 rounded-full shrink-0 flex items-center justify-center text-[11px] font-black"
+                    style={{ background: `${GREEN}1a`, color: GREEN_D, fontFamily: "var(--font-dm-sans)" }}
+                  >
+                    {t.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[14px] font-bold" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{t.name}</span>
+                    <span className="mx-1.5 text-[13px]" style={{ color: DIM }}>·</span>
+                    <span className="text-[13px]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{t.company}</span>
+                  </div>
+                </div>
               </div>
-              <p className="text-[15px] leading-[1.85] flex-1" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              <div className="border-t pt-4 mt-auto" style={{ borderColor: DIM }}>
-                <p className="text-[15px] font-bold" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{t.name}</p>
-                <p className="text-sm mt-0.5" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{t.role}, {t.company}</p>
-              </div>
-            </article>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
       <style jsx>{`
         @keyframes testi-1 { from { transform: translateX(0); } to { transform: translateX(-33.333%); } }
         @keyframes testi-2 { from { transform: translateX(-33.333%); } to { transform: translateX(0); } }
-        .animate-testi-1 { animation: testi-1 46s linear infinite; }
-        .animate-testi-2 { animation: testi-2 40s linear infinite; }
+        .animate-testi-1 { animation: testi-1 52s linear infinite; }
+        .animate-testi-2 { animation: testi-2 44s linear infinite; }
       `}</style>
     </section>
   );
@@ -998,36 +1467,59 @@ function TechSection() {
   );
 }
 
-// ─── Section 9 — CTA ──────────────────────────────────────────────────────────
+// ─── Section 9 — CTA (dark atmospheric) ──────────────────────────────────────
+
+const BG_DARK = "#0e1210";   // near-black with slight green tint
 
 function CTASection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  // Atmospheric orb drifts upward as you scroll through
+  const orbY = useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]);
+
   return (
-    <section className="w-full relative overflow-hidden py-48 px-8 md:px-16 lg:px-24 xl:px-32 border-t" style={{ background: BG2, borderColor: DIM }}>
-      {/* Subtle green glow */}
+    <section
+      ref={sectionRef}
+      className="w-full relative overflow-hidden py-48 px-8 md:px-16 lg:px-24 xl:px-32"
+      style={{ background: BG_DARK }}
+    >
+      {/* Atmospheric background */}
       <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle grid */}
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage: `linear-gradient(${GREEN}18 1px, transparent 1px), linear-gradient(90deg, ${GREEN}18 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(${GREEN} 1px, transparent 1px), linear-gradient(90deg, ${GREEN} 1px, transparent 1px)`,
             backgroundSize: "80px 80px",
           }}
         />
+        {/* Floating green orb */}
+        <motion.div
+          className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full blur-[160px]"
+          style={{ background: `${GREEN}14`, y: orbY }}
+        />
+        {/* Edge vignette */}
         <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-[140px]"
-          style={{ background: `${GREEN}18` }}
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, ${BG_DARK}cc 100%)`,
+          }}
         />
       </div>
 
       <div className="relative text-center">
         <FadeUp>
-          <p className="text-xs font-black tracking-[0.32em] uppercase mb-12" style={{ color: MUTED }}>
+          <p className="text-xs font-black tracking-[0.32em] uppercase mb-12" style={{ color: `${GREEN}80` }}>
             Get started today
           </p>
         </FadeUp>
         <RevealText className="mb-1">
           <h2
             className="text-[clamp(3.5rem,10vw,13rem)] font-black leading-[0.83] tracking-[-0.04em]"
-            style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+            style={{ color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
           >
             Ready to
           </h2>
@@ -1035,7 +1527,7 @@ function CTASection() {
         <RevealText delay={0.05} className="mb-1">
           <h2
             className="text-[clamp(3.5rem,10vw,13rem)] font-black leading-[0.83] tracking-[-0.04em]"
-            style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+            style={{ color: GREEN, fontFamily: "var(--font-dm-sans)", textShadow: `0 0 80px ${GREEN}60` }}
           >
             automate your
           </h2>
@@ -1043,33 +1535,33 @@ function CTASection() {
         <RevealText delay={0.1} className="mb-20">
           <h2
             className="text-[clamp(3.5rem,10vw,13rem)] font-black leading-[0.83] tracking-[-0.04em]"
-            style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+            style={{ color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
           >
             site?
           </h2>
         </RevealText>
 
-        <FadeUp delay={0.3} className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
+        <FadeUp delay={0.3} className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+          <MagneticButton
             href="/contact"
-            className="inline-flex items-center justify-center gap-2.5 px-12 py-5 rounded-full text-sm font-black transition-all duration-300 hover:scale-105 shadow-lg"
-            style={{ background: GREEN, color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
+            className="inline-flex items-center justify-center gap-2.5 px-12 py-5 rounded-full text-sm font-black shadow-[0_0_40px_rgba(124,205,84,0.35)] hover:shadow-[0_0_60px_rgba(124,205,84,0.55)] transition-shadow duration-400"
+            style={{ background: GREEN, color: "#0e1210", fontFamily: "var(--font-dm-sans)" }}
           >
             Talk to our team <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link
+          </MagneticButton>
+          <MagneticButton
             href="/offerings/material-movement"
-            className="inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full text-sm font-bold border transition-all duration-300 hover:bg-white"
-            style={{ borderColor: DIM, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+            className="inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full text-sm font-bold border transition-colors duration-300 hover:border-white/40"
+            style={{ borderColor: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-dm-sans)" }}
           >
             View all solutions
-          </Link>
+          </MagneticButton>
         </FadeUp>
 
         <FadeUp delay={0.5} className="mt-16 flex flex-wrap items-center justify-center gap-8">
           {["ISO Certified", "500+ Projects", "24/7 Support", "< 1 Day Deploy"].map((t) => (
-            <div key={t} className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>
-              <span className="w-1 h-1 rounded-full" style={{ background: GREEN }} />
+            <div key={t} className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.25)" }}>
+              <span className="w-1 h-1 rounded-full" style={{ background: `${GREEN}80` }} />
               {t}
             </div>
           ))}
@@ -1091,6 +1583,7 @@ export default function Home() {
       <ProductsSection />
       <CaseStudySection />
       <ProcessSection />
+      <BelieversSection />
       <CustomersSection />
       <TestimonialsSection />
       <TechSection />

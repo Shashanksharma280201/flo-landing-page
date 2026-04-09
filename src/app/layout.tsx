@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
 import { PageLoaderProvider } from "@/components/PageLoader/PageLoaderProvider";
+import { SiteChrome } from "@/components/shared/site-chrome";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -14,7 +15,7 @@ const inter = Inter({
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -33,11 +34,13 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${dmSans.variable} bg-[#f5f5f5] antialiased font-sans text-pretty`}
       >
-        {/* Cinematic page loader — unmounts itself after animation */}
-        <PageLoaderProvider />
-        <Navbar />
-        <main className="grow">{children}</main>
-        <Footer />
+        <SiteChrome>
+          {/* Cinematic page loader — unmounts itself after animation */}
+          <PageLoaderProvider />
+          <Navbar />
+          <main className="grow">{children}</main>
+          <Footer />
+        </SiteChrome>
       </body>
     </html>
   );
