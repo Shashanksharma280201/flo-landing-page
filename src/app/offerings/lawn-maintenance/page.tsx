@@ -111,7 +111,7 @@ function VideoEmbed({ videoId, title }: { videoId: string; title: string }) {
       ) : (
         <>
           <Image
-            src={`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`}
+            src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
             alt={title}
             fill
             className="object-cover"
@@ -156,18 +156,7 @@ const HERO_STATS = [
 
 function HeroSection() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-16 pb-0" style={{ background: BG2 }}>
-      {/* Breadcrumb */}
-      <FadeUp className="mb-12">
-        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: DIM }}>
-          <Link href="/" className="hover:underline" style={{ color: DIM }}>Home</Link>
-          <span>/</span>
-          <span>Offerings</span>
-          <span>/</span>
-          <span style={{ color: TEXT }}>Lawn Maintenance</span>
-        </div>
-      </FadeUp>
-
+    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-28 pb-0" style={{ background: BG2 }}>
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center pb-0">
         {/* Left — text */}
         <div>

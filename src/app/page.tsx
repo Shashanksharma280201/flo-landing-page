@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { HeroWithScroll } from "@/components/hero-with-scroll";
 import { StatsSection } from "@/components/sections/stats-section";
-import { ArrowRight, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { ArrowRight, CheckCircle2, ArrowUpRight, Play } from "lucide-react";
 
 // ─── Design tokens — FLO brand light theme ───────────────────────────────────
 const BG       = "#ffffff";
@@ -251,8 +251,8 @@ function MissionSection() {
             style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
           >
             FLO Mobility builds autonomous robots that work alongside your crew
-            — hauling materials, maintaining grounds, and running 24/7 without
-            breaks. Robot-as-a-Service for India's most demanding construction sites.
+            — hauling materials, maintaining grounds, and managing entire fleets
+            at scale. Robot-as-a-Service for India's most demanding job sites.
           </p>
           <MagneticButton
             href="/contact"
@@ -304,7 +304,23 @@ function MissionSection() {
 
 // ─── Section 3 — Products (RaaS) with Parallax ───────────────────────────────
 
-const PRODUCTS = [
+type ProductMedia =
+  | { type: "image"; src: string }
+  | { type: "video"; videoId: string }
+  | { type: "dashboard" };
+
+const PRODUCTS: {
+  number: string;
+  tag: string;
+  title: string;
+  body: string;
+  stats: { value: string; label: string }[];
+  points: string[];
+  media: ProductMedia;
+  href: string;
+  cta: string;
+  flip: boolean;
+}[] = [
   {
     number: "01",
     tag: "Material Movement",
@@ -320,7 +336,7 @@ const PRODUCTS = [
       "Electric Power Train — efficient and sustainable with instant torque",
       "Swappable batteries — minimize downtime by seamlessly swapping batteries",
     ],
-    image: "/mmr-images/mmr-images-1.jpg",
+    media: { type: "image", src: "/mmr-images/mmr-images-1.jpg" },
     href: "/offerings/material-movement",
     cta: "Explore Material Movement",
     flip: false,
@@ -340,29 +356,29 @@ const PRODUCTS = [
       "Automatic obstacle detection and avoidance",
       "Runs continuously with minimal supervision",
     ],
-    image: "/mmr-images/mmr-images-2.jpg",
+    media: { type: "video", videoId: "NDvQAb3qPzI" },
     href: "/offerings/lawn-maintenance",
     cta: "Explore Lawn Maintenance",
     flip: true,
   },
   {
     number: "03",
-    tag: "Wall Finishing",
-    title: "Uniform quality. Every surface. Every time.",
-    body: "Our wall finishing robot automates sanding and putty application on walls. With precision movement, it brings uniformity and consistency in wall finishing, saves material wastage, reduces cost, and delivers a better quality finish.",
+    tag: "Fleet Management",
+    title: "Full fleet visibility. One dashboard.",
+    body: "FLO Fleet Control gives you real-time oversight of every robot across every site — from battery levels and mission status to route analytics and alerts. Scale from one unit to an entire fleet without adding headcount.",
     stats: [
-      { value: "100%", label: "Uniform Finish" },
-      { value: "40%", label: "Cost Reduction" },
-      { value: "0", label: "Rework Rate" },
+      { value: "24/7",  label: "Monitoring" },
+      { value: "99.9%", label: "Uptime SLA" },
+      { value: "<100",  label: "ms Latency" },
     ],
     points: [
-      "Precision putty application and sanding",
-      "Reduces material waste by eliminating over-application",
-      "Consistent quality across every wall surface",
+      "Real-time LiDAR mapping and obstacle detection",
+      "Multi-robot coordination across multiple sites",
+      "Remote monitoring and instant alert dashboard",
     ],
-    image: "/mmr-images/mmr-images-3.jpg",
-    href: "/offerings/material-movement",
-    cta: "Explore Wall Finishing",
+    media: { type: "dashboard" },
+    href: "/offerings/fleet-control",
+    cta: "Explore Fleet Control",
     flip: false,
   },
 ];
@@ -374,6 +390,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
   const isFlip = product.flip;
+  const [playing, setPlaying] = useState(false);
 
   // 3D tilt on content panel
   const tiltX = useMotionValue(0);
@@ -395,32 +412,248 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
     tiltY.set(0);
   }, [tiltX, tiltY]);
 
+  // ── Media panel ──────────────────────────────────────────────────────────────
+  const media = product.media;
+
+  // Dashboard: browser chrome + hud-dashboard.png — no clip-path, FadeUp style
+  if (media.type === "dashboard") {
+    return (
+      <div
+        ref={ref}
+        className="grid lg:grid-cols-2 min-h-[680px] lg:min-h-[800px] w-full overflow-hidden border-b"
+        style={{ borderColor: DIM }}
+      >
+        {/* Dashboard mockup panel */}
+        <motion.div
+          className={`relative order-1 ${isFlip ? "lg:order-2" : "lg:order-1"} min-h-[360px] flex items-center justify-center p-8 lg:p-12`}
+          style={{ background: BG2 }}
+          initial={{ opacity: 0, x: isFlip ? 48 : -48 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 1.1, delay: 0.05, ease: EASE }}
+        >
+          {/* Browser chrome mockup */}
+          <div
+            className="w-full rounded-2xl overflow-hidden border shadow-xl"
+            style={{ borderColor: DIM }}
+          >
+            {/* Chrome header */}
+            <div
+              className="flex items-center gap-2 px-4 py-3 border-b"
+              style={{ background: BG, borderColor: DIM }}
+            >
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: DIM }} />
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: DIM }} />
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: GREEN }} />
+              </div>
+              <div
+                className="flex-1 rounded px-3 py-1 text-[10px] ml-2 font-mono"
+                style={{ background: BG2, color: MUTED }}
+              >
+                fleet.flomobility.com
+              </div>
+            </div>
+            {/* Dashboard image */}
+            <div className="relative aspect-video" style={{ background: "#0a140a" }}>
+              <Image
+                src="/hud-dashboard.png"
+                alt="Fleet Control Dashboard — Real-time Robot Management"
+                fill
+                className="object-contain"
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+          </div>
+
+          {/* Product number overlay */}
+          <div
+            className="absolute bottom-8 left-8 text-[7rem] font-black leading-none select-none tabular-nums pointer-events-none"
+            style={{ color: "rgba(25,28,26,0.06)", fontFamily: "var(--font-dm-sans)" }}
+            aria-hidden="true"
+          >
+            {product.number}
+          </div>
+        </motion.div>
+
+        {/* Content panel — 3D tilt */}
+        <motion.div
+          ref={cardRef}
+          className={`relative flex items-center order-2 ${isFlip ? "lg:order-1" : "lg:order-2"}`}
+          style={{ background: BG, rotateX, rotateY, transformPerspective: 1200 }}
+          initial={{ opacity: 0, x: isFlip ? -48 : 48 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
+          onMouseMove={onTiltMove}
+          onMouseLeave={onTiltLeave}
+        >
+          <div className="px-10 sm:px-14 lg:px-16 xl:px-20 py-16 lg:py-24 w-full">
+            {/* Tag */}
+            <motion.div
+              className="flex items-center gap-2.5 mb-8"
+              initial={{ opacity: 0, x: -12 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
+            >
+              <div className="w-1.5 h-1.5 rounded-full" style={{ background: GREEN }} />
+              <span className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: MUTED }}>{product.tag}</span>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              className="flex mb-12 rounded-2xl overflow-hidden border"
+              style={{ borderColor: DIM, background: BG2 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+            >
+              {product.stats.map((s, i) => (
+                <div
+                  key={s.label}
+                  className={`flex-1 px-6 py-5 text-center ${i < product.stats.length - 1 ? "border-r" : ""}`}
+                  style={{ borderColor: DIM }}
+                >
+                  <div className="text-2xl font-black leading-none mb-1.5" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{s.value}</div>
+                  <div className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>{s.label}</div>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.h3
+              className="text-[clamp(1.8rem,3.2vw,3rem)] font-black leading-[1.05] tracking-[-0.025em] mb-5"
+              style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.25, ease: EASE }}
+            >
+              {product.title}
+            </motion.h3>
+
+            <motion.p
+              className="text-base leading-[1.85] mb-8 max-w-lg"
+              style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              {product.body}
+            </motion.p>
+
+            <motion.ul
+              className="space-y-3.5 mb-10"
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.7, delay: 0.35 }}
+            >
+              {product.points.map((pt) => (
+                <li key={pt} className="flex items-start gap-3">
+                  <CheckCircle2 className="w-[18px] h-[18px] mt-0.5 shrink-0" style={{ color: GREEN }} />
+                  <span className="text-[15px] leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{pt}</span>
+                </li>
+              ))}
+            </motion.ul>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.45, ease: EASE }}
+            >
+              <MagneticButton
+                href={product.href}
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wide"
+                style={{ background: GREEN, color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
+              >
+                {product.cta}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </MagneticButton>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div
       ref={ref}
       className="grid lg:grid-cols-2 min-h-[680px] lg:min-h-[800px] w-full overflow-hidden border-b"
       style={{ borderColor: DIM }}
     >
-      {/* Image — parallax + magazine clip-path reveal */}
+      {/* Media panel — image or YouTube embed */}
       <motion.div
         className={`relative order-1 ${isFlip ? "lg:order-2" : "lg:order-1"} min-h-[360px] overflow-hidden`}
         initial={{ clipPath: isFlip ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)" }}
         animate={inView ? { clipPath: "inset(0 0% 0 0%)" } : {}}
         transition={{ duration: 1.2, delay: 0.05, ease: EASE }}
       >
-        <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
-          <Image src={product.image} alt={product.tag} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-        </motion.div>
-        {/* Subtle gradient overlay */}
-        <div className={`absolute inset-0 ${isFlip ? "bg-gradient-to-l" : "bg-gradient-to-r"} from-black/30 via-black/10 to-transparent z-10`} />
-        {/* Product number — editorial overlay */}
-        <div
-          className="absolute bottom-8 left-8 z-20 text-[7rem] font-black leading-none select-none tabular-nums"
-          style={{ color: "rgba(255,255,255,0.12)", fontFamily: "var(--font-dm-sans)" }}
-          aria-hidden="true"
-        >
-          {product.number}
-        </div>
+        {media.type === "image" ? (
+          <>
+            <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
+              <Image src={media.src} alt={product.tag} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+            </motion.div>
+            {/* Gradient overlay */}
+            <div className={`absolute inset-0 ${isFlip ? "bg-gradient-to-l" : "bg-gradient-to-r"} from-black/30 via-black/10 to-transparent z-10`} />
+          </>
+        ) : (
+          /* YouTube embed with visible thumbnail */
+          <div className="absolute inset-0">
+            {playing ? (
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${media.videoId}?autoplay=1&rel=0`}
+                title={product.tag}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <>
+                {/* YouTube hqdefault thumbnail (always available) */}
+                <Image
+                  src={`https://i.ytimg.com/vi/${media.videoId}/hqdefault.jpg`}
+                  alt={product.tag}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  unoptimized
+                />
+                {/* Dark overlay for contrast */}
+                <div className="absolute inset-0 bg-black/30 z-10" />
+                {/* Play button */}
+                <button
+                  onClick={() => setPlaying(true)}
+                  className="absolute inset-0 flex items-center justify-center z-20"
+                  aria-label="Play video"
+                >
+                  <motion.div
+                    className="w-20 h-20 rounded-full flex items-center justify-center"
+                    style={{ background: GREEN }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.25, ease: EASE }}
+                  >
+                    <Play className="w-8 h-8 fill-white text-white ml-1" />
+                  </motion.div>
+                </button>
+                {/* Caption badge */}
+                <div
+                  className="absolute bottom-8 left-8 z-20 px-3 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.16em]"
+                  style={{ background: "rgba(25,28,26,0.6)", color: "#fff" }}
+                >
+                  Watch the robot in action
+                </div>
+              </>
+            )}
+          </div>
+        )}
+        {/* Product number — editorial overlay (image only, stays visible) */}
+        {media.type === "image" && (
+          <div
+            className="absolute bottom-8 left-8 z-20 text-[7rem] font-black leading-none select-none tabular-nums"
+            style={{ color: "rgba(255,255,255,0.12)", fontFamily: "var(--font-dm-sans)" }}
+            aria-hidden="true"
+          >
+            {product.number}
+          </div>
+        )}
       </motion.div>
 
       {/* Content — 3D tilt */}
@@ -548,9 +781,9 @@ function ProductsSection() {
           </div>
           <FadeUp delay={0.2} className="pb-2">
             <p className="text-base leading-relaxed" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              We offer cutting-edge robots on a flexible subscription basis, helping
-              you automate material handling and wall finishing activities, seamlessly
-              integrating with existing workflows.
+              We offer autonomous robots on a flexible subscription basis — from
+              material movement and lawn maintenance to complete fleet management —
+              seamlessly integrating with your existing operations.
             </p>
           </FadeUp>
         </div>

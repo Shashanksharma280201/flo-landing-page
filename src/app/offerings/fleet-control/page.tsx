@@ -138,17 +138,7 @@ const HERO_STATS = [
 
 function HeroSection() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-16 pb-0" style={{ background: BG2 }}>
-      <FadeUp className="mb-12">
-        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: DIM }}>
-          <Link href="/" className="hover:underline" style={{ color: DIM }}>Home</Link>
-          <span>/</span>
-          <span>Offerings</span>
-          <span>/</span>
-          <span style={{ color: TEXT }}>Fleet Control</span>
-        </div>
-      </FadeUp>
-
+    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-28 pb-0" style={{ background: BG2 }}>
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center pb-0">
         {/* Left — text */}
         <div>
@@ -315,7 +305,98 @@ function ProofBar() {
   );
 }
 
-// ─── Section 3 — Capabilities ──────────────────────────────────
+// ─── Section 3 — Showcase (video alternating) ──────────────────
+
+const SHOWCASE = [
+  {
+    tag: "Coordination",
+    heading: ["Multi-robot coordination,", "simplified."],
+    headingGreen: 1,
+    body: "Streamline control across multiple robots from a single platform. Assign tasks, monitor progress, and manage entire fleets with unparalleled ease.",
+    bullets: ["Centralised task assignment", "Real-time fleet status overview", "Automated mission planning"],
+    videoSrc: "https://flomobility.com/wp-content/uploads/2025/06/Flo-Nav.mp4",
+    videoLeft: false,
+  },
+  {
+    tag: "Visualisation",
+    heading: ["Real-time data,", "at a glance."],
+    headingGreen: 1,
+    body: "Enhanced situational awareness through comprehensive data collection and management. Visualise sensor feeds, telemetry, and environmental maps in real time.",
+    bullets: ["Live sensor data streaming", "3D environment mapping", "Performance analytics & reporting"],
+    videoSrc: "https://flomobility.com/wp-content/uploads/2025/06/data-visualisation-realtime-1.mp4",
+    videoLeft: true,
+  },
+];
+
+function ShowcaseSection() {
+  return (
+    <section className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
+      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-24">
+        <SectionRule label="Platform in Action" />
+        <div className="flex flex-col gap-32">
+          {SHOWCASE.map((item) => (
+            <FadeUp key={item.tag} delay={0.05}>
+              <div className={`grid lg:grid-cols-2 gap-16 lg:gap-24 items-center ${item.videoLeft ? "" : ""}`}>
+                {/* Video */}
+                <div className={`relative aspect-video overflow-hidden rounded-2xl border ${item.videoLeft ? "lg:order-1" : "lg:order-2"}`} style={{ borderColor: DIM }}>
+                  <video
+                    src={item.videoSrc}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+
+                {/* Text */}
+                <div className={item.videoLeft ? "lg:order-2" : "lg:order-1"}>
+                  <FadeUp delay={0.1}>
+                    <span className="inline-block text-[10px] font-bold tracking-[0.24em] uppercase px-3 py-1.5 rounded-full mb-8 border" style={{ color: MUTED, borderColor: DIM, fontFamily: "var(--font-dm-sans)" }}>
+                      {item.tag}
+                    </span>
+                  </FadeUp>
+                  <div className="mb-6">
+                    {item.heading.map((line, li) => (
+                      <RevealText key={li} delay={0.05 * li} className="mb-1">
+                        <h2
+                          className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[0.9] tracking-[-0.03em]"
+                          style={{
+                            color: li === item.headingGreen ? "rgba(4 104 37 / 0.86)" : TEXT,
+                            fontFamily: "var(--font-dm-sans)",
+                          }}
+                        >
+                          {line}
+                        </h2>
+                      </RevealText>
+                    ))}
+                  </div>
+                  <FadeUp delay={0.2} className="mb-8">
+                    <p className="text-base leading-[1.85] max-w-lg" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                      {item.body}
+                    </p>
+                  </FadeUp>
+                  <FadeUp delay={0.28}>
+                    <div className="flex flex-col gap-3">
+                      {item.bullets.map((b) => (
+                        <div key={b} className="flex items-center gap-3">
+                          <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: GREEN }} />
+                          <span className="text-sm font-medium" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{b}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </FadeUp>
+                </div>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Section 4 — Capabilities ──────────────────────────────────
 
 const FEATURES = [
   {
@@ -844,6 +925,7 @@ export default function FleetControlPage() {
     <div className="w-full" style={{ color: TEXT, background: BG2 }}>
       <HeroSection />
       <ProofBar />
+      <ShowcaseSection />
       <CapabilitiesSection />
       <ProcessSection />
       <UseCasesSection />
