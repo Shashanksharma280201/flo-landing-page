@@ -329,7 +329,7 @@ const FEATURES = [
   {
     icon: Truck,
     title: "Customisable Dumper",
-    body: "Versatile payload platform carrying 500–700 kg. Swap body configurations to match your site requirements.",
+    body: "Versatile payload platform carrying 500 kg. Swap body configurations to match your site requirements.",
   },
   {
     icon: Battery,
@@ -673,7 +673,7 @@ function UseCasesSection() {
 // ─── Section 6 — Technical Specs ─────────────────────────────────────────────
 
 const SPECS = [
-  { label: "Load Capacity",   value: "500–700 kg" },
+  { label: "Load Capacity",   value: "500 kg" },
   { label: "Max Speed",       value: "5 km/h" },
   { label: "Gradeability",    value: "Up to 20°" },
   { label: "Battery Life",    value: "8–10 hours" },
@@ -829,7 +829,7 @@ function CTASection() {
         </FadeUp>
 
         <FadeUp delay={0.5} className="mt-16 flex flex-wrap items-center justify-center gap-8">
-          {["500–700 kg Payload", "< 1 Day Deploy", "24/7 Operation", "0 Emissions"].map((t) => (
+          {["500 kg Payload", "< 1 Day Deploy", "24/7 Operation", "0 Emissions"].map((t) => (
             <div key={t} className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>
               <span className="w-1 h-1 rounded-full" style={{ background: GREEN }} />
               {t}

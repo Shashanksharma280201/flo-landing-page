@@ -89,7 +89,7 @@ function LogoScrollingSection({ title, subtitle, logos, bgColor, speed = 0.5, di
           </style>
           <div
             ref={scrollRef}
-            className="flex overflow-x-auto gap-5 sm:gap-8 lg:gap-10 pb-4 no-scrollbar touch-pan-y"
+            className="flex overflow-x-auto gap-3 sm:gap-5 lg:gap-6 pb-4 no-scrollbar touch-pan-y"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
@@ -104,7 +104,7 @@ function LogoScrollingSection({ title, subtitle, logos, bgColor, speed = 0.5, di
                 key={`${logo.name}-${index}`}
                 className="flex-shrink-0 group cursor-pointer"
               >
-                <div className="relative w-40 h-24 sm:w-56 sm:h-36 lg:w-72 lg:h-44 flex items-center justify-center overflow-hidden rounded-xl lg:rounded-2xl hover:scale-105 transition-all duration-300">
+                <div className="relative w-24 h-14 sm:w-32 sm:h-20 lg:w-40 lg:h-24 flex items-center justify-center overflow-hidden rounded-lg lg:rounded-xl hover:scale-105 transition-all duration-300">
                   <Image
                     src={logo.logo}
                     alt={`${logo.name} logo`}

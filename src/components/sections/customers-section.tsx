@@ -1,15 +1,73 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { CUSTOMERS } from "@/lib/constants";
 
-// Split customers into sets of 8 for rotation
+// 15 customers → set1: first 12, set2: last 12 (wraps around), giving 2-row 6-col grids
 const LOGO_SETS = [
-  CUSTOMERS.slice(0, 8),
-  CUSTOMERS.slice(8, 15).concat(CUSTOMERS.slice(0, 1)), // 7 + 1 to make 8
+  CUSTOMERS.slice(0, 12),
+  [...CUSTOMERS.slice(3), ...CUSTOMERS.slice(0, 3)].slice(0, 12),
 ];
+
+// Mobile auto-scrolling strip
+function MobileScrollStrip() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isPaused = useRef(false);
+  const duplicated = [...CUSTOMERS, ...CUSTOMERS, ...CUSTOMERS, ...CUSTOMERS];
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    let raf: number;
+
+    const scroll = () => {
+      if (!isPaused.current && el) {
+        el.scrollLeft += 0.6;
+        const cardWidth = el.children[0]?.getBoundingClientRect().width ?? 0;
+        const gap = parseFloat(window.getComputedStyle(el).gap) || 0;
+        const singleSetWidth = CUSTOMERS.length * (cardWidth + gap);
+        if (el.scrollLeft >= singleSetWidth) el.scrollLeft -= singleSetWidth;
+      }
+      raf = requestAnimationFrame(scroll);
+    };
+
+    raf = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  return (
+    <div className="relative w-full">
+      {/* Edge fade masks */}
+      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-10 z-10 bg-gradient-to-r from-white to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-10 z-10 bg-gradient-to-l from-white to-transparent" />
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-auto gap-3 pb-2 no-scrollbar touch-pan-x"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        onTouchStart={() => { isPaused.current = true; }}
+        onTouchEnd={() => { isPaused.current = false; }}
+      >
+        {duplicated.map((customer, i) => (
+          <div key={`${customer.name}-${i}`} className="flex-shrink-0">
+            <div className="relative w-24 h-14 rounded-xl border border-gray-200/80 bg-white p-2.5 shadow-sm overflow-hidden">
+              <Image
+                src={customer.logo}
+                alt={`${customer.name} logo`}
+                fill
+                quality={90}
+                className="object-contain"
+                sizes="96px"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
+    </div>
+  );
+}
 
 export function CustomersSection() {
   const [currentSet, setCurrentSet] = useState(0);
@@ -17,8 +75,7 @@ export function CustomersSection() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSet((prev) => (prev + 1) % LOGO_SETS.length);
-    }, 3000); // Swap every 3 seconds
-
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
@@ -29,7 +86,7 @@ export function CustomersSection() {
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="mb-12 lg:mb-16 text-center space-y-3">
+        <div className="mb-10 lg:mb-14 text-center space-y-3">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -64,61 +121,56 @@ export function CustomersSection() {
           </motion.p>
         </div>
 
-        {/* Logo Grid with Swap Animation */}
-        <div className="mx-auto max-w-7xl">
+        {/* Mobile: auto-scrolling strip */}
+        <div className="block sm:hidden">
+          <MobileScrollStrip />
+        </div>
+
+        {/* Desktop: animated grid */}
+        <div className="hidden sm:block mx-auto max-w-7xl">
           <AnimatePresence mode="popLayout">
             <motion.div
               key={currentSet}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8"
+              className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 md:gap-3"
             >
               {LOGO_SETS[currentSet].map((customer, index) => (
                 <motion.div
                   key={`${customer.name}-${currentSet}`}
                   custom={index}
                   variants={{
-                    hidden: {
-                      opacity: 0,
-                      y: 40,
-                      filter: "blur(10px)",
-                    },
+                    hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
                     visible: (i: number) => ({
                       opacity: 1,
                       y: 0,
                       filter: "blur(0px)",
                       transition: {
-                        duration: 0.6,
-                        delay: i * 0.1,
+                        duration: 0.5,
+                        delay: i * 0.07,
                         ease: [0.22, 1, 0.36, 1],
                       },
                     }),
                     exit: {
                       opacity: 0,
-                      y: -40,
-                      filter: "blur(10px)",
-                      transition: {
-                        duration: 0.4,
-                        ease: [0.22, 1, 0.36, 1],
-                      },
+                      y: -30,
+                      filter: "blur(8px)",
+                      transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
                     },
                   }}
                   className="group relative flex items-center justify-center"
                 >
-                  <div className="relative h-28 w-full sm:h-32 md:h-36 lg:h-40 rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm hover:shadow-xl hover:scale-105 transition-all duration-300 hover:border-[#7ccd54]/50 overflow-hidden">
-                    {/* Glow effect on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#7ccd54]/0 via-[#9be06d]/0 to-[#7ccd54]/0 group-hover:from-[#7ccd54]/5 group-hover:via-[#9be06d]/5 group-hover:to-[#7ccd54]/5 transition-all duration-300 rounded-2xl" />
-
-                    {/* Logo */}
-                    <div className="relative h-full w-full">
+                  <div className="relative h-20 w-full md:h-24 lg:h-24 rounded-xl border border-gray-200/80 bg-white p-2 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 hover:border-[#7ccd54]/50 overflow-hidden flex items-center justify-center">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#7ccd54]/0 to-[#7ccd54]/0 group-hover:from-[#7ccd54]/5 group-hover:to-[#7ccd54]/5 transition-all duration-300 rounded-xl" />
+                    <div className="relative w-[85%] h-[75%]">
                       <Image
                         src={customer.logo}
                         alt={`${customer.name} logo`}
                         fill
                         quality={100}
                         className="object-contain"
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        sizes="(max-width: 1024px) 33vw, 25vw"
                       />
                     </div>
                   </div>
@@ -128,15 +180,15 @@ export function CustomersSection() {
           </AnimatePresence>
 
           {/* Pagination Dots */}
-          <div className="mt-10 lg:mt-12 flex items-center justify-center gap-2">
+          <div className="mt-8 flex items-center justify-center gap-2">
             {LOGO_SETS.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSet(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-all duration-300 ${
                   currentSet === index
-                    ? "w-8 bg-[#7ccd54]"
-                    : "w-2 bg-gray-300 hover:bg-gray-400"
+                    ? "w-6 bg-[#7ccd54]"
+                    : "w-1.5 bg-gray-300 hover:bg-gray-400"
                 }`}
                 aria-label={`Show logo set ${index + 1}`}
               />

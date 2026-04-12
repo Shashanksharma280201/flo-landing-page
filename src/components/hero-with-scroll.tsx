@@ -428,6 +428,50 @@ function ScrollContent({
           <ScrollIndicator />
         </motion.div>
 
+        {/* ── Skip animation button ── */}
+        <motion.button
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
+          style={{ borderColor: "rgba(40,108,0,0.3)", color: "#286c00", background: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", fontFamily: "var(--font-dm-sans)" }}
+          onClick={() => {
+            const target = document.querySelector<HTMLElement>(".hero-skip-target");
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
+            } else {
+              window.scrollTo({ top: TOTAL_HEIGHT + window.innerHeight, behavior: "smooth" });
+            }
+          }}
+          className="hidden md:flex fixed bottom-8 right-14 lg:right-20 xl:right-24 z-50 items-center gap-2 px-4 py-2 rounded-full border text-[12px] font-semibold uppercase tracking-[0.18em] transition-all duration-300 hover:scale-105"
+        >
+          Skip animation
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M5 1.5v7M2.5 6l2.5 2.5L7.5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </motion.button>
+
+        {/* ── Skip animation button — mobile ── */}
+        <motion.button
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
+          onClick={() => {
+            const target = document.querySelector<HTMLElement>(".hero-skip-target");
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
+            } else {
+              window.scrollTo({ top: TOTAL_HEIGHT + window.innerHeight, behavior: "smooth" });
+            }
+          }}
+          className="flex md:hidden fixed bottom-8 right-8 z-50 items-center gap-2 px-4 py-2 rounded-full border text-[11px] font-semibold uppercase tracking-[0.18em]"
+          style={{ borderColor: "rgba(40,108,0,0.5)", color: "#286c00", background: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", fontFamily: "var(--font-dm-sans)" }}
+        >
+          Skip
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M5 1.5v7M2.5 6l2.5 2.5L7.5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </motion.button>
+
       </div>
     </div>
   );

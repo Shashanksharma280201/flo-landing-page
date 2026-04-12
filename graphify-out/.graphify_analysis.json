@@ -1,0 +1,304 @@
+{
+  "communities": {
+    "0": [
+      "antigravity",
+      "antigravity_generateparticles",
+      "circle_pattern",
+      "circle_pattern_circlepattern",
+      "circuit_lines",
+      "circuit_lines_circuitlines",
+      "construction_grid",
+      "construction_grid_constructiongrid",
+      "dot_pattern",
+      "dot_pattern_dotpattern",
+      "fade_in",
+      "fade_in_fadein",
+      "hexagon_grid",
+      "hexagon_grid_hexagongrid",
+      "input",
+      "input_input",
+      "label",
+      "label_label",
+      "parallax_scroll",
+      "progressive_blur",
+      "textarea",
+      "textarea_cn",
+      "triangle_pattern",
+      "triangle_pattern_trianglepattern",
+      "utils",
+      "utils_cn",
+      "wavy_background",
+      "wavy_background_wavybackground"
+    ],
+    "1": [
+      "case_study_section",
+      "constants",
+      "customers_section",
+      "customers_section_scroll",
+      "hero",
+      "logo_showcase",
+      "logo_showcase_scroll",
+      "magicui_dot_pattern",
+      "magicui_dot_pattern_update",
+      "process",
+      "raas_section",
+      "specs",
+      "stats_bar_graph",
+      "stats_bar_graph_animatedmetricvalue",
+      "stats_section",
+      "stats_section_statssection",
+      "use_has_mounted",
+      "use_has_mounted_usehasmounted",
+      "use_intersection_observer",
+      "use_intersection_observer_useintersectionobserver",
+      "video_player",
+      "video_player_handleplay"
+    ],
+    "2": [
+      "contact_form",
+      "contact_form_handlesubmit",
+      "contact_form_inputfield",
+      "contact_form_submitbutton",
+      "form_actions",
+      "form_actions_submitformaction",
+      "hero_with_scroll",
+      "hero_with_scroll_draw",
+      "hero_with_scroll_loadingscreen",
+      "hero_with_scroll_schedule",
+      "page",
+      "page_generatemetadata",
+      "page_generatestaticparams",
+      "page_onleave",
+      "page_onmove"
+    ],
+    "3": [
+      "footer",
+      "layout",
+      "layout_rootlayout",
+      "lenis_provider",
+      "lenis_provider_lenisprovider",
+      "navbar",
+      "navbar_isactive",
+      "pageloader",
+      "pageloader_pageloader",
+      "pageloaderprovider",
+      "pageloaderprovider_pageloaderprovider",
+      "site_chrome",
+      "site_chrome_sitechrome"
+    ],
+    "4": [
+      "avatar",
+      "avatar_avatar",
+      "avatar_avatarfallback",
+      "avatar_cn",
+      "blogcard",
+      "blogcard_blogcard",
+      "bloggrid",
+      "bloggrid_bloggrid",
+      "card",
+      "card_carddescription",
+      "card_cardfooter",
+      "card_cn",
+      "testimonials"
+    ],
+    "5": [
+      "button",
+      "button_cn",
+      "featuredpost",
+      "featuredpost_featuredpost",
+      "not_found",
+      "not_found_notfound",
+      "sharedtitle",
+      "sharedtitle_sharedtitle"
+    ],
+    "6": [
+      "sheet",
+      "sheet_cn",
+      "sheet_sheet",
+      "sheet_sheetclose",
+      "sheet_sheetdescription",
+      "sheet_sheetportal",
+      "sheet_sheettrigger"
+    ],
+    "7": [
+      "container_scroll_animation",
+      "container_scroll_animation_card",
+      "container_scroll_animation_containerscroll",
+      "container_scroll_animation_header",
+      "scroll_demo_section",
+      "scroll_demo_section_scrolldemosection"
+    ],
+    "8": [
+      "accordion",
+      "accordion_accordion",
+      "accordion_accordionitem",
+      "accordion_accordiontrigger",
+      "faq",
+      "faq_faq"
+    ],
+    "9": [
+      "blog",
+      "blog_getallposts",
+      "blog_getpostbyslug",
+      "blogpost",
+      "db",
+      "db_dbconnect"
+    ],
+    "10": [
+      "robot_scroll",
+      "robot_scroll_handleresize",
+      "robot_scroll_loadingscreen",
+      "robot_scroll_render",
+      "robot_scroll_schedulerender"
+    ],
+    "11": [
+      "navigation_menu",
+      "navigation_menu_cn",
+      "navigation_menu_navigationmenucontent",
+      "navigation_menu_navigationmenutrigger",
+      "navigation_menu_navigationmenuviewport"
+    ],
+    "12": [
+      "infinite_moving_cards",
+      "infinite_moving_cards_addanimation",
+      "infinite_moving_cards_getdirection",
+      "infinite_moving_cards_getspeed"
+    ],
+    "13": [
+      "mmr_section",
+      "mmr_section_cardinner",
+      "mmr_section_mmrsection"
+    ],
+    "14": [
+      "particles",
+      "particles_particles"
+    ],
+    "15": [
+      "counter",
+      "counter_counter"
+    ],
+    "16": [
+      "laser_flow",
+      "laser_flow_laserflow"
+    ],
+    "17": [
+      "scroll_progress",
+      "scroll_progress_scrollprogress"
+    ],
+    "18": [
+      "scroll_timeline",
+      "scroll_timeline_timelineitem"
+    ],
+    "19": [
+      "userevealonload",
+      "userevealonload_userevealonload"
+    ],
+    "20": [
+      "hero_section"
+    ],
+    "21": [
+      "smooth_scroll_hero"
+    ],
+    "22": [
+      "testimonials_section"
+    ],
+    "23": [
+      "alternating_timeline"
+    ],
+    "24": [
+      "contact_info"
+    ],
+    "25": [
+      "features"
+    ],
+    "26": [
+      "metrics"
+    ],
+    "27": [
+      "cta"
+    ],
+    "28": [
+      "showcase"
+    ],
+    "29": [
+      "index"
+    ]
+  },
+  "cohesion": {
+    "0": 0.07,
+    "1": 0.1,
+    "2": 0.14,
+    "3": 0.15,
+    "4": 0.15,
+    "5": 0.25,
+    "6": 0.29,
+    "7": 0.33,
+    "8": 0.33,
+    "9": 0.33,
+    "10": 0.5,
+    "11": 0.4,
+    "12": 0.83,
+    "13": 0.67,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0
+  },
+  "gods": [
+    {
+      "id": "infinite_moving_cards_addanimation",
+      "label": "addAnimation()",
+      "edges": 3
+    },
+    {
+      "id": "robot_scroll_schedulerender",
+      "label": "scheduleRender()",
+      "edges": 2
+    },
+    {
+      "id": "robot_scroll_handleresize",
+      "label": "handleResize()",
+      "edges": 2
+    },
+    {
+      "id": "infinite_moving_cards_getdirection",
+      "label": "getDirection()",
+      "edges": 2
+    },
+    {
+      "id": "infinite_moving_cards_getspeed",
+      "label": "getSpeed()",
+      "edges": 2
+    }
+  ],
+  "surprises": [],
+  "questions": [
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 0` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.07 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 1` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.1 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 2` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.14 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

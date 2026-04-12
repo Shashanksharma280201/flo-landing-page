@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { VideoPlayer } from "@/components/shared/video-player";
 
 const SPECS = [
-  { label: "Load Capacity", value: "500–700 kg" },
+  { label: "Load Capacity", value: "500 kg" },
   { label: "Max Speed", value: "5 km/h" },
   { label: "Gradeability", value: "Up to 20°" },
   { label: "Battery Life", value: "8–10 hours" },

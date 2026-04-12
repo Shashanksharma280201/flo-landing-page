@@ -23,7 +23,7 @@ const features = [
   {
     title: "Customisable Dumper",
     description:
-      "Versatile payload platform capable of carrying 500–700 kg. Swap body configurations to match your site requirements.",
+      "Versatile payload platform capable of carrying 500 kg. Swap body configurations to match your site requirements.",
     icon: Truck,
   },
   {

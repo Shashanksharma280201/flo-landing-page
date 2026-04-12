@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { HeroWithScroll } from "@/components/hero-with-scroll";
-import { StatsSection } from "@/components/sections/stats-section";
 import { ArrowRight, CheckCircle2, ArrowUpRight, Play, Cpu, Eye, Navigation2, LayoutDashboard } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -169,6 +168,51 @@ function MagneticButton({
   return content;
 }
 
+// ─── Image Showcase Section ───────────────────────────────────────────────────
+
+const SHOWCASE_IMAGES = [
+  { src: "/mmr-images/mmr-images-1.jpg",   label: "Material Movement Bot" },
+  { src: "/mmr-images/mmr-images-2.jpg",   label: "Autonomous Navigation" },
+  { src: "/mmr-images/mmr-images-3.jpg",   label: "Site Operations" },
+  { src: "/mmr-images/mmr-robot.png",      label: "MMR Robot" },
+  { src: "/mmr-images/mmr-robot-new.png",  label: "Next-Gen MMR" },
+];
+
+function ImageShowcaseSection() {
+  return (
+    <section className="w-full py-16 md:py-24 overflow-hidden" style={{ background: BG2 }}>
+      <div className="flex gap-3 md:gap-4 px-4 md:px-8">
+        {SHOWCASE_IMAGES.map((img, i) => (
+          <FadeUp key={img.label} delay={i * 0.08} className="flex-1 min-w-0">
+            <div className="group relative flex flex-col">
+              {/* Image */}
+              <div className="relative w-full overflow-hidden rounded-xl md:rounded-2xl" style={{ aspectRatio: "3/4" }}>
+                <Image
+                  src={img.src}
+                  alt={img.label}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 50vw, 20vw"
+                  quality={90}
+                />
+                {/* Subtle bottom gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent rounded-xl md:rounded-2xl" />
+              </div>
+              {/* Label */}
+              <p
+                className="mt-3 text-[11px] md:text-xs font-semibold uppercase tracking-[0.18em] text-center"
+                style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
+              >
+                {img.label}
+              </p>
+            </div>
+          </FadeUp>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 // ─── Section 1 — Proof ticker ─────────────────────────────────────────────────
 
 const METRICS = [
@@ -216,7 +260,7 @@ function ProofBar() {
 
 function MissionSection() {
   return (
-    <section className="w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40" style={{ background: BG }}>
+    <section className="hero-skip-target w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40" style={{ background: BG }}>
       <SectionRule label="Mission" />
       <div className="grid lg:grid-cols-[1fr_400px] gap-20 items-end">
         <div>
@@ -249,7 +293,7 @@ function MissionSection() {
         <FadeUp delay={0.3} className="pb-4">
           <div className="w-px h-14 mb-8" style={{ background: GREEN }} />
           <p
-            className="text-lg leading-[1.85] mb-8"
+            className="text-lg md:text-xl leading-[1.85] mb-8"
             style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
           >
             FLO Mobility builds autonomous robots that work alongside your crew
@@ -326,10 +370,10 @@ const PRODUCTS: {
   {
     number: "01",
     tag: "Material Movement",
-    title: "500–700 kg. Zero driver. Full speed.",
+    title: "500 kg. Zero driver. Full speed.",
     body: "With advanced sensors and autonomous navigation, this efficient and adaptable robot streamlines logistics operations with speed and reliability. Experience optimized efficiency, reduced manual labor, and increased productivity with the Material Movement Bot.",
     stats: [
-      { value: "500–700 kg", label: "Payload" },
+      { value: "500 kg", label: "Payload" },
       { value: "24/7", label: "Operation" },
       { value: "<1 day", label: "Commissioning" },
     ],
@@ -345,22 +389,22 @@ const PRODUCTS: {
   },
   {
     number: "02",
-    tag: "Lawn Maintenance",
-    title: "Precision grounds. Zero labour cost.",
-    body: "Our lawn mowing robot will take care of your lawn, so you can relax and enjoy your free time. Efficient and safe — equipped with sensors that prevent collisions and getting stuck. The cost is less than hiring a traditional lawn service.",
+    tag: "Wall Finishing",
+    title: "Uniform finish. Zero rework. Every wall.",
+    body: "Our wall finishing robot automates sanding and putty application with precision movement — bringing uniformity and consistency to every surface, reducing material wastage, and delivering a superior quality finish at lower cost.",
     stats: [
-      { value: "GPS", label: "Boundary Mapping" },
-      { value: "360°", label: "Sensor Coverage" },
-      { value: "0", label: "Emissions" },
+      { value: "±1 mm", label: "Precision" },
+      { value: "3×", label: "Faster than manual" },
+      { value: "30%", label: "Material savings" },
     ],
     points: [
-      "AI-guided precision mowing with GPS boundaries",
-      "Automatic obstacle detection and avoidance",
-      "Runs continuously with minimal supervision",
+      "Automated putty application and sanding — no manual rework",
+      "Precision movement ensures uniform thickness on every wall",
+      "Reduces material waste and project costs significantly",
     ],
-    media: { type: "video", videoId: "NDvQAb3qPzI" },
-    href: "/offerings/lawn-maintenance",
-    cta: "Explore Lawn Maintenance",
+    media: { type: "video", videoId: "ic9SQMPXoDE" },
+    href: "/offerings/wall-finishing",
+    cta: "Explore Wall Finishing",
     flip: true,
   },
   {
@@ -532,7 +576,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
             </motion.h3>
 
             <motion.p
-              className="text-lg leading-[1.85] mb-8 max-w-lg"
+              className="text-lg md:text-xl leading-[1.85] mb-8 max-w-lg"
               style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
@@ -550,7 +594,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
               {product.points.map((pt) => (
                 <li key={pt} className="flex items-start gap-3">
                   <CheckCircle2 className="w-[18px] h-[18px] mt-0.5 shrink-0" style={{ color: GREEN }} />
-                  <span className="text-base leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{pt}</span>
+                  <span className="text-base md:text-lg leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{pt}</span>
                 </li>
               ))}
             </motion.ul>
@@ -719,7 +763,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
           </motion.h3>
 
           <motion.p
-            className="text-lg leading-[1.85] mb-8 max-w-lg"
+            className="text-lg md:text-xl leading-[1.85] mb-8 max-w-lg"
             style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
@@ -737,7 +781,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
             {product.points.map((pt) => (
               <li key={pt} className="flex items-start gap-3">
                 <CheckCircle2 className="w-[18px] h-[18px] mt-0.5 shrink-0" style={{ color: GREEN }} />
-                <span className="text-base leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                <span className="text-base md:text-lg leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
                   {pt}
                 </span>
               </li>
@@ -782,9 +826,9 @@ function ProductsSection() {
             </RevealText>
           </div>
           <FadeUp delay={0.2} className="pb-2">
-            <p className="text-lg leading-relaxed" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg md:text-xl leading-relaxed" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               We offer autonomous robots on a flexible subscription basis — from
-              material movement and lawn maintenance to complete fleet management —
+              material movement and wall finishing to complete fleet management —
               seamlessly integrating with your existing operations.
             </p>
           </FadeUp>
@@ -831,7 +875,7 @@ function CaseStudySection() {
           </RevealText>
 
           <FadeUp delay={0.3} className="mt-12">
-            <p className="text-lg leading-[1.85] max-w-xl" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg md:text-xl leading-[1.85] max-w-xl" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               Across active construction deployments, Flo's autonomous hauler replaces
               repetitive site transport with predictable, trackable movement. Deployed
               at L&T, PSP Projects, Sobha, Capacite Infra, and Total Environment.
@@ -903,7 +947,7 @@ function CaseStudySection() {
                 >
                   {stat.value}
                 </div>
-                <div className="text-base leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                <div className="text-base md:text-lg leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
                   {stat.label}
                 </div>
               </div>
@@ -971,7 +1015,7 @@ function ProcessStep({ step, index }: { step: (typeof STEPS)[0]; index: number }
         >
           {step.title}
         </h3>
-        <p className="text-lg leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+        <p className="text-lg md:text-xl leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
           {step.body}
         </p>
       </div>
@@ -1024,7 +1068,7 @@ function ProcessSection() {
             </h2>
           </RevealText>
           <FadeUp delay={0.3} className="mt-8">
-            <p className="text-lg leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg md:text-xl leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               Our deployment process is built for real construction sites — not controlled
               labs. Most customers see measurable ROI within the first month of operation.
             </p>
@@ -1087,7 +1131,7 @@ function InvestorCell({ believer, index }: { believer: (typeof BELIEVERS)[0]; in
   return (
     <motion.div
       ref={cellRef}
-      className="relative flex flex-col items-center justify-center px-10 py-16 sm:py-20 border-r border-b cursor-default overflow-hidden group"
+      className="relative flex flex-col items-center justify-center px-5 py-8 sm:py-10 md:py-12 border-r border-b cursor-default overflow-hidden group"
       style={{ borderColor: DIM }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
@@ -1103,7 +1147,7 @@ function InvestorCell({ believer, index }: { believer: (typeof BELIEVERS)[0]; in
       />
 
       {/* logo */}
-      <div className="relative h-20 sm:h-24 w-full max-w-[200px] z-10 transition-transform duration-500 group-hover:scale-105">
+      <div className="relative h-16 sm:h-20 md:h-24 w-full max-w-[200px] z-10 transition-transform duration-500 group-hover:scale-105">
         <Image
           src={believer.logo}
           alt={believer.name}
@@ -1116,7 +1160,7 @@ function InvestorCell({ believer, index }: { believer: (typeof BELIEVERS)[0]; in
 
       {/* name */}
       <p
-        className="relative z-10 mt-5 text-sm font-semibold uppercase tracking-[0.2em] text-center"
+        className="relative z-10 mt-3 text-xs font-semibold uppercase tracking-[0.15em] text-center"
         style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
       >
         {believer.name}
@@ -1162,7 +1206,7 @@ function BelieversSection() {
 
           <FadeUp delay={0.3} className="pb-3">
             <div className="w-px h-10 mb-8" style={{ background: GREEN }} />
-            <p className="text-lg leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg md:text-xl leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               Backed by India's leading venture funds, accelerators,
               and research institutions — fuelling FLO's mission to
               automate construction at scale.
@@ -1183,7 +1227,7 @@ function BelieversSection() {
       {/* ── Bottom caption ── */}
       <div className="w-full border-t px-6 md:px-16 lg:px-24 xl:px-32 py-8 md:py-10" style={{ borderColor: DIM }}>
         <FadeUp>
-          <p className="text-base text-center" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+          <p className="text-base md:text-lg text-center" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
             Supported by India's leading venture funds, accelerators, and research institutions
           </p>
         </FadeUp>
@@ -1236,7 +1280,7 @@ function LogoCell({ customer, index }: { customer: (typeof ALL_CUSTOMERS)[0]; in
   return (
     <motion.div
       ref={cellRef}
-      className="relative flex flex-col items-center justify-center px-8 py-16 sm:py-20 border-r border-b cursor-default overflow-hidden"
+      className="relative flex flex-col items-center justify-center px-4 py-8 sm:py-10 md:py-12 border-r border-b cursor-default overflow-hidden"
       style={{ borderColor: DIM }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
@@ -1252,20 +1296,20 @@ function LogoCell({ customer, index }: { customer: (typeof ALL_CUSTOMERS)[0]; in
       />
 
       {/* Logo — always full opacity, no fade */}
-      <div className="relative h-20 sm:h-24 w-full max-w-[220px] z-10">
+      <div className="relative h-16 sm:h-20 md:h-24 w-full max-w-[200px] z-10">
         <Image
           src={customer.logo}
           alt={customer.name}
           fill
           className="object-contain"
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+          sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 16vw"
           quality={100}
         />
       </div>
 
       {/* Company name */}
       <p
-        className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-center mt-5"
+        className="relative z-10 text-xs font-semibold uppercase tracking-[0.15em] text-center mt-3"
         style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
       >
         {customer.name}
@@ -1309,7 +1353,7 @@ function CustomersSection() {
           </div>
           <FadeUp delay={0.3} className="pb-3">
             <div className="w-px h-10 mb-8" style={{ background: GREEN }} />
-            <p className="text-lg leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg md:text-xl leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               From construction giants to innovative infrastructure companies,
               our autonomous robots are transforming workflows across India's
               most active construction sites.
@@ -1321,7 +1365,7 @@ function CustomersSection() {
       {/* Full-bleed logo grid — Terminal Industries style */}
       {/* container: border-t + border-l; each cell: border-r + border-b = perfect grid */}
       <div className="w-full border-t border-l" style={{ borderColor: DIM }}>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-6">
           {ALL_CUSTOMERS.map((c, i) => (
             <LogoCell key={c.name} customer={c} index={i} />
           ))}
@@ -1331,7 +1375,7 @@ function CustomersSection() {
       {/* Bottom caption — no external link */}
       <div className="w-full border-t px-6 md:px-16 lg:px-24 xl:px-32 py-8 md:py-10" style={{ borderColor: DIM }}>
         <FadeUp>
-          <p className="text-base text-center" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+          <p className="text-base md:text-lg text-center" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
             Trusted by industry leaders worldwide
           </p>
         </FadeUp>
@@ -1346,7 +1390,7 @@ const TESTIMONIALS = [
   { quote: "Flo Mobility's autonomous robots have transformed our construction site operations. We've seen a 40% increase in productivity and significantly improved safety standards.", name: "Rajesh Kumar", role: "Project Manager", company: "L&T Construction" },
   { quote: "The fleet control system is incredibly intuitive. Managing multiple robots across different sites has never been easier. This technology is a game-changer.", name: "Sarah Thompson", role: "Operations Director", company: "Shapoorji Pallonji" },
   { quote: "We've reduced our material movement costs by 35% since implementing Flo's autonomous solutions. The ROI was evident within the first quarter itself.", name: "Amit Patel", role: "CEO", company: "Buildtech Solutions" },
-  { quote: "Their lawn maintenance robots have freed up our team to focus on more specialised tasks. The precision and reliability are outstanding.", name: "Maria Garcia", role: "Facilities Manager", company: "Embassy Group" },
+  { quote: "Their wall finishing robot has eliminated rework entirely on our sites. The precision and consistency are outstanding — every wall comes out perfect.", name: "Maria Garcia", role: "Facilities Manager", company: "Embassy Group" },
   { quote: "The customer support and ongoing innovation from Flo Mobility keeps us ahead of the competition. They're not just a vendor — they're a true partner.", name: "David Chen", role: "VP Operations", company: "Prestige Group" },
   { quote: "From deployment to daily operations, the entire experience has been seamless. The autonomous robots integrate perfectly with our existing workflows.", name: "Priya Sharma", role: "Site Supervisor", company: "Tata Projects" },
 ];
@@ -1612,7 +1656,7 @@ const TECH_CARDS: {
     tagline: "The robot itself.",
     Icon: Cpu,
     specs: [
-      { value: "500–700 kg", label: "Payload" },
+      { value: "500 kg", label: "Payload" },
       { value: "IP65",       label: "Dust Sealed" },
       { value: "<1 day",     label: "Deploy Time" },
     ],
@@ -1759,7 +1803,7 @@ function TechSection() {
         <FadeUp delay={0.2} className="pb-2">
           <div className="w-px h-10 mb-7" style={{ background: GREEN }} />
           <p
-            className="text-lg leading-[1.85]"
+            className="text-lg md:text-xl leading-[1.85]"
             style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
           >
             FLO owns every layer of the stack — from the robot chassis to the
@@ -1889,7 +1933,7 @@ export default function Home() {
       <HeroWithScroll />
       <ProofBar />
       <MissionSection />
-      <StatsSection />
+      <ImageShowcaseSection />
       <ProductsSection />
       {/* <CaseStudySection /> */}
       {/* <ProcessSection /> */}

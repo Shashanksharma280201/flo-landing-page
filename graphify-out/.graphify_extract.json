@@ -1,0 +1,4491 @@
+{
+  "nodes": [
+    {
+      "id": "robot_scroll",
+      "label": "robot-scroll.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "robot_scroll_loadingscreen",
+      "label": "LoadingScreen()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L13"
+    },
+    {
+      "id": "robot_scroll_render",
+      "label": "render()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L309"
+    },
+    {
+      "id": "robot_scroll_schedulerender",
+      "label": "scheduleRender()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L364"
+    },
+    {
+      "id": "robot_scroll_handleresize",
+      "label": "handleResize()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L372"
+    },
+    {
+      "id": "hero_with_scroll",
+      "label": "hero-with-scroll.tsx",
+      "file_type": "code",
+      "source_file": "src/components/hero-with-scroll.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "hero_with_scroll_loadingscreen",
+      "label": "LoadingScreen()",
+      "file_type": "code",
+      "source_file": "src/components/hero-with-scroll.tsx",
+      "source_location": "L30"
+    },
+    {
+      "id": "hero_with_scroll_draw",
+      "label": "draw()",
+      "file_type": "code",
+      "source_file": "src/components/hero-with-scroll.tsx",
+      "source_location": "L274"
+    },
+    {
+      "id": "hero_with_scroll_schedule",
+      "label": "schedule()",
+      "file_type": "code",
+      "source_file": "src/components/hero-with-scroll.tsx",
+      "source_location": "L315"
+    },
+    {
+      "id": "hero_section",
+      "label": "hero-section.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/hero-section.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "dot_pattern",
+      "label": "dot-pattern.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/dot-pattern.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "dot_pattern_dotpattern",
+      "label": "DotPattern()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/dot-pattern.tsx",
+      "source_location": "L10"
+    },
+    {
+      "id": "particles",
+      "label": "particles.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/particles.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "particles_particles",
+      "label": "Particles()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/particles.tsx",
+      "source_location": "L22"
+    },
+    {
+      "id": "navigation_menu",
+      "label": "navigation-menu.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "navigation_menu_cn",
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L39"
+    },
+    {
+      "id": "navigation_menu_navigationmenutrigger",
+      "label": "NavigationMenuTrigger()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L65"
+    },
+    {
+      "id": "navigation_menu_navigationmenucontent",
+      "label": "NavigationMenuContent()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L85"
+    },
+    {
+      "id": "navigation_menu_navigationmenuviewport",
+      "label": "NavigationMenuViewport()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L102"
+    },
+    {
+      "id": "infinite_moving_cards",
+      "label": "infinite-moving-cards.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "infinite_moving_cards_addanimation",
+      "label": "addAnimation()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L32"
+    },
+    {
+      "id": "infinite_moving_cards_getdirection",
+      "label": "getDirection()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L57"
+    },
+    {
+      "id": "infinite_moving_cards_getspeed",
+      "label": "getSpeed()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L73"
+    },
+    {
+      "id": "avatar",
+      "label": "avatar.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "avatar_avatar",
+      "label": "Avatar()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "avatar_avatarfallback",
+      "label": "AvatarFallback()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L41"
+    },
+    {
+      "id": "avatar_cn",
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L61"
+    },
+    {
+      "id": "card",
+      "label": "card.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "card_cn",
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L9"
+    },
+    {
+      "id": "card_carddescription",
+      "label": "CardDescription()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L41"
+    },
+    {
+      "id": "card_cardfooter",
+      "label": "CardFooter()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L74"
+    },
+    {
+      "id": "button",
+      "label": "button.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/button.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "button_cn",
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/button.tsx",
+      "source_location": "L58"
+    },
+    {
+      "id": "progressive_blur",
+      "label": "progressive-blur.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/progressive-blur.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "sheet",
+      "label": "sheet.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "sheet_sheet",
+      "label": "Sheet()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L9"
+    },
+    {
+      "id": "sheet_sheettrigger",
+      "label": "SheetTrigger()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L13"
+    },
+    {
+      "id": "sheet_sheetclose",
+      "label": "SheetClose()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L19"
+    },
+    {
+      "id": "sheet_sheetportal",
+      "label": "SheetPortal()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L25"
+    },
+    {
+      "id": "sheet_cn",
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L62"
+    },
+    {
+      "id": "sheet_sheetdescription",
+      "label": "SheetDescription()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L121"
+    },
+    {
+      "id": "fade_in",
+      "label": "fade-in.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/fade-in.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "fade_in_fadein",
+      "label": "FadeIn()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/fade-in.tsx",
+      "source_location": "L13"
+    },
+    {
+      "id": "container_scroll_animation",
+      "label": "container-scroll-animation.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/container-scroll-animation.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "container_scroll_animation_containerscroll",
+      "label": "ContainerScroll()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/container-scroll-animation.tsx",
+      "source_location": "L6"
+    },
+    {
+      "id": "container_scroll_animation_header",
+      "label": "Header()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/container-scroll-animation.tsx",
+      "source_location": "L67"
+    },
+    {
+      "id": "container_scroll_animation_card",
+      "label": "Card()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/container-scroll-animation.tsx",
+      "source_location": "L86"
+    },
+    {
+      "id": "triangle_pattern",
+      "label": "triangle-pattern.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/triangle-pattern.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "triangle_pattern_trianglepattern",
+      "label": "TrianglePattern()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/triangle-pattern.tsx",
+      "source_location": "L10"
+    },
+    {
+      "id": "antigravity",
+      "label": "Antigravity.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/Antigravity.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "antigravity_generateparticles",
+      "label": "generateParticles()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/Antigravity.tsx",
+      "source_location": "L32"
+    },
+    {
+      "id": "counter",
+      "label": "counter.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/counter.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "counter_counter",
+      "label": "Counter()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/counter.tsx",
+      "source_location": "L12"
+    },
+    {
+      "id": "wavy_background",
+      "label": "wavy-background.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/wavy-background.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "wavy_background_wavybackground",
+      "label": "WavyBackground()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/wavy-background.tsx",
+      "source_location": "L6"
+    },
+    {
+      "id": "textarea",
+      "label": "textarea.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/textarea.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "textarea_cn",
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/textarea.tsx",
+      "source_location": "L9"
+    },
+    {
+      "id": "label",
+      "label": "label.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/label.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "label_label",
+      "label": "Label()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/label.tsx",
+      "source_location": "L6"
+    },
+    {
+      "id": "parallax_scroll",
+      "label": "parallax-scroll.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/parallax-scroll.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "magicui_dot_pattern",
+      "label": "magicui-dot-pattern.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/magicui-dot-pattern.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "magicui_dot_pattern_update",
+      "label": "update()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/magicui-dot-pattern.tsx",
+      "source_location": "L36"
+    },
+    {
+      "id": "smooth_scroll_hero",
+      "label": "smooth-scroll-hero.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/smooth-scroll-hero.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "input",
+      "label": "input.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/input.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "input_input",
+      "label": "Input()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/input.tsx",
+      "source_location": "L5"
+    },
+    {
+      "id": "circle_pattern",
+      "label": "circle-pattern.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/circle-pattern.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "circle_pattern_circlepattern",
+      "label": "CirclePattern()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/circle-pattern.tsx",
+      "source_location": "L10"
+    },
+    {
+      "id": "laser_flow",
+      "label": "laser-flow.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/laser-flow.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "laser_flow_laserflow",
+      "label": "LaserFlow()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/laser-flow.tsx",
+      "source_location": "L266"
+    },
+    {
+      "id": "accordion",
+      "label": "accordion.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "accordion_accordion",
+      "label": "Accordion()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L9"
+    },
+    {
+      "id": "accordion_accordionitem",
+      "label": "AccordionItem()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L15"
+    },
+    {
+      "id": "accordion_accordiontrigger",
+      "label": "AccordionTrigger()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L28"
+    },
+    {
+      "id": "lenis_provider",
+      "label": "lenis-provider.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/lenis-provider.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "lenis_provider_lenisprovider",
+      "label": "LenisProvider()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/lenis-provider.tsx",
+      "source_location": "L16"
+    },
+    {
+      "id": "scroll_progress",
+      "label": "scroll-progress.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/scroll-progress.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "scroll_progress_scrollprogress",
+      "label": "ScrollProgress()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/scroll-progress.tsx",
+      "source_location": "L5"
+    },
+    {
+      "id": "footer",
+      "label": "footer.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/footer.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "site_chrome",
+      "label": "site-chrome.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/site-chrome.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "site_chrome_sitechrome",
+      "label": "SiteChrome()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/site-chrome.tsx",
+      "source_location": "L13"
+    },
+    {
+      "id": "navbar",
+      "label": "navbar.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "navbar_isactive",
+      "label": "isActive()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L149"
+    },
+    {
+      "id": "video_player",
+      "label": "video-player.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/video-player.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "video_player_handleplay",
+      "label": "handlePlay()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/video-player.tsx",
+      "source_location": "L55"
+    },
+    {
+      "id": "pageloaderprovider",
+      "label": "PageLoaderProvider.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoaderProvider.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "pageloaderprovider_pageloaderprovider",
+      "label": "PageLoaderProvider()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoaderProvider.tsx",
+      "source_location": "L13"
+    },
+    {
+      "id": "pageloader",
+      "label": "PageLoader.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoader.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "pageloader_pageloader",
+      "label": "PageLoader()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoader.tsx",
+      "source_location": "L12"
+    },
+    {
+      "id": "featuredpost",
+      "label": "FeaturedPost.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "featuredpost_featuredpost",
+      "label": "FeaturedPost()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L16"
+    },
+    {
+      "id": "blogcard",
+      "label": "BlogCard.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogCard.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "blogcard_blogcard",
+      "label": "BlogCard()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogCard.tsx",
+      "source_location": "L19"
+    },
+    {
+      "id": "sharedtitle",
+      "label": "SharedTitle.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/SharedTitle.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "sharedtitle_sharedtitle",
+      "label": "SharedTitle()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/SharedTitle.tsx",
+      "source_location": "L13"
+    },
+    {
+      "id": "bloggrid",
+      "label": "BlogGrid.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogGrid.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "bloggrid_bloggrid",
+      "label": "BlogGrid()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogGrid.tsx",
+      "source_location": "L21"
+    },
+    {
+      "id": "scroll_demo_section",
+      "label": "scroll-demo-section.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/scroll-demo-section.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "scroll_demo_section_scrolldemosection",
+      "label": "ScrollDemoSection()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/scroll-demo-section.tsx",
+      "source_location": "L6"
+    },
+    {
+      "id": "testimonials",
+      "label": "testimonials.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/testimonials.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "faq",
+      "label": "faq.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/faq.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "faq_faq",
+      "label": "FAQ()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/faq.tsx",
+      "source_location": "L27"
+    },
+    {
+      "id": "stats_bar_graph",
+      "label": "stats-bar-graph.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-bar-graph.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "stats_bar_graph_animatedmetricvalue",
+      "label": "AnimatedMetricValue()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-bar-graph.tsx",
+      "source_location": "L19"
+    },
+    {
+      "id": "stats_section",
+      "label": "stats-section.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-section.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "stats_section_statssection",
+      "label": "StatsSection()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-section.tsx",
+      "source_location": "L32"
+    },
+    {
+      "id": "raas_section",
+      "label": "raas-section.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/raas-section.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "case_study_section",
+      "label": "case-study-section.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/case-study-section.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "hero",
+      "label": "hero.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/hero.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "customers_section",
+      "label": "customers-section.tsx",
+      "file_type": "code",
+      "source_file": "src/components/sections/customers-section.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "customers_section_scroll",
+      "label": "scroll()",
+      "file_type": "code",
+      "source_file": "src/components/sections/customers-section.tsx",
+      "source_location": "L25"
+    },
+    {
+      "id": "mmr_section",
+      "label": "mmr-section.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/mmr-section.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "mmr_section_cardinner",
+      "label": "CardInner()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/mmr-section.tsx",
+      "source_location": "L30"
+    },
+    {
+      "id": "mmr_section_mmrsection",
+      "label": "MmrSection()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/mmr-section.tsx",
+      "source_location": "L62"
+    },
+    {
+      "id": "logo_showcase",
+      "label": "logo-showcase.tsx",
+      "file_type": "code",
+      "source_file": "src/components/sections/logo-showcase.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "logo_showcase_scroll",
+      "label": "scroll()",
+      "file_type": "code",
+      "source_file": "src/components/sections/logo-showcase.tsx",
+      "source_location": "L29"
+    },
+    {
+      "id": "testimonials_section",
+      "label": "testimonials-section.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/testimonials-section.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "alternating_timeline",
+      "label": "alternating-timeline.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/about/alternating-timeline.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "scroll_timeline",
+      "label": "scroll-timeline.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/about/scroll-timeline.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "scroll_timeline_timelineitem",
+      "label": "TimelineItem()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/about/scroll-timeline.tsx",
+      "source_location": "L99"
+    },
+    {
+      "id": "contact_info",
+      "label": "contact-info.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-info.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "contact_form",
+      "label": "contact-form.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "contact_form_inputfield",
+      "label": "InputField()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L61"
+    },
+    {
+      "id": "contact_form_submitbutton",
+      "label": "SubmitButton()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L80"
+    },
+    {
+      "id": "contact_form_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L107"
+    },
+    {
+      "id": "specs",
+      "label": "specs.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/specs.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "process",
+      "label": "process.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/process.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "features",
+      "label": "features.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/features.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "hero",
+      "label": "hero.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/hero.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "specs",
+      "label": "specs.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/specs.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "metrics",
+      "label": "metrics.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/metrics.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "features",
+      "label": "features.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/features.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "hero",
+      "label": "hero.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/hero.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "cta",
+      "label": "cta.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/cta.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "features",
+      "label": "features.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/features.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "hero",
+      "label": "hero.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/hero.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "showcase",
+      "label": "showcase.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/showcase.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "circuit_lines",
+      "label": "circuit-lines.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/circuit-lines.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "circuit_lines_circuitlines",
+      "label": "CircuitLines()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/circuit-lines.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "construction_grid",
+      "label": "construction-grid.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/construction-grid.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "construction_grid_constructiongrid",
+      "label": "ConstructionGrid()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/construction-grid.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "hexagon_grid",
+      "label": "hexagon-grid.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/hexagon-grid.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "hexagon_grid_hexagongrid",
+      "label": "HexagonGrid()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/hexagon-grid.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "use_has_mounted",
+      "label": "use-has-mounted.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/use-has-mounted.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "use_has_mounted_usehasmounted",
+      "label": "useHasMounted()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/use-has-mounted.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "use_intersection_observer",
+      "label": "use-intersection-observer.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/use-intersection-observer.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "use_intersection_observer_useintersectionobserver",
+      "label": "useIntersectionObserver()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/use-intersection-observer.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "userevealonload",
+      "label": "useRevealOnLoad.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/useRevealOnLoad.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "userevealonload_userevealonload",
+      "label": "useRevealOnLoad()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/useRevealOnLoad.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "db",
+      "label": "db.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/db.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "db_dbconnect",
+      "label": "dbConnect()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/db.ts",
+      "source_location": "L30"
+    },
+    {
+      "id": "constants",
+      "label": "constants.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/constants.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "blog",
+      "label": "blog.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/blog.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "blog_getpostbyslug",
+      "label": "getPostBySlug()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/blog.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "blog_getallposts",
+      "label": "getAllPosts()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/blog.ts",
+      "source_location": "L29"
+    },
+    {
+      "id": "utils",
+      "label": "utils.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/utils.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "utils_cn",
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/utils.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "blogpost",
+      "label": "BlogPost.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/models/BlogPost.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "layout",
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "layout_rootlayout",
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L27"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/about/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "page_onmove",
+      "label": "onMove()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L269"
+    },
+    {
+      "id": "page_onleave",
+      "label": "onLeave()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L277"
+    },
+    {
+      "id": "layout",
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/layout.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "not_found",
+      "label": "not-found.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/not-found.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "not_found_notfound",
+      "label": "NotFound()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/not-found.tsx",
+      "source_location": "L4"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "page_generatestaticparams",
+      "label": "generateStaticParams()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L11"
+    },
+    {
+      "id": "page_generatemetadata",
+      "label": "generateMetadata()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L18"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/channel-partner/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "page_onmove",
+      "label": "onMove()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L267"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/material-movement/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/lawn-maintenance/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "page",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/fleet-control/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "form_actions",
+      "label": "form-actions.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/actions/form-actions.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "form_actions_submitformaction",
+      "label": "submitFormAction()",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/actions/form-actions.ts",
+      "source_location": "L11"
+    },
+    {
+      "id": "index",
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/types/index.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "robot_scroll",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "robot_scroll",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "robot_scroll",
+      "target": "robot_scroll_loadingscreen",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "robot_scroll",
+      "target": "robot_scroll_render",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L309",
+      "weight": 1.0
+    },
+    {
+      "source": "robot_scroll",
+      "target": "robot_scroll_schedulerender",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L364",
+      "weight": 1.0
+    },
+    {
+      "source": "robot_scroll",
+      "target": "robot_scroll_handleresize",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L372",
+      "weight": 1.0
+    },
+    {
+      "source": "robot_scroll_handleresize",
+      "target": "robot_scroll_schedulerender",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/robot-scroll.tsx",
+      "source_location": "L372",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_with_scroll",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/hero-with-scroll.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_with_scroll",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/hero-with-scroll.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_with_scroll",
+      "target": "hero_with_scroll_loadingscreen",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/hero-with-scroll.tsx",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_with_scroll",
+      "target": "hero_with_scroll_draw",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/hero-with-scroll.tsx",
+      "source_location": "L274",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_with_scroll",
+      "target": "hero_with_scroll_schedule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/hero-with-scroll.tsx",
+      "source_location": "L315",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_section",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/hero-section.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_section",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/hero-section.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_section",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/hero-section.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_section",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/hero-section.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "hero_section",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/hero-section.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "dot_pattern",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/dot-pattern.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "dot_pattern",
+      "target": "dot_pattern_dotpattern",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/dot-pattern.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "particles",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/particles.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "particles",
+      "target": "particles_particles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/particles.tsx",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_menu",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_menu",
+      "target": "class_variance_authority",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_menu",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_menu",
+      "target": "radix_ui",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_menu",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_menu",
+      "target": "navigation_menu_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_menu",
+      "target": "navigation_menu_navigationmenutrigger",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_menu",
+      "target": "navigation_menu_navigationmenucontent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_menu",
+      "target": "navigation_menu_navigationmenuviewport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/navigation-menu.tsx",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "infinite_moving_cards",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "infinite_moving_cards",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "infinite_moving_cards",
+      "target": "infinite_moving_cards_addanimation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "infinite_moving_cards",
+      "target": "infinite_moving_cards_getdirection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "infinite_moving_cards",
+      "target": "infinite_moving_cards_getspeed",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "infinite_moving_cards_addanimation",
+      "target": "infinite_moving_cards_getdirection",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "infinite_moving_cards_addanimation",
+      "target": "infinite_moving_cards_getspeed",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/infinite-moving-cards.tsx",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "avatar",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "avatar",
+      "target": "radix_ui",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "avatar",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "avatar",
+      "target": "avatar_avatar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "avatar",
+      "target": "avatar_avatarfallback",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "avatar",
+      "target": "avatar_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "avatar",
+      "target": "avatar_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "avatar",
+      "target": "avatar_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/avatar.tsx",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "card",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "card",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "card",
+      "target": "card_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "card",
+      "target": "card_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "card",
+      "target": "card_carddescription",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "card",
+      "target": "card_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "card",
+      "target": "card_cardfooter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/card.tsx",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "button",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/button.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "button",
+      "target": "class_variance_authority",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/button.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "button",
+      "target": "radix_ui",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/button.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "button",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/button.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "button",
+      "target": "button_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/button.tsx",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "progressive_blur",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/progressive-blur.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "progressive_blur",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/progressive-blur.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "radix_ui",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "sheet_sheet",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "sheet_sheettrigger",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "sheet_sheetclose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "sheet_sheetportal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "sheet_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "sheet",
+      "target": "sheet_sheetdescription",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/sheet.tsx",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "fade_in",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/fade-in.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "fade_in",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/fade-in.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "fade_in",
+      "target": "fade_in_fadein",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/fade-in.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "container_scroll_animation",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/container-scroll-animation.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "container_scroll_animation",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/container-scroll-animation.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "container_scroll_animation",
+      "target": "container_scroll_animation_containerscroll",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/container-scroll-animation.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "container_scroll_animation",
+      "target": "container_scroll_animation_header",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/container-scroll-animation.tsx",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "container_scroll_animation",
+      "target": "container_scroll_animation_card",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/container-scroll-animation.tsx",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "triangle_pattern",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/triangle-pattern.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "triangle_pattern",
+      "target": "triangle_pattern_trianglepattern",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/triangle-pattern.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "antigravity",
+      "target": "fiber",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/Antigravity.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "antigravity",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/Antigravity.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "antigravity",
+      "target": "three",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/Antigravity.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "antigravity",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/Antigravity.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "antigravity",
+      "target": "antigravity_generateparticles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/Antigravity.tsx",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "counter",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/counter.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "counter",
+      "target": "counter_counter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/counter.tsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "wavy_background",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/wavy-background.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "wavy_background",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/wavy-background.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "wavy_background",
+      "target": "simplex_noise",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/wavy-background.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "wavy_background",
+      "target": "wavy_background_wavybackground",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/wavy-background.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "textarea",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/textarea.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "textarea",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/textarea.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "textarea",
+      "target": "textarea_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/textarea.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "label",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/label.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "label",
+      "target": "radix_ui",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/label.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "label",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/label.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "label",
+      "target": "label_label",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/label.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "parallax_scroll",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/parallax-scroll.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "parallax_scroll",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/parallax-scroll.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "parallax_scroll",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/parallax-scroll.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "parallax_scroll",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/parallax-scroll.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "parallax_scroll",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/parallax-scroll.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "magicui_dot_pattern",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/magicui-dot-pattern.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "magicui_dot_pattern",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/magicui-dot-pattern.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "magicui_dot_pattern",
+      "target": "magicui_dot_pattern_update",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/magicui-dot-pattern.tsx",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "smooth_scroll_hero",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/smooth-scroll-hero.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "smooth_scroll_hero",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/smooth-scroll-hero.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "input",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/input.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "input",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/input.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "input",
+      "target": "input_input",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/input.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "circle_pattern",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/circle-pattern.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "circle_pattern",
+      "target": "circle_pattern_circlepattern",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/circle-pattern.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "laser_flow",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/laser-flow.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "laser_flow",
+      "target": "three",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/laser-flow.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "laser_flow",
+      "target": "laser_flow_css",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/laser-flow.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "laser_flow",
+      "target": "laser_flow_laserflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/laser-flow.tsx",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "accordion",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "accordion",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "accordion",
+      "target": "radix_ui",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "accordion",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "accordion",
+      "target": "accordion_accordion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "accordion",
+      "target": "accordion_accordionitem",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "accordion",
+      "target": "accordion_accordiontrigger",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/ui/accordion.tsx",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "lenis_provider",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/lenis-provider.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "lenis_provider",
+      "target": "lenis",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/lenis-provider.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "lenis_provider",
+      "target": "lenis_provider_lenisprovider",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/lenis-provider.tsx",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "scroll_progress",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/scroll-progress.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "scroll_progress",
+      "target": "scroll_progress_scrollprogress",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/scroll-progress.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "footer",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/footer.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "footer",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/footer.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "footer",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/footer.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "footer",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/footer.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "footer",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/footer.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "site_chrome",
+      "target": "lenis_provider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/site-chrome.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "site_chrome",
+      "target": "site_chrome_sitechrome",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/site-chrome.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "navbar",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "navbar",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "navbar",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "navbar",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "navbar",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "navbar",
+      "target": "constants",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "navbar",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "navbar",
+      "target": "navbar_isactive",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/navbar.tsx",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "video_player",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/video-player.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "video_player",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/video-player.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "video_player",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/video-player.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "video_player",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/video-player.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "video_player",
+      "target": "use_intersection_observer",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/video-player.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "video_player",
+      "target": "use_has_mounted",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/video-player.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "video_player",
+      "target": "video_player_handleplay",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/shared/video-player.tsx",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "pageloaderprovider",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoaderProvider.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "pageloaderprovider",
+      "target": "pageloader",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoaderProvider.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "pageloaderprovider",
+      "target": "pageloaderprovider_pageloaderprovider",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoaderProvider.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "pageloader",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoader.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "pageloader",
+      "target": "pageloader_module_css",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoader.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "pageloader",
+      "target": "pageloader_pageloader",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/PageLoader/PageLoader.tsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "featuredpost",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "featuredpost",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "featuredpost",
+      "target": "button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "featuredpost",
+      "target": "types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "featuredpost",
+      "target": "date_fns",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "featuredpost",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "featuredpost",
+      "target": "sharedtitle",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "featuredpost",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "featuredpost",
+      "target": "featuredpost_featuredpost",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/FeaturedPost.tsx",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "blogcard",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogCard.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "blogcard",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "blogcard",
+      "target": "card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogCard.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "blogcard",
+      "target": "types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogCard.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "blogcard",
+      "target": "date_fns",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogCard.tsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "blogcard",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogCard.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "blogcard",
+      "target": "blogcard_blogcard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogCard.tsx",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "sharedtitle",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/SharedTitle.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "sharedtitle",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/SharedTitle.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "sharedtitle",
+      "target": "sharedtitle_sharedtitle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/SharedTitle.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "bloggrid",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogGrid.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "bloggrid",
+      "target": "blogcard",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogGrid.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "bloggrid",
+      "target": "types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogGrid.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "bloggrid",
+      "target": "bloggrid_bloggrid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/blog/BlogGrid.tsx",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "scroll_demo_section",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/scroll-demo-section.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "scroll_demo_section",
+      "target": "container_scroll_animation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/scroll-demo-section.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "scroll_demo_section",
+      "target": "scroll_demo_section_scrolldemosection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/scroll-demo-section.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "testimonials",
+      "target": "avatar",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/testimonials.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "testimonials",
+      "target": "card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/testimonials.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "testimonials",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/testimonials.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "faq",
+      "target": "accordion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/faq.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "faq",
+      "target": "faq_faq",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/faq.tsx",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "stats_bar_graph",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-bar-graph.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "stats_bar_graph",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-bar-graph.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "stats_bar_graph",
+      "target": "use_intersection_observer",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-bar-graph.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "stats_bar_graph",
+      "target": "stats_bar_graph_animatedmetricvalue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-bar-graph.tsx",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "stats_section",
+      "target": "magicui_dot_pattern",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-section.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "stats_section",
+      "target": "stats_bar_graph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-section.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "stats_section",
+      "target": "stats_section_statssection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/stats-section.tsx",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "raas_section",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/raas-section.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "raas_section",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/raas-section.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "raas_section",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/raas-section.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "raas_section",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/raas-section.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "raas_section",
+      "target": "use_intersection_observer",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/raas-section.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "case_study_section",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/case-study-section.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "case_study_section",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/case-study-section.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "case_study_section",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/case-study-section.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "case_study_section",
+      "target": "magicui_dot_pattern",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/case-study-section.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/hero.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/hero.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/hero.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/hero.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "magicui_dot_pattern",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/hero.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "constants",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/hero.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "customers_section",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/sections/customers-section.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "customers_section",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/sections/customers-section.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "customers_section",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/sections/customers-section.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "customers_section",
+      "target": "constants",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/sections/customers-section.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "customers_section",
+      "target": "customers_section_scroll",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/sections/customers-section.tsx",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "mmr_section",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/mmr-section.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "mmr_section",
+      "target": "mmr_section_cardinner",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/mmr-section.tsx",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "mmr_section",
+      "target": "mmr_section_mmrsection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/mmr-section.tsx",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "logo_showcase",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/sections/logo-showcase.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "logo_showcase",
+      "target": "constants",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/sections/logo-showcase.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "logo_showcase",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/sections/logo-showcase.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "logo_showcase",
+      "target": "logo_showcase_scroll",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/sections/logo-showcase.tsx",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "alternating_timeline",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/about/alternating-timeline.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "scroll_timeline",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/about/scroll-timeline.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "scroll_timeline",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/about/scroll-timeline.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "scroll_timeline",
+      "target": "scroll_timeline_timelineitem",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/about/scroll-timeline.tsx",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_info",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-info.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_form",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_form",
+      "target": "react_dom",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_form",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_form",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_form",
+      "target": "form_actions",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_form",
+      "target": "contact_form_inputfield",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_form",
+      "target": "contact_form_submitbutton",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_form",
+      "target": "contact_form_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/contact/contact-form.tsx",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "specs",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/specs.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "specs",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/specs.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "specs",
+      "target": "video_player",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/specs.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "process",
+      "target": "magicui_dot_pattern",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/process.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "features",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/features.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/hero.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/hero.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "video_player",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/hero.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "magicui_dot_pattern",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/material-movement/hero.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "specs",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/specs.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "specs",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/specs.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/hero.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/hero.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "video_player",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/hero.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "magicui_dot_pattern",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/lawn-maintenance/hero.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "cta",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/cta.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "cta",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/cta.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/hero.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/hero.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/hero.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "hero",
+      "target": "magicui_dot_pattern",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/sections/fleet-control/hero.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "circuit_lines",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/circuit-lines.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "circuit_lines",
+      "target": "circuit_lines_circuitlines",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/circuit-lines.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "construction_grid",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/construction-grid.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "construction_grid",
+      "target": "construction_grid_constructiongrid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/construction-grid.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "hexagon_grid",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/hexagon-grid.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "hexagon_grid",
+      "target": "hexagon_grid_hexagongrid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/components/patterns/hexagon-grid.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "use_has_mounted",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/use-has-mounted.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "use_has_mounted",
+      "target": "use_has_mounted_usehasmounted",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/use-has-mounted.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "use_intersection_observer",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/use-intersection-observer.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "use_intersection_observer",
+      "target": "use_intersection_observer_useintersectionobserver",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/use-intersection-observer.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "userevealonload",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/useRevealOnLoad.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "userevealonload",
+      "target": "userevealonload_userevealonload",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/hooks/useRevealOnLoad.ts",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "db",
+      "target": "mongoose",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/db.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "db",
+      "target": "db_dbconnect",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/db.ts",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "blog",
+      "target": "db",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/blog.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "blog",
+      "target": "blogpost",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/blog.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "blog",
+      "target": "types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/blog.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "blog",
+      "target": "blog_getpostbyslug",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/blog.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "blog",
+      "target": "blog_getallposts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/blog.ts",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "utils",
+      "target": "clsx",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/utils.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "utils",
+      "target": "tailwind_merge",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/utils.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "utils",
+      "target": "utils_cn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/lib/utils.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "blogpost",
+      "target": "mongoose",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/models/BlogPost.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "blogpost",
+      "target": "types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/models/BlogPost.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "next",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "google",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "globals_css",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "navbar",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "footer",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "pageloaderprovider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "site_chrome",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "layout_rootlayout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/layout.tsx",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "hero_with_scroll",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/about/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/about/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/about/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/about/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/about/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "contact_form",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "page_onmove",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L269",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "page_onleave",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/contact/page.tsx",
+      "source_location": "L277",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "dynamic",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "layout",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/layout.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "blog",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "bloggrid",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "featuredpost",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "not_found",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/not-found.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "not_found",
+      "target": "button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/not-found.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "not_found",
+      "target": "not_found_notfound",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/not-found.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "navigation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "blog",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "date_fns",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "isomorphic_dompurify",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "page_generatestaticparams",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "page_generatemetadata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "sharedtitle",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/blogs/[slug]/page.tsx",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/channel-partner/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/channel-partner/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/channel-partner/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/channel-partner/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/channel-partner/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react_dom",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/channel-partner/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "form_actions",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/channel-partner/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/channel-partner/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react_dom",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "constants",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "form_actions",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "page_onmove",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/careers/page.tsx",
+      "source_location": "L267",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/material-movement/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/material-movement/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/material-movement/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/material-movement/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/material-movement/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/lawn-maintenance/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/lawn-maintenance/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/lawn-maintenance/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/lawn-maintenance/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/lawn-maintenance/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/fleet-control/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "image",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/fleet-control/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/fleet-control/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "framer_motion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/fleet-control/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "page",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/offerings/fleet-control/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "form_actions",
+      "target": "nodemailer",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/actions/form-actions.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "form_actions",
+      "target": "form_actions_submitformaction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/shanks/Videos/flo-landing-page/src/app/actions/form-actions.ts",
+      "source_location": "L11",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
