@@ -6,7 +6,8 @@ import Link from "next/link";
 import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { HeroWithScroll } from "@/components/hero-with-scroll";
 import { StatsSection } from "@/components/sections/stats-section";
-import { ArrowRight, CheckCircle2, ArrowUpRight, Play } from "lucide-react";
+import { ArrowRight, CheckCircle2, ArrowUpRight, Play, Cpu, Eye, Navigation2, LayoutDashboard } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 // ─── Design tokens — FLO brand light theme ───────────────────────────────────
 const BG       = "#ffffff";
@@ -17,6 +18,7 @@ const GREEN_D  = "#286c00";       // darker green — buttons/links only
 const TEXT     = "#191c1a";       // near-black — all headings & accent lines
 const MUTED    = "rgba(25,28,26,0.55)";
 const DIM      = "rgba(25,28,26,0.15)";
+const BG_DARK = "#0e1210";       // near-black with slight green tint — dark sections
 const EASE: [number,number,number,number] = [0.16, 1, 0.3, 1];
 
 // ─── Primitive animation components ──────────────────────────────────────────
@@ -83,7 +85,7 @@ function SectionRule({ label }: { label: string }) {
       transition={{ duration: 0.6 }}
     >
       <span
-        className="text-xs font-bold tracking-[0.26em] uppercase whitespace-nowrap"
+        className="text-base font-bold tracking-[0.26em] uppercase whitespace-nowrap"
         style={{ color: DIM }}
       >
         {label}
@@ -196,7 +198,7 @@ function ProofBar() {
             >
               {m.value}
             </span>
-            <span className="text-[13px] font-semibold uppercase tracking-[0.2em] whitespace-nowrap" style={{ color: MUTED }}>
+            <span className="text-base font-semibold uppercase tracking-[0.2em] whitespace-nowrap" style={{ color: MUTED }}>
               {m.label}
             </span>
           </div>
@@ -214,7 +216,7 @@ function ProofBar() {
 
 function MissionSection() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 py-40" style={{ background: BG }}>
+    <section className="w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40" style={{ background: BG }}>
       <SectionRule label="Mission" />
       <div className="grid lg:grid-cols-[1fr_400px] gap-20 items-end">
         <div>
@@ -256,7 +258,7 @@ function MissionSection() {
           </p>
           <MagneticButton
             href="/contact"
-            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wide group"
+            className="inline-flex items-center gap-2 text-base font-bold uppercase tracking-wide group"
             style={{ color: GREEN_D }}
           >
             See how it works
@@ -273,31 +275,31 @@ function MissionSection() {
       </div>
 
       {/* Stat strip */}
-      <div className="mt-24 grid grid-cols-2 md:grid-cols-4 border-t" style={{ borderColor: DIM }}>
-        {[
-          { value: "50+", label: "Robots deployed" },
-          { value: "10K+", label: "Hours saved" },
-          { value: "4,000 km", label: "Autonomous distance" },
-          { value: "200+", label: "Projects completed" },
-        ].map((s, i) => (
-          <FadeUp key={s.label} delay={0.08 + i * 0.07}>
-            <div
-              className={`py-10 px-8 ${i < 3 ? "border-r" : ""}`}
-              style={{ borderColor: DIM }}
-            >
+        {/* <div className="mt-14 md:mt-24 grid grid-cols-2 md:grid-cols-4 border-t" style={{ borderColor: DIM }}>
+          {[
+            { value: "50+", label: "Robots deployed" },
+            { value: "10K+", label: "Hours saved" },
+            { value: "4,000 km", label: "Autonomous distance" },
+            { value: "200+", label: "Projects completed" },
+          ].map((s, i) => (
+            <FadeUp key={s.label} delay={0.08 + i * 0.07}>
               <div
-                className="text-[clamp(2.2rem,4vw,4.5rem)] font-black tracking-[-0.03em] leading-none mb-2"
-                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                className={`py-7 md:py-10 px-5 md:px-8 ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b md:border-b-0" : ""}`}
+                style={{ borderColor: DIM }}
               >
-                {s.value}
+                <div
+                  className="text-[clamp(2.2rem,4vw,4.5rem)] font-black tracking-[-0.03em] leading-none mb-2"
+                  style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                >
+                  {s.value}
+                </div>
+                <div className="text-base font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>
+                  {s.label}
+                </div>
               </div>
-              <div className="text-sm font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>
-                {s.label}
-              </div>
-            </div>
-          </FadeUp>
-        ))}
-      </div>
+            </FadeUp>
+          ))}
+        </div> */}
     </section>
   );
 }
@@ -420,12 +422,12 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
     return (
       <div
         ref={ref}
-        className="grid lg:grid-cols-2 min-h-[680px] lg:min-h-[800px] w-full overflow-hidden border-b"
+        className="grid lg:grid-cols-2 w-full overflow-hidden border-b"
         style={{ borderColor: DIM }}
       >
         {/* Dashboard mockup panel */}
         <motion.div
-          className={`relative order-1 ${isFlip ? "lg:order-2" : "lg:order-1"} min-h-[360px] flex items-center justify-center p-8 lg:p-12`}
+          className={`relative order-1 ${isFlip ? "lg:order-2" : "lg:order-1"} min-h-[280px] lg:min-h-[360px] flex items-center justify-center p-6 lg:p-12`}
           style={{ background: BG2 }}
           initial={{ opacity: 0, x: isFlip ? 48 : -48 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -487,7 +489,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
           onMouseMove={onTiltMove}
           onMouseLeave={onTiltLeave}
         >
-          <div className="px-10 sm:px-14 lg:px-16 xl:px-20 py-16 lg:py-24 w-full">
+          <div className="px-7 sm:px-14 lg:px-16 xl:px-20 py-10 lg:py-24 w-full">
             {/* Tag */}
             <motion.div
               className="flex items-center gap-2.5 mb-8"
@@ -496,12 +498,12 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
               transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
             >
               <div className="w-1.5 h-1.5 rounded-full" style={{ background: GREEN }} />
-              <span className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: MUTED }}>{product.tag}</span>
+              <span className="text-base font-bold uppercase tracking-[0.22em]" style={{ color: MUTED }}>{product.tag}</span>
             </motion.div>
 
             {/* Stats */}
             <motion.div
-              className="flex mb-12 rounded-2xl overflow-hidden border"
+              className="flex mb-8 md:mb-12 rounded-2xl overflow-hidden border"
               style={{ borderColor: DIM, background: BG2 }}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -510,11 +512,11 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
               {product.stats.map((s, i) => (
                 <div
                   key={s.label}
-                  className={`flex-1 px-6 py-5 text-center ${i < product.stats.length - 1 ? "border-r" : ""}`}
+                  className={`flex-1 px-3 sm:px-6 py-4 sm:py-5 text-center ${i < product.stats.length - 1 ? "border-r" : ""}`}
                   style={{ borderColor: DIM }}
                 >
-                  <div className="text-2xl font-black leading-none mb-1.5" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{s.value}</div>
-                  <div className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>{s.label}</div>
+                  <div className="text-lg sm:text-2xl font-black leading-none mb-1 sm:mb-1.5" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{s.value}</div>
+                  <div className="text-sm sm:text-base font-semibold uppercase tracking-[0.14em] sm:tracking-[0.18em]" style={{ color: DIM }}>{s.label}</div>
                 </div>
               ))}
             </motion.div>
@@ -530,7 +532,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
             </motion.h3>
 
             <motion.p
-              className="text-base leading-[1.85] mb-8 max-w-lg"
+              className="text-lg leading-[1.85] mb-8 max-w-lg"
               style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
@@ -548,7 +550,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
               {product.points.map((pt) => (
                 <li key={pt} className="flex items-start gap-3">
                   <CheckCircle2 className="w-[18px] h-[18px] mt-0.5 shrink-0" style={{ color: GREEN }} />
-                  <span className="text-[15px] leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{pt}</span>
+                  <span className="text-base leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{pt}</span>
                 </li>
               ))}
             </motion.ul>
@@ -560,7 +562,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
             >
               <MagneticButton
                 href={product.href}
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wide"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-bold uppercase tracking-wide"
                 style={{ background: GREEN, color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
               >
                 {product.cta}
@@ -576,12 +578,12 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
   return (
     <div
       ref={ref}
-      className="grid lg:grid-cols-2 min-h-[680px] lg:min-h-[800px] w-full overflow-hidden border-b"
+      className="grid lg:grid-cols-2 w-full overflow-hidden border-b"
       style={{ borderColor: DIM }}
     >
       {/* Media panel — image or YouTube embed */}
       <motion.div
-        className={`relative order-1 ${isFlip ? "lg:order-2" : "lg:order-1"} min-h-[360px] overflow-hidden`}
+        className={`relative order-1 ${isFlip ? "lg:order-2" : "lg:order-1"} min-h-[280px] lg:min-h-[360px] overflow-hidden`}
         initial={{ clipPath: isFlip ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)" }}
         animate={inView ? { clipPath: "inset(0 0% 0 0%)" } : {}}
         transition={{ duration: 1.2, delay: 0.05, ease: EASE }}
@@ -667,7 +669,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
         onMouseMove={onTiltMove}
         onMouseLeave={onTiltLeave}
       >
-        <div className="px-10 sm:px-14 lg:px-16 xl:px-20 py-16 lg:py-24 w-full">
+        <div className="px-7 sm:px-14 lg:px-16 xl:px-20 py-10 lg:py-24 w-full">
           {/* Tag */}
           <motion.div
             className="flex items-center gap-2.5 mb-8"
@@ -676,12 +678,12 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
             transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
           >
             <div className="w-1.5 h-1.5 rounded-full" style={{ background: GREEN }} />
-            <span className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: MUTED }}>{product.tag}</span>
+            <span className="text-base font-bold uppercase tracking-[0.22em]" style={{ color: MUTED }}>{product.tag}</span>
           </motion.div>
 
           {/* Stats */}
           <motion.div
-            className="flex mb-12 rounded-2xl overflow-hidden border"
+            className="flex mb-8 md:mb-12 rounded-2xl overflow-hidden border"
             style={{ borderColor: DIM, background: BG2 }}
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -690,16 +692,16 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
             {product.stats.map((s, i) => (
               <div
                 key={s.label}
-                className={`flex-1 px-6 py-5 text-center ${i < product.stats.length - 1 ? "border-r" : ""}`}
+                className={`flex-1 px-3 sm:px-6 py-4 sm:py-5 text-center ${i < product.stats.length - 1 ? "border-r" : ""}`}
                 style={{ borderColor: DIM }}
               >
                 <div
-                  className="text-2xl font-black leading-none mb-1.5"
+                  className="text-lg sm:text-2xl font-black leading-none mb-1 sm:mb-1.5"
                   style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
                 >
                   {s.value}
                 </div>
-                <div className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>
+                <div className="text-sm sm:text-base font-semibold uppercase tracking-[0.14em] sm:tracking-[0.18em]" style={{ color: DIM }}>
                   {s.label}
                 </div>
               </div>
@@ -717,7 +719,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
           </motion.h3>
 
           <motion.p
-            className="text-base leading-[1.85] mb-8 max-w-lg"
+            className="text-lg leading-[1.85] mb-8 max-w-lg"
             style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
@@ -735,7 +737,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
             {product.points.map((pt) => (
               <li key={pt} className="flex items-start gap-3">
                 <CheckCircle2 className="w-[18px] h-[18px] mt-0.5 shrink-0" style={{ color: GREEN }} />
-                <span className="text-[15px] leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                <span className="text-base leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
                   {pt}
                 </span>
               </li>
@@ -749,7 +751,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
           >
             <MagneticButton
               href={product.href}
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wide"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-bold uppercase tracking-wide"
               style={{ background: GREEN, color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
             >
               {product.cta}
@@ -765,7 +767,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
 function ProductsSection() {
   return (
     <section className="w-full" style={{ background: BG2 }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-28 pb-16 border-t" style={{ borderColor: DIM }}>
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-28 pb-8 md:pb-16 border-t" style={{ borderColor: DIM }}>
         <SectionRule label="Solutions" />
         <div className="grid lg:grid-cols-[1fr_380px] gap-16 items-end">
           <div>
@@ -780,7 +782,7 @@ function ProductsSection() {
             </RevealText>
           </div>
           <FadeUp delay={0.2} className="pb-2">
-            <p className="text-base leading-relaxed" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg leading-relaxed" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               We offer autonomous robots on a flexible subscription basis — from
               material movement and lawn maintenance to complete fleet management —
               seamlessly integrating with your existing operations.
@@ -799,7 +801,7 @@ function ProductsSection() {
 
 function CaseStudySection() {
   return (
-    <section className="w-full py-36 px-8 md:px-16 lg:px-24 xl:px-32 border-t" style={{ background: BG, borderColor: DIM }}>
+    <section className="w-full py-20 md:py-36 px-6 md:px-16 lg:px-24 xl:px-32 border-t" style={{ background: BG, borderColor: DIM }}>
       <SectionRule label="Proof of Work" />
       <div className="grid lg:grid-cols-[1fr_520px] gap-20 items-start">
         <div>
@@ -829,7 +831,7 @@ function CaseStudySection() {
           </RevealText>
 
           <FadeUp delay={0.3} className="mt-12">
-            <p className="text-base leading-[1.85] max-w-xl" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg leading-[1.85] max-w-xl" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               Across active construction deployments, Flo's autonomous hauler replaces
               repetitive site transport with predictable, trackable movement. Deployed
               at L&T, PSP Projects, Sobha, Capacite Infra, and Total Environment.
@@ -846,7 +848,7 @@ function CaseStudySection() {
             >
               <div>
                 <p
-                  className="text-xs font-bold uppercase tracking-[0.22em] mb-2.5"
+                  className="text-sm font-bold uppercase tracking-[0.22em] mb-2.5"
                   style={{ color: DIM }}
                 >
                   Trusted by
@@ -858,7 +860,7 @@ function CaseStudySection() {
                   10+ leading construction<br />companies across India
                 </p>
                 <motion.p
-                  className="text-xs font-semibold uppercase tracking-[0.18em] mt-3 flex items-center gap-1.5"
+                  className="text-sm font-semibold uppercase tracking-[0.18em] mt-3 flex items-center gap-1.5"
                   style={{ color: DIM }}
                   initial={{ x: 0 }}
                   whileHover={{ x: 4 }}
@@ -938,7 +940,7 @@ function ProcessStep({ step, index }: { step: (typeof STEPS)[0]; index: number }
   return (
     <motion.div
       ref={ref}
-      className="flex gap-8 py-12 border-b group cursor-default relative"
+      className="flex gap-5 sm:gap-8 py-8 sm:py-12 border-b group cursor-default relative"
       style={{ borderColor: DIM }}
       initial={{ opacity: 0, x: 32 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -955,7 +957,7 @@ function ProcessStep({ step, index }: { step: (typeof STEPS)[0]; index: number }
       />
 
       <motion.div
-        className="text-[5rem] font-black leading-none w-24 shrink-0 pt-1 tabular-nums"
+        className="text-[3rem] sm:text-[5rem] font-black leading-none w-16 sm:w-24 shrink-0 pt-1 tabular-nums"
         style={{ fontFamily: "var(--font-dm-sans)" }}
         animate={{ color: hovered ? GREEN : "rgba(4 104 37 / 0.86)" }}
         transition={{ duration: 0.3 }}
@@ -969,7 +971,7 @@ function ProcessStep({ step, index }: { step: (typeof STEPS)[0]; index: number }
         >
           {step.title}
         </h3>
-        <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+        <p className="text-lg leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
           {step.body}
         </p>
       </div>
@@ -993,7 +995,7 @@ function ProcessSection() {
   const lineHeight = useTransform(stepsProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 py-40 border-t" style={{ background: BG2, borderColor: DIM }}>
+    <section className="w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40 border-t" style={{ background: BG2, borderColor: DIM }}>
       <SectionRule label="Process" />
       <div className="grid lg:grid-cols-[520px_1fr] gap-24 items-start">
         <div className="lg:sticky lg:top-32">
@@ -1022,7 +1024,7 @@ function ProcessSection() {
             </h2>
           </RevealText>
           <FadeUp delay={0.3} className="mt-8">
-            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               Our deployment process is built for real construction sites — not controlled
               labs. Most customers see measurable ROI within the first month of operation.
             </p>
@@ -1114,7 +1116,7 @@ function InvestorCell({ believer, index }: { believer: (typeof BELIEVERS)[0]; in
 
       {/* name */}
       <p
-        className="relative z-10 mt-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-center"
+        className="relative z-10 mt-5 text-sm font-semibold uppercase tracking-[0.2em] text-center"
         style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
       >
         {believer.name}
@@ -1128,7 +1130,7 @@ function BelieversSection() {
     <section id="investors" className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
 
       {/* ── Header — same structure as CustomersSection ── */}
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-20">
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-10 md:pb-20">
         <SectionRule label="Investors" />
         <div className="grid lg:grid-cols-[1fr_440px] gap-16 items-end">
           <div>
@@ -1160,7 +1162,7 @@ function BelieversSection() {
 
           <FadeUp delay={0.3} className="pb-3">
             <div className="w-px h-10 mb-8" style={{ background: GREEN }} />
-            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               Backed by India's leading venture funds, accelerators,
               and research institutions — fuelling FLO's mission to
               automate construction at scale.
@@ -1179,9 +1181,9 @@ function BelieversSection() {
       </div>
 
       {/* ── Bottom caption ── */}
-      <div className="w-full border-t px-8 md:px-16 lg:px-24 xl:px-32 py-10" style={{ borderColor: DIM }}>
+      <div className="w-full border-t px-6 md:px-16 lg:px-24 xl:px-32 py-8 md:py-10" style={{ borderColor: DIM }}>
         <FadeUp>
-          <p className="text-base text-center" style={{ color: DIM, fontFamily: "var(--font-dm-sans)" }}>
+          <p className="text-base text-center" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
             Supported by India's leading venture funds, accelerators, and research institutions
           </p>
         </FadeUp>
@@ -1263,7 +1265,7 @@ function LogoCell({ customer, index }: { customer: (typeof ALL_CUSTOMERS)[0]; in
 
       {/* Company name */}
       <p
-        className="relative z-10 text-xs font-semibold uppercase tracking-[0.2em] text-center mt-5"
+        className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-center mt-5"
         style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
       >
         {customer.name}
@@ -1276,7 +1278,7 @@ function CustomersSection() {
   return (
     <section id="customers" className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
       {/* Section header */}
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-20">
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-10 md:pb-20">
         <SectionRule label="Customers" />
         <div className="grid lg:grid-cols-[1fr_440px] gap-16 items-end">
           <div>
@@ -1307,7 +1309,7 @@ function CustomersSection() {
           </div>
           <FadeUp delay={0.3} className="pb-3">
             <div className="w-px h-10 mb-8" style={{ background: GREEN }} />
-            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+            <p className="text-lg leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
               From construction giants to innovative infrastructure companies,
               our autonomous robots are transforming workflows across India's
               most active construction sites.
@@ -1327,9 +1329,9 @@ function CustomersSection() {
       </div>
 
       {/* Bottom caption — no external link */}
-      <div className="w-full border-t px-8 md:px-16 lg:px-24 xl:px-32 py-10" style={{ borderColor: DIM }}>
+      <div className="w-full border-t px-6 md:px-16 lg:px-24 xl:px-32 py-8 md:py-10" style={{ borderColor: DIM }}>
         <FadeUp>
-          <p className="text-base text-center" style={{ color: DIM, fontFamily: "var(--font-dm-sans)" }}>
+          <p className="text-base text-center" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
             Trusted by industry leaders worldwide
           </p>
         </FadeUp>
@@ -1422,7 +1424,7 @@ function TestimonialsSection() {
     <section className="w-full border-t overflow-hidden" style={{ background: BG2, borderColor: DIM }}>
 
       {/* ── Top zone: editorial two-column layout ── */}
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-24">
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-12 md:pb-24">
         <SectionRule label="Testimonials" />
 
         <div className="grid lg:grid-cols-[420px_1fr] xl:grid-cols-[480px_1fr] gap-20 xl:gap-28 items-start">
@@ -1457,7 +1459,7 @@ function TestimonialsSection() {
             <FadeUp delay={0.3} className="mt-10">
               <div className="w-px h-10 mb-7" style={{ background: GREEN }} />
               <p
-                className="text-[17px] leading-[1.85]"
+                className="text-xl leading-[1.85]"
                 style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
               >
                 From India's largest construction companies to growing infrastructure teams — real results from real deployments.
@@ -1478,7 +1480,7 @@ function TestimonialsSection() {
                     40%
                   </div>
                   <div
-                    className="text-[12px] font-semibold uppercase tracking-[0.2em] mt-1.5"
+                    className="text-sm font-semibold uppercase tracking-[0.2em] mt-1.5"
                     style={{ color: MUTED }}
                   >
                     Avg. productivity gain
@@ -1493,7 +1495,7 @@ function TestimonialsSection() {
                     35%
                   </div>
                   <div
-                    className="text-[12px] font-semibold uppercase tracking-[0.2em] mt-1.5"
+                    className="text-sm font-semibold uppercase tracking-[0.2em] mt-1.5"
                     style={{ color: MUTED }}
                   >
                     Cost reduction
@@ -1526,7 +1528,7 @@ function TestimonialsSection() {
                 style={{ background: BG, borderColor: DIM }}
               >
                 <p
-                  className="text-[15px] sm:text-[16px] leading-[1.75] font-medium"
+                  className="text-base sm:text-[17px] leading-[1.75] font-medium"
                   style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
                 >
                   &ldquo;{t.quote}&rdquo;
@@ -1539,9 +1541,9 @@ function TestimonialsSection() {
                     {t.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[14px] font-bold" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{t.name}</span>
+                    <span className="text-[15px] font-bold" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{t.name}</span>
                     <span className="mx-1.5 text-[13px]" style={{ color: DIM }}>·</span>
-                    <span className="text-[13px]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{t.company}</span>
+                    <span className="text-sm" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{t.company}</span>
                   </div>
                 </div>
               </div>
@@ -1561,7 +1563,7 @@ function TestimonialsSection() {
                 style={{ background: BG, borderColor: DIM }}
               >
                 <p
-                  className="text-[15px] sm:text-[16px] leading-[1.75] font-medium"
+                  className="text-base sm:text-[17px] leading-[1.75] font-medium"
                   style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
                 >
                   &ldquo;{t.quote}&rdquo;
@@ -1574,9 +1576,9 @@ function TestimonialsSection() {
                     {t.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[14px] font-bold" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{t.name}</span>
+                    <span className="text-[15px] font-bold" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{t.name}</span>
                     <span className="mx-1.5 text-[13px]" style={{ color: DIM }}>·</span>
-                    <span className="text-[13px]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{t.company}</span>
+                    <span className="text-sm" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{t.company}</span>
                   </div>
                 </div>
               </div>
@@ -1595,114 +1597,189 @@ function TestimonialsSection() {
   );
 }
 
-// ─── Section 8 — Platform ─────────────────────────────────────────────────────
+// ─── Section 8 — Technology (visual card grid, light) ─────────────────────────
+
+const TECH_CARDS: {
+  number: string;
+  tag: string;
+  tagline: string;
+  Icon: LucideIcon;
+  specs: { value: string; label: string }[];
+}[] = [
+  {
+    number: "01",
+    tag: "Hardware",
+    tagline: "The robot itself.",
+    Icon: Cpu,
+    specs: [
+      { value: "500–700 kg", label: "Payload" },
+      { value: "IP65",       label: "Dust Sealed" },
+      { value: "<1 day",     label: "Deploy Time" },
+    ],
+  },
+  {
+    number: "02",
+    tag: "Perception",
+    tagline: "How it sees the world.",
+    Icon: Eye,
+    specs: [
+      { value: "32-beam", label: "LiDAR" },
+      { value: "200 m",   label: "Range" },
+      { value: "360°",    label: "Coverage" },
+    ],
+  },
+  {
+    number: "03",
+    tag: "Autonomy",
+    tagline: "How it navigates.",
+    Icon: Navigation2,
+    specs: [
+      { value: "GPS-free", label: "SLAM Nav" },
+      { value: "<100 ms",  label: "Reaction" },
+      { value: "Edge AI",  label: "On-board" },
+    ],
+  },
+  {
+    number: "04",
+    tag: "Fleet Platform",
+    tagline: "How you control it all.",
+    Icon: LayoutDashboard,
+    specs: [
+      { value: "99.9%",      label: "Uptime SLA" },
+      { value: "Multi-site", label: "Dashboard" },
+      { value: "OTA",        label: "Updates" },
+    ],
+  },
+];
+
+function TechCard({ card, index }: { card: (typeof TECH_CARDS)[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+  const Icon = card.Icon;
+
+  return (
+    <motion.div
+      ref={ref}
+      className="relative flex flex-col rounded-3xl border overflow-hidden"
+      style={{ background: BG, borderColor: DIM }}
+      initial={{ opacity: 0, y: 32 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.65, delay: 0.1 * index, ease: EASE }}
+    >
+      {/* Ghost number — background watermark */}
+      <span
+        className="absolute top-3 right-5 text-[5.5rem] font-black leading-none tabular-nums select-none pointer-events-none"
+        style={{ color: "rgba(25,28,26,0.04)", fontFamily: "var(--font-dm-sans)" }}
+        aria-hidden="true"
+      >
+        {card.number}
+      </span>
+
+      <div className="flex flex-col flex-1 p-7 lg:p-8">
+
+        {/* Tag label */}
+        <span
+          className="text-sm font-bold uppercase tracking-[0.22em] mb-7"
+          style={{ color: DIM, fontFamily: "var(--font-dm-sans)" }}
+        >
+          {card.tag}
+        </span>
+
+        {/* Icon — large, centrepiece */}
+        <div
+          className="w-16 h-16 rounded-2xl flex items-center justify-center mb-7 shrink-0"
+          style={{ background: `${GREEN}18` }}
+        >
+          <Icon className="w-8 h-8" style={{ color: GREEN }} />
+        </div>
+
+        {/* Short tagline */}
+        <h3
+          className="text-2xl font-black leading-[1.1] tracking-[-0.02em] mb-8"
+          style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+        >
+          {card.tagline}
+        </h3>
+
+        {/* 3 key specs — pushed to bottom of card */}
+        <div
+          className="mt-auto pt-6 border-t grid grid-cols-3 gap-3"
+          style={{ borderColor: DIM }}
+        >
+          {card.specs.map((spec) => (
+            <div key={spec.label}>
+              <div
+                className="text-base font-black leading-none mb-1 tabular-nums"
+                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              >
+                {spec.value}
+              </div>
+              <div
+                className="text-[11px] font-semibold uppercase tracking-[0.12em] leading-snug"
+                style={{ color: MUTED }}
+              >
+                {spec.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 function TechSection() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 py-40 border-t" style={{ background: BG, borderColor: DIM }}>
-      <SectionRule label="Platform" />
-      <div className="grid lg:grid-cols-2 gap-24 items-center">
+    <section
+      className="w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40 border-t"
+      style={{ background: BG2, borderColor: DIM }}
+    >
+      <SectionRule label="Technology" />
+
+      {/* Header */}
+      <div className="grid lg:grid-cols-[1fr_400px] gap-16 items-end mb-16 md:mb-20">
         <div>
-          <FadeUp>
-            <p className="text-sm font-black tracking-[0.28em] uppercase mb-6" style={{ color: MUTED }}>
-              Fleet Control
-            </p>
-          </FadeUp>
           <RevealText className="mb-1">
             <h2
-              className="text-[clamp(2.5rem,5vw,6.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
+              className="text-[clamp(2.8rem,5.5vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]"
               style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
             >
-              Built for the
+              Built end-to-end,
             </h2>
           </RevealText>
-          <RevealText delay={0.06} className="mb-12">
+          <RevealText delay={0.06}>
             <h2
-              className="text-[clamp(2.5rem,5vw,6.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
-              style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              className="text-[clamp(2.8rem,5.5vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]"
+              style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
             >
-              harshest sites.
+              in-house.
             </h2>
           </RevealText>
-          <FadeUp delay={0.2}>
-            <p className="text-base leading-[1.75] mb-12" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              Real-time LiDAR mapping and computer vision navigate dynamic construction
-              sites — detecting workers, machinery, and obstacles at 360°. Managed from
-              a single fleet control dashboard.
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.3}>
-            <div className="grid grid-cols-2 gap-3">
-              {["Real-time obstacle detection", "GPS-independent navigation", "Multi-robot fleet coordination", "Remote monitoring dashboard"].map((f) => (
-                <div
-                  key={f}
-                  className="flex items-start gap-3 p-5 rounded-2xl border transition-colors duration-300"
-                  style={{ background: BG2, borderColor: DIM }}
-                >
-                  <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: GREEN }} />
-                  <span className="text-[15px] leading-snug" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{f}</span>
-                </div>
-              ))}
-            </div>
-          </FadeUp>
         </div>
-
-        {/* Dashboard mock */}
-        <FadeUp delay={0.15}>
-          <div
-            className="relative rounded-3xl overflow-hidden border shadow-lg aspect-[4/3]"
-            style={{ background: BG_WARM, borderColor: DIM }}
+        <FadeUp delay={0.2} className="pb-2">
+          <div className="w-px h-10 mb-7" style={{ background: GREEN }} />
+          <p
+            className="text-lg leading-[1.85]"
+            style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
           >
-            {/* Grid */}
-            <div
-              className="absolute inset-0 opacity-40"
-              style={{
-                backgroundImage: `linear-gradient(${GREEN}20 1px, transparent 1px), linear-gradient(90deg, ${GREEN}20 1px, transparent 1px)`,
-                backgroundSize: "40px 40px",
-              }}
-            />
-            {/* Header */}
-            <div className="absolute top-0 left-0 right-0 border-b px-6 py-3.5 flex justify-between items-center" style={{ borderColor: DIM, background: `${BG}ee` }}>
-              <span className="font-mono text-[10px] tracking-widest uppercase" style={{ color: MUTED }}>FLO FLEET CONTROL</span>
-              <span className="font-mono text-[10px] tracking-widest uppercase font-semibold flex items-center gap-1.5" style={{ color: GREEN }}>
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse inline-block" style={{ background: GREEN }} />
-                3 UNITS ONLINE
-              </span>
-            </div>
-            {/* Robot dots */}
-            {[
-              { x: "28%", y: "45%", label: "MMR-01", status: "Hauling" },
-              { x: "58%", y: "62%", label: "MMR-02", status: "Idle" },
-              { x: "72%", y: "38%", label: "LMR-01", status: "Mowing" },
-            ].map((r) => (
-              <div key={r.label} className="absolute flex flex-col items-center gap-1.5" style={{ left: r.x, top: r.y, transform: "translate(-50%,-50%)" }}>
-                <div className="w-4 h-4 rounded-full animate-pulse" style={{ background: GREEN, boxShadow: `0 0 12px ${GREEN}99` }} />
-                <div className="flex flex-col items-center">
-                  <span className="font-mono text-[9px] font-bold" style={{ color: MUTED }}>{r.label}</span>
-                  <span className="font-mono text-[8px]" style={{ color: GREEN_D }}>{r.status}</span>
-                </div>
-              </div>
-            ))}
-            {/* Route lines */}
-            <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none" viewBox="0 0 400 300">
-              <path d="M 112 135 Q 180 100 232 186" stroke={GREEN} strokeWidth="1.5" fill="none" strokeDasharray="4 4" />
-              <path d="M 232 186 Q 280 200 288 114" stroke={GREEN} strokeWidth="1.5" fill="none" strokeDasharray="4 4" />
-            </svg>
-            {/* Footer */}
-            <div className="absolute bottom-0 left-0 right-0 border-t px-6 py-3 flex justify-between" style={{ borderColor: DIM, background: `${BG}ee` }}>
-              <span className="font-mono text-[9px] tracking-widest uppercase" style={{ color: DIM }}>NAV-SYS v3.1</span>
-              <span className="font-mono text-[9px] tracking-widest uppercase" style={{ color: DIM }}>LIDAR · 32-BEAM · 200m</span>
-            </div>
-          </div>
+            FLO owns every layer of the stack — from the robot chassis to the
+            fleet control software — giving full control over performance,
+            safety, and cost.
+          </p>
         </FadeUp>
+      </div>
+
+      {/* 4-card grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+        {TECH_CARDS.map((card, i) => (
+          <TechCard key={card.number} card={card} index={i} />
+        ))}
       </div>
     </section>
   );
 }
 
 // ─── Section 9 — CTA (dark atmospheric) ──────────────────────────────────────
-
-const BG_DARK = "#0e1210";   // near-black with slight green tint
 
 function CTASection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -1716,7 +1793,7 @@ function CTASection() {
   return (
     <section
       ref={sectionRef}
-      className="w-full relative overflow-hidden py-48 px-8 md:px-16 lg:px-24 xl:px-32"
+      className="w-full relative overflow-hidden py-24 md:py-48 px-6 md:px-16 lg:px-24 xl:px-32"
       style={{ background: BG_DARK }}
     >
       {/* Atmospheric background */}
@@ -1745,7 +1822,7 @@ function CTASection() {
 
       <div className="relative text-center">
         <FadeUp>
-          <p className="text-xs font-black tracking-[0.32em] uppercase mb-12" style={{ color: `${GREEN}80` }}>
+          <p className="text-base font-black tracking-[0.32em] uppercase mb-12" style={{ color: `${GREEN}80` }}>
             Get started today
           </p>
         </FadeUp>
@@ -1777,14 +1854,14 @@ function CTASection() {
         <FadeUp delay={0.3} className="flex flex-col sm:flex-row gap-5 justify-center items-center">
           <MagneticButton
             href="/contact"
-            className="inline-flex items-center justify-center gap-2.5 px-12 py-5 rounded-full text-sm font-black shadow-[0_0_40px_rgba(124,205,84,0.35)] hover:shadow-[0_0_60px_rgba(124,205,84,0.55)] transition-shadow duration-400"
+            className="inline-flex items-center justify-center gap-2.5 px-12 py-5 rounded-full text-base font-black shadow-[0_0_40px_rgba(124,205,84,0.35)] hover:shadow-[0_0_60px_rgba(124,205,84,0.55)] transition-shadow duration-400"
             style={{ background: GREEN, color: "#0e1210", fontFamily: "var(--font-dm-sans)" }}
           >
             Talk to our team <ArrowRight className="w-4 h-4" />
           </MagneticButton>
           <MagneticButton
             href="/offerings/material-movement"
-            className="inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full text-sm font-bold border transition-colors duration-300 hover:border-white/40"
+            className="inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full text-base font-bold border transition-colors duration-300 hover:border-white/40"
             style={{ borderColor: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-dm-sans)" }}
           >
             View all solutions
@@ -1793,7 +1870,7 @@ function CTASection() {
 
         <FadeUp delay={0.5} className="mt-16 flex flex-wrap items-center justify-center gap-8">
           {["ISO Certified", "500+ Projects", "24/7 Support", "< 1 Day Deploy"].map((t) => (
-            <div key={t} className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <div key={t} className="flex items-center gap-2 text-base font-semibold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.25)" }}>
               <span className="w-1 h-1 rounded-full" style={{ background: `${GREEN}80` }} />
               {t}
             </div>
@@ -1814,11 +1891,11 @@ export default function Home() {
       <MissionSection />
       <StatsSection />
       <ProductsSection />
-      <CaseStudySection />
-      <ProcessSection />
-      <BelieversSection />
+      {/* <CaseStudySection /> */}
+      {/* <ProcessSection /> */}
       <CustomersSection />
-      <TestimonialsSection />
+      <BelieversSection />
+      {/* <TestimonialsSection /> */}
       <TechSection />
       <CTASection />
     </div>

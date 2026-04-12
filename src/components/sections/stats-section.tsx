@@ -3,24 +3,29 @@ import { StatsBarGraph } from "@/components/sections/stats-bar-graph";
 
 const STATS = [
   {
-    value: 50,
-    suffix: "+",
-    label: "Robots Deployed",
+    value: 45,
+    suffix: "%",
+    label: "Labour Reduction",
   },
   {
-    value: 10000,
-    suffix: "+",
-    label: "Hours Saved",
+    value: 51,
+    suffix: "%",
+    label: "Time Savings",
   },
   {
-    value: 4000,
-    suffix: "Km",
-    label: "Autonommous Distance Covered",
+    value: 100,
+    suffix: "%",
+    label: "Hoist Utilisation Improvement",
   },
   {
-    value: 200,
-    suffix: "+",
-    label: "Projects Completed",
+    value: 30,
+    suffix: "%",
+    label: "Accidents Reduction",
+  },
+  {
+    value: 60,
+    suffix: "%",
+    label: "Productivity Improvement",
   },
 ];
 

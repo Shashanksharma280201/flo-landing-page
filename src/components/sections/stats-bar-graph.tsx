@@ -68,10 +68,10 @@ export function StatsBarGraph({ stats }: StatsBarGraphProps) {
     triggerOnce: true,
   });
 
-  const scaledValues = stats.map((stat) => Math.log10(stat.value + 1));
-  const minValue = Math.min(...scaledValues);
-  const maxValue = Math.max(...scaledValues);
-  const range = maxValue - minValue || 1;
+  // Direct percentage scaling (0–100)
+  const minValue = 0;
+  const maxValue = 100;
+  const range = maxValue - minValue;
 
   return (
     <div
@@ -88,10 +88,10 @@ export function StatsBarGraph({ stats }: StatsBarGraphProps) {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-4 sm:gap-x-6">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-5 sm:gap-x-6">
           {stats.map((stat, index) => {
             const normalizedHeight =
-              30 + ((scaledValues[index] - minValue) / range) * 70;
+              30 + ((stat.value - minValue) / range) * 70;
 
             return (
               <div key={stat.label} className="flex flex-col items-center">
@@ -151,15 +151,6 @@ export function StatsBarGraph({ stats }: StatsBarGraphProps) {
             );
           })}
         </div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isIntersecting ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.45, delay: 0.45, ease: EASE }}
-          className="mt-6 text-center text-[0.7rem] uppercase tracking-[0.18em] text-gray-400 sm:text-xs"
-        >
-          Bar heights are normalized for mixed units.
-        </motion.p>
       </div>
     </div>
   );

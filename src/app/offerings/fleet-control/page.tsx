@@ -79,7 +79,7 @@ function SectionRule({ label }: { label: string }) {
       animate={inView ? { opacity: 1 } : {}}
       transition={{ duration: 0.6 }}
     >
-      <span className="text-[10px] font-bold tracking-[0.26em] uppercase whitespace-nowrap" style={{ color: DIM }}>
+      <span className="text-sm font-bold tracking-[0.26em] uppercase whitespace-nowrap" style={{ color: DIM }}>
         {label}
       </span>
       <motion.div
@@ -138,7 +138,7 @@ const HERO_STATS = [
 
 function HeroSection() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-28 pb-0" style={{ background: BG2 }}>
+    <section className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-24 md:pt-28 pb-0" style={{ background: BG2 }}>
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center pb-0">
         {/* Left — text */}
         <div>
@@ -148,7 +148,7 @@ function HeroSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: GREEN }} />
                 <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: GREEN }} />
               </span>
-              <span className="text-[10px] font-bold tracking-[0.26em] uppercase" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+              <span className="text-sm font-bold tracking-[0.26em] uppercase" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
                 Fleet Management Platform
               </span>
             </div>
@@ -196,14 +196,14 @@ function HeroSection() {
           <FadeUp delay={0.35} className="flex flex-wrap gap-4 mb-14">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full text-base font-bold uppercase tracking-wide transition-all duration-300 hover:scale-105"
               style={{ background: GREEN, color: "#fff", fontFamily: "var(--font-dm-sans)" }}
             >
               Request a Demo <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href="#features"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold border transition-all duration-300 hover:bg-white"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-bold border transition-all duration-300 hover:bg-white"
               style={{ borderColor: DIM, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
             >
               Explore Features <ChevronDown className="w-4 h-4" />
@@ -211,11 +211,11 @@ function HeroSection() {
           </FadeUp>
 
           <FadeUp delay={0.4}>
-            <div className="grid grid-cols-4 border-t border-b" style={{ borderColor: DIM }}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-b" style={{ borderColor: DIM }}>
               {HERO_STATS.map((s, i) => (
                 <div
                   key={s.label}
-                  className={`py-6 px-4 text-center ${i < 3 ? "border-r" : ""}`}
+                  className={`py-6 px-4 text-center ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b sm:border-b-0" : ""}`}
                   style={{ borderColor: DIM }}
                 >
                   <div
@@ -224,7 +224,7 @@ function HeroSection() {
                   >
                     {s.value}
                   </div>
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.18em] mt-1" style={{ color: MUTED }}>
+                  <div className="text-sm font-semibold uppercase tracking-[0.18em] mt-1" style={{ color: MUTED }}>
                     {s.label}
                   </div>
                 </div>
@@ -253,8 +253,8 @@ function HeroSection() {
                   {c.value}
                 </div>
                 <div>
-                  <div className="text-sm font-black" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{c.label}</div>
-                  <div className="text-[11px] mt-0.5" style={{ color: MUTED }}>{c.sub}</div>
+                  <div className="text-base font-black" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>{c.label}</div>
+                  <div className="text-sm mt-0.5" style={{ color: MUTED }}>{c.sub}</div>
                 </div>
               </div>
             ))}
@@ -291,7 +291,7 @@ function ProofBar() {
             <span className="text-3xl font-black tracking-tight tabular-nums" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
               {m.value}
             </span>
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] whitespace-nowrap" style={{ color: MUTED }}>
+            <span className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap" style={{ color: MUTED }}>
               {m.label}
             </span>
           </div>
@@ -331,7 +331,7 @@ const SHOWCASE = [
 function ShowcaseSection() {
   return (
     <section className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-24">
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-12 md:pb-24">
         <SectionRule label="Platform in Action" />
         <div className="flex flex-col gap-32">
           {SHOWCASE.map((item) => (
@@ -352,7 +352,7 @@ function ShowcaseSection() {
                 {/* Text */}
                 <div className={item.videoLeft ? "lg:order-2" : "lg:order-1"}>
                   <FadeUp delay={0.1}>
-                    <span className="inline-block text-[10px] font-bold tracking-[0.24em] uppercase px-3 py-1.5 rounded-full mb-8 border" style={{ color: MUTED, borderColor: DIM, fontFamily: "var(--font-dm-sans)" }}>
+                    <span className="inline-block text-sm font-bold tracking-[0.24em] uppercase px-3 py-1.5 rounded-full mb-8 border" style={{ color: MUTED, borderColor: DIM, fontFamily: "var(--font-dm-sans)" }}>
                       {item.tag}
                     </span>
                   </FadeUp>
@@ -381,7 +381,7 @@ function ShowcaseSection() {
                       {item.bullets.map((b) => (
                         <div key={b} className="flex items-center gap-3">
                           <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: GREEN }} />
-                          <span className="text-sm font-medium" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{b}</span>
+                          <span className="text-base font-medium" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>{b}</span>
                         </div>
                       ))}
                     </div>
@@ -441,7 +441,7 @@ function FeatureCell({ feature, index }: { feature: (typeof FEATURES)[0]; index:
     const r = ref.current.getBoundingClientRect();
     const x = ((e.clientX - r.left) / r.width) * 100;
     const y = ((e.clientY - r.top) / r.height) * 100;
-    glowRef.current.style.background = `radial-gradient(ellipse 80% 80% at ${x}% ${y}%, ${GREEN}28 0%, transparent 65%)`;
+    glowRef.current.style.background = `radial-gradient(ellipse 160% 130% at ${x}% ${y}%, ${GREEN}60 0%, ${GREEN}25 40%, rgba(255,255,255,0.06) 70%, transparent 85%)`;
     glowRef.current.style.opacity = "1";
   };
   const onLeave = () => { if (glowRef.current) glowRef.current.style.opacity = "0"; };
@@ -449,7 +449,7 @@ function FeatureCell({ feature, index }: { feature: (typeof FEATURES)[0]; index:
   return (
     <motion.div
       ref={ref}
-      className="relative flex flex-col p-10 border-r border-b overflow-hidden cursor-default"
+      className="relative flex flex-col p-6 border-r border-b overflow-hidden cursor-default group"
       style={{ borderColor: DIM }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
@@ -457,17 +457,24 @@ function FeatureCell({ feature, index }: { feature: (typeof FEATURES)[0]; index:
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: 0.05 * index, ease: EASE }}
     >
-      <div ref={glowRef} className="absolute inset-0 pointer-events-none" style={{ opacity: 0, transition: "opacity 0.3s ease" }} />
-      <span className="text-[10px] font-bold tracking-[0.24em] uppercase mb-6 block" style={{ color: DIM }}>
-        {String(index + 1).padStart(2, "0")}
-      </span>
-      <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-6" style={{ background: `${GREEN}18` }}>
-        <feature.icon className="w-5 h-5" style={{ color: GREEN }} />
+      <div ref={glowRef} className="absolute inset-0 pointer-events-none" style={{ opacity: 0, transition: "opacity 0.35s ease" }} />
+      {/* Top accent bar */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" style={{ background: `linear-gradient(90deg, ${GREEN}, ${GREEN}60)` }} />
+      {/* Icon + Number row */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-105" style={{ background: `${GREEN}18` }}>
+          <feature.icon className="w-5 h-5" style={{ color: GREEN }} />
+        </div>
+        <span className="text-sm font-bold tracking-[0.24em] uppercase" style={{ color: DIM }}>
+          {String(index + 1).padStart(2, "0")}
+        </span>
       </div>
-      <h3 className="text-lg font-black mb-3 leading-snug tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+      {/* Title */}
+      <h3 className="text-lg font-black mb-2 leading-snug tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
         {feature.title}
       </h3>
-      <p className="text-sm leading-[1.85] flex-1" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+      {/* Body */}
+      <p className="text-base leading-[1.75]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
         {feature.body}
       </p>
     </motion.div>
@@ -477,7 +484,7 @@ function FeatureCell({ feature, index }: { feature: (typeof FEATURES)[0]; index:
 function CapabilitiesSection() {
   return (
     <section id="features" className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-16">
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-8 md:pb-16">
         <SectionRule label="Software Capabilities" />
         <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-end">
           <div>
@@ -572,7 +579,7 @@ function StepRow({ step, i }: { step: (typeof STEPS)[0]; i: number }) {
 
 function ProcessSection() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 py-40 border-t" style={{ background: BG2, borderColor: DIM }}>
+    <section className="w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40 border-t" style={{ background: BG2, borderColor: DIM }}>
       <SectionRule label="How It Works" />
       <div className="grid lg:grid-cols-[520px_1fr] gap-24 items-start">
         <div className="lg:sticky lg:top-32">
@@ -677,19 +684,19 @@ function UseCaseCard({ uc, index }: { uc: (typeof USE_CASES)[0]; index: number }
           <div className="text-4xl font-black leading-none text-white" style={{ fontFamily: "var(--font-dm-sans)" }}>
             {uc.stat}
           </div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70 mt-1">
+          <div className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70 mt-1">
             {uc.statLabel}
           </div>
         </div>
       </div>
       <div className="p-8" style={{ background: BG }}>
-        <div className="text-[10px] font-bold tracking-[0.22em] uppercase mb-3" style={{ color: DIM }}>
+        <div className="text-sm font-bold tracking-[0.22em] uppercase mb-3" style={{ color: DIM }}>
           {String(index + 1).padStart(2, "0")}
         </div>
         <h3 className="text-xl font-black mb-3 tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
           {uc.label}
         </h3>
-        <p className="text-sm leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+        <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
           {uc.description}
         </p>
       </div>
@@ -700,7 +707,7 @@ function UseCaseCard({ uc, index }: { uc: (typeof USE_CASES)[0]; index: number }
 function UseCasesSection() {
   return (
     <section className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-24">
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-12 md:pb-24">
         <SectionRule label="Where We Deploy" />
         <div className="grid lg:grid-cols-[1fr_400px] gap-16 items-end mb-20">
           <div>
@@ -764,7 +771,7 @@ const SPECS = [
 function SpecsSection() {
   return (
     <section id="specs" className="w-full border-t" style={{ background: BG2, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 py-40">
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40">
         <SectionRule label="Platform Specifications" />
         <div className="grid lg:grid-cols-2 gap-24 items-start">
           {/* Left — specs */}
@@ -801,14 +808,14 @@ function SpecsSection() {
                     style={{ borderColor: DIM }}
                   >
                     <div className="flex items-center gap-5">
-                      <span className="text-[10px] font-bold w-6 shrink-0" style={{ color: DIM }}>
+                      <span className="text-sm font-bold w-6 shrink-0" style={{ color: DIM }}>
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <span className="text-sm font-medium" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                      <span className="text-base font-medium" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
                         {spec.label}
                       </span>
                     </div>
-                    <span className="text-sm font-black tracking-[-0.01em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                    <span className="text-base font-black tracking-[-0.01em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
                       {spec.value}
                     </span>
                   </div>
@@ -820,7 +827,7 @@ function SpecsSection() {
           {/* Right — dashboard mockup */}
           <FadeUp delay={0.2} className="lg:pt-24">
             <DashboardMockup />
-            <div className="mt-4 flex items-center gap-2 text-xs" style={{ color: DIM }}>
+            <div className="mt-4 flex items-center gap-2 text-sm" style={{ color: DIM }}>
               <div className="w-1.5 h-1.5 rounded-full" style={{ background: GREEN }} />
               <span style={{ fontFamily: "var(--font-dm-sans)" }}>Flo Fleet Control — Live command centre view</span>
             </div>
@@ -835,7 +842,7 @@ function SpecsSection() {
 
 function CTASection() {
   return (
-    <section className="w-full relative overflow-hidden py-48 px-8 md:px-16 lg:px-24 xl:px-32 border-t" style={{ background: BG, borderColor: DIM }}>
+    <section className="w-full relative overflow-hidden py-24 md:py-48 px-6 md:px-16 lg:px-24 xl:px-32 border-t" style={{ background: BG, borderColor: DIM }}>
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute inset-0 opacity-20"
@@ -852,7 +859,7 @@ function CTASection() {
 
       <div className="relative text-center">
         <FadeUp>
-          <p className="text-[11px] font-black tracking-[0.32em] uppercase mb-12" style={{ color: MUTED }}>
+          <p className="text-sm font-black tracking-[0.32em] uppercase mb-12" style={{ color: MUTED }}>
             Now available worldwide
           </p>
         </FadeUp>
@@ -891,14 +898,14 @@ function CTASection() {
         <FadeUp delay={0.4} className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2.5 px-12 py-5 rounded-full text-sm font-black transition-all duration-300 hover:scale-105 shadow-lg"
+            className="inline-flex items-center justify-center gap-2.5 px-12 py-5 rounded-full text-base font-black transition-all duration-300 hover:scale-105 shadow-lg"
             style={{ background: GREEN, color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
           >
             Request a Demo <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/offerings/material-movement"
-            className="inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full text-sm font-bold border transition-all duration-300 hover:bg-white"
+            className="inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full text-base font-bold border transition-all duration-300 hover:bg-white"
             style={{ borderColor: DIM, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
           >
             Explore Robots
@@ -907,7 +914,7 @@ function CTASection() {
 
         <FadeUp delay={0.5} className="mt-16 flex flex-wrap items-center justify-center gap-8">
           {["99.9% Uptime", "< 100 ms Latency", "Unlimited Scale", "SOC 2 Compliant"].map((t) => (
-            <div key={t} className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>
+            <div key={t} className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>
               <span className="w-1 h-1 rounded-full" style={{ background: GREEN }} />
               {t}
             </div>

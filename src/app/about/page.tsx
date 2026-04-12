@@ -147,7 +147,7 @@ const STATS = [
 
 function HeroSection() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-28 pb-0" style={{ background: BG2 }}>
+    <section className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-24 md:pt-28 pb-0" style={{ background: BG2 }}>
       {/* Breadcrumb */}
       <FadeUp className="mb-12">
         <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: DIM }}>
@@ -219,9 +219,9 @@ function HeroSection() {
 
           {/* Stats strip */}
           <FadeUp delay={0.4}>
-            <div className="grid grid-cols-4 border-t border-b" style={{ borderColor: DIM }}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-b" style={{ borderColor: DIM }}>
               {STATS.map((s, i) => (
-                <div key={s.label} className={`py-6 pr-4 ${i < 3 ? "border-r" : ""}`} style={{ borderColor: DIM }}>
+                <div key={s.label} className={`py-6 px-4 ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b sm:border-b-0" : ""}`} style={{ borderColor: DIM }}>
                   <div className="text-[clamp(1.4rem,2.5vw,2.4rem)] font-black leading-none mb-1 tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
                     {s.value}
                   </div>
@@ -330,7 +330,7 @@ function ValueCell({ value, index }: { value: typeof VALUES[0]; index: number })
 function ValuesSection() {
   return (
     <section className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-16">
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-8 md:pb-16">
         <SectionRule label="What We Stand For" />
         <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-end">
           <div>
@@ -368,14 +368,14 @@ function MilestoneRow({ milestone, i }: { milestone: typeof MILESTONES[0]; i: nu
   return (
     <FadeUp delay={0.08 * i}>
       <div
-        className="grid grid-cols-[120px_1fr_24px] gap-8 py-10 border-b group cursor-default items-start"
+        className="grid grid-cols-[70px_1fr_16px] sm:grid-cols-[120px_1fr_24px] gap-4 sm:gap-8 py-7 sm:py-10 border-b group cursor-default items-start"
         style={{ borderColor: DIM }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
         {/* Year */}
         <div
-          className="text-[2.6rem] font-black leading-none tabular-nums transition-colors duration-500 pt-0.5"
+          className="text-[1.8rem] sm:text-[2.6rem] font-black leading-none tabular-nums transition-colors duration-500 pt-0.5"
           style={{ color: hovered ? GREEN : "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
         >
           {milestone.year}
@@ -400,7 +400,7 @@ function MilestoneRow({ milestone, i }: { milestone: typeof MILESTONES[0]; i: nu
 
 function JourneySection() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 py-40 border-t" style={{ background: BG2, borderColor: DIM }}>
+    <section className="w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40 border-t" style={{ background: BG2, borderColor: DIM }}>
       <SectionRule label="Our Journey" />
       <div className="grid lg:grid-cols-[520px_1fr] gap-24 items-start">
         <div className="lg:sticky lg:top-32">
@@ -535,7 +535,7 @@ function PersonCard({ person, index }: { person: typeof CORE_TEAM[0]; index: num
 function TeamSection() {
   return (
     <section className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-24">
+      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-12 md:pb-24">
         <SectionRule label="Leadership" />
         <div className="grid lg:grid-cols-[1fr_400px] gap-16 items-end mb-20">
           <div>
@@ -595,7 +595,7 @@ function TeamSection() {
 
 function CTASection() {
   return (
-    <section className="w-full relative overflow-hidden py-48 px-8 md:px-16 lg:px-24 xl:px-32 border-t" style={{ background: BG2, borderColor: DIM }}>
+    <section className="w-full relative overflow-hidden py-24 md:py-48 px-6 md:px-16 lg:px-24 xl:px-32 border-t" style={{ background: BG2, borderColor: DIM }}>
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute inset-0 opacity-20"
@@ -675,7 +675,7 @@ export default function AboutPage() {
     <div className="w-full" style={{ color: TEXT, background: BG2 }}>
       <HeroSection />
       <ValuesSection />
-      <JourneySection />
+      {/* <JourneySection /> */}
       <TeamSection />
       <CTASection />
     </div>

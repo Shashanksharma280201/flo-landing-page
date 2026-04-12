@@ -56,13 +56,13 @@ function Dropdown({ items }: { items: { title: string; href: string; description
               </span>
               <div className="flex-1 min-w-0">
                 <div
-                  className="text-[13px] font-semibold mb-0.5 transition-colors duration-200 group-hover:text-[#2d7a1f]"
+                  className="text-[17px] font-semibold mb-0.5 transition-colors duration-200 group-hover:text-[#2d7a1f]"
                   style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
                 >
                   {item.title}
                 </div>
                 <div
-                  className="text-xs leading-relaxed"
+                  className="text-[13px] leading-relaxed"
                   style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
                 >
                   {item.description}
@@ -92,7 +92,7 @@ function NavItem({
       <div className="relative">
         <Link
           href={href}
-          className="flex items-center gap-1 text-[13px] font-semibold transition-colors duration-200"
+          className="flex items-center gap-1 text-[17px] font-semibold transition-colors duration-200"
           style={{ color: isActive ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = ACTIVE_GREEN; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? ACTIVE_GREEN : TEXT; }}
@@ -110,7 +110,7 @@ function NavItem({
       onMouseLeave={() => setOpen(false)}
     >
       <button
-        className="flex items-center gap-1 text-[13px] font-semibold transition-colors duration-200"
+        className="flex items-center gap-1 text-[17px] font-semibold transition-colors duration-200"
         style={{ color: isActive || open ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
         onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = ACTIVE_GREEN; }}
         onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive || open ? ACTIVE_GREEN : TEXT; }}
@@ -121,7 +121,7 @@ function NavItem({
           transition={{ duration: 0.2 }}
           className="inline-flex"
         >
-          <ChevronDown style={{ width: 13, height: 13 }} />
+          <ChevronDown style={{ width: 16, height: 16 }} />
         </motion.span>
       </button>
       {open && <Dropdown items={item.items} />}
@@ -160,7 +160,7 @@ export function Navbar() {
           transition={{ duration: 0.6, ease: EASE }}
         >
           <motion.div
-            className="flex h-[60px] items-center justify-between px-5 rounded-2xl"
+            className="flex h-[84px] items-center justify-between px-6 rounded-2xl"
             style={{
               WebkitBackdropFilter: scrolled ? "blur(28px) saturate(180%)" : "blur(16px) saturate(140%)",
             }}
@@ -184,7 +184,7 @@ export function Navbar() {
                 width={200}
                 height={80}
                 priority
-                className="h-14 w-auto object-contain"
+                className="h-[72px] w-auto object-contain"
               />
             </Link>
 
@@ -204,7 +204,7 @@ export function Navbar() {
                 href={NAV_CONFIG.actions.fleet}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-[13px] font-semibold transition-colors duration-200"
+                className="flex items-center gap-1 text-[17px] font-semibold transition-colors duration-200"
                 style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = GREEN; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = MUTED; }}
@@ -214,7 +214,7 @@ export function Navbar() {
               </Link>
               <Link
                 href={NAV_CONFIG.actions.contact}
-                className="inline-flex items-center px-5 py-2 rounded-full text-[13px] font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                className="inline-flex items-center px-5 py-2 rounded-full text-[17px] font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 style={{
                   background: GREEN,
                   fontFamily: "var(--font-dm-sans)",
