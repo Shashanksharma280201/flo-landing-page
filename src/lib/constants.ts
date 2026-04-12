@@ -66,7 +66,7 @@ export const RAAS_CONTENT = {
       description:
         "With advanced sensors and autonomous navigation, this efficient and adaptable robot streamlines logistics operations with speed and reliability. Experience optimized efficiency, reduced manual labor, and increased productivity with the Material Movement Bot.",
       videoId: "KMTNnYjulQE",
-      image: "/mmr-images/mmr-images-1.jpg",
+      image: "/mmr-images/mmr-images-1.webp",
     },
     {
       id: "lawn-mower",
@@ -74,7 +74,7 @@ export const RAAS_CONTENT = {
       description:
         "Our lawn mowing robot will take care of your lawn, so you can relax and enjoy your free time. Efficient and safe. The robot is equipped with sensors that prevent it from colliding with objects or getting stuck. The cost is less expensive than hiring a traditional lawn service.",
       videoId: "KMTNnYjulQE",
-      image: "/mmr-images/mmr-images-2.jpg",
+      image: "/mmr-images/mmr-images-2.webp",
     },
     {
       id: "wall-finishing",
@@ -82,7 +82,7 @@ export const RAAS_CONTENT = {
       description:
         "Our wall finishing robot is designed to automate the tasks of sanding and putty application on the walls. With precision movement, the robot not only brings uniformity and consistency in wall finishing, but also saves material wastage thereby reducing cost while delivering better quality finish.",
       videoId: "KMTNnYjulQE",
-      image: "/mmr-images/mmr-images-3.jpg",
+      image: "/mmr-images/mmr-images-3.webp",
     },
   ],
 };

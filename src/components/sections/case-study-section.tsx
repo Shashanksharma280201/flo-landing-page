@@ -47,7 +47,7 @@ const FEATURED_CASE_STUDY: FeaturedCaseStudy = {
   title: "50% lower cost and time on last-mile material movement",
   summary:
     "Across active construction deployments, Flo's autonomous hauler replaces repetitive site transport with predictable, trackable movement that scales without fresh capex. Flo's public materials point to usage across large construction contractors including L&T, PSP Projects, Sobha, Capacite Infra, and Total Environment, where the system is positioned to reduce movement cost and time by up to 50% while improving site safety. With 500 kg payload handling, route-level fleet visibility, and commissioning that can begin in under a day, the product is built for real site logistics rather than controlled pilot environments.",
-  image: "/mmr-images/mmr-images-1.jpg",
+  image: "/mmr-images/mmr-images-1.webp",
   href: "/offerings/material-movement",
   hrefLabel: "Explore Material Movement",
   stats: [

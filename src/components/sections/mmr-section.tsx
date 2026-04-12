@@ -4,22 +4,22 @@ import Image from "next/image";
 
 const MMR_IMAGES = [
   {
-    src: "/mmr-images/mmr-images-1.jpg",
+    src: "/mmr-images/mmr-images-1.webp",
     alt: "MMR Image 1",
     text: "Autonomous Material Movement Bot designed for factory floors and warehouses.",
   },
   {
-    src: "/mmr-images/mmr-images-2.jpg",
+    src: "/mmr-images/mmr-images-2.webp",
     alt: "MMR Image 2",
     text: "Precision navigation in dynamic environments with zero infrastructure changes.",
   },
   {
-    src: "/mmr-images/mmr-images-3.jpg",
+    src: "/mmr-images/mmr-images-3.webp",
     alt: "MMR Image 3",
     text: "Robust payload capacity and all-day operation with smart charging.",
   },
   {
-    src: "/mmr-images/mmr-images-1.jpg",
+    src: "/mmr-images/mmr-images-1.webp",
     alt: "MMR Image 4",
     text: "Fleet-ready architecture that scales from one robot to hundreds across sites.",
   },

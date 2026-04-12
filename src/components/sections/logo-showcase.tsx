@@ -110,6 +110,8 @@ function LogoScrollingSection({ title, subtitle, logos, bgColor, speed = 0.5, di
                     alt={`${logo.name} logo`}
                     fill
                     className="object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                    sizes="(max-width: 640px) 96px, (max-width: 1024px) 128px, 160px"
+                    quality={85}
                   />
                 </div>
               </div>

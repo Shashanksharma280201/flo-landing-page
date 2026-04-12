@@ -171,9 +171,9 @@ function MagneticButton({
 // ─── Image Showcase Section ───────────────────────────────────────────────────
 
 const SHOWCASE_IMAGES = [
-  { src: "/mmr-images/mmr-images-1.jpg",   label: "Material Movement Bot" },
-  { src: "/mmr-images/mmr-images-2.jpg",   label: "Autonomous Navigation" },
-  { src: "/mmr-images/mmr-images-3.jpg",   label: "Site Operations" },
+  { src: "/mmr-images/mmr-images-1.webp",   label: "Material Movement Bot" },
+  { src: "/mmr-images/mmr-images-2.webp",   label: "Autonomous Navigation" },
+  { src: "/mmr-images/mmr-images-3.webp",   label: "Site Operations" },
   { src: "/mmr-images/mmr-robot.png",      label: "MMR Robot" },
   { src: "/mmr-images/mmr-robot-new.png",  label: "Next-Gen MMR" },
 ];
@@ -382,7 +382,7 @@ const PRODUCTS: {
       "Electric Power Train — efficient and sustainable with instant torque",
       "Swappable batteries — minimize downtime by seamlessly swapping batteries",
     ],
-    media: { type: "image", src: "/mmr-images/mmr-images-1.jpg" },
+    media: { type: "image", src: "/mmr-images/mmr-images-1.webp" },
     href: "/offerings/material-movement",
     cta: "Explore Material Movement",
     flip: false,
@@ -655,12 +655,11 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
               <>
                 {/* YouTube hqdefault thumbnail (always available) */}
                 <Image
-                  src={`https://i.ytimg.com/vi/${media.videoId}/hqdefault.jpg`}
+                  src={`https://i.ytimg.com/vi/${media.videoId}/maxresdefault.jpg`}
                   alt={product.tag}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  unoptimized
                 />
                 {/* Dark overlay for contrast */}
                 <div className="absolute inset-0 bg-black/30 z-10" />
@@ -1154,7 +1153,7 @@ function InvestorCell({ believer, index }: { believer: (typeof BELIEVERS)[0]; in
           fill
           className="object-contain"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-          quality={100}
+          quality={85}
         />
       </div>
 
@@ -1303,7 +1302,7 @@ function LogoCell({ customer, index }: { customer: (typeof ALL_CUSTOMERS)[0]; in
           fill
           className="object-contain"
           sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 16vw"
-          quality={100}
+          quality={85}
         />
       </div>
 

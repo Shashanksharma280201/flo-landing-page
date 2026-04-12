@@ -168,9 +168,9 @@ export function CustomersSection() {
                         src={customer.logo}
                         alt={`${customer.name} logo`}
                         fill
-                        quality={100}
+                        quality={85}
                         className="object-contain"
-                        sizes="(max-width: 1024px) 33vw, 25vw"
+                        sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 14vw"
                       />
                     </div>
                   </div>

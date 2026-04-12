@@ -261,9 +261,9 @@ function HeroSection() {
           <VideoEmbed videoId="KMTNnYjulQE" title="Flo Autonomous Material Mover" />
           {/* Product image strip */}
           <div className="grid grid-cols-2 gap-4">
-            {["/mmr-images/mmr-images-1.jpg", "/mmr-images/mmr-images-2.jpg"].map((src, i) => (
+            {["/mmr-images/mmr-images-1.webp", "/mmr-images/mmr-images-2.webp"].map((src, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden border" style={{ borderColor: DIM }}>
-                <Image src={src} alt="Material mover" fill className="object-cover" sizes="25vw" />
+                <Image src={src} alt="Material mover" fill className="object-cover" sizes="25vw" priority />
               </div>
             ))}
           </div>
@@ -550,7 +550,7 @@ const USE_CASES = [
     label: "Construction Sites",
     description:
       "Move concrete blocks, steel rebar, and aggregate between floors and work zones without manual labour.",
-    image: "/mmr-images/mmr-images-1.jpg",
+    image: "/mmr-images/mmr-images-1.webp",
     stat: "50%",
     statLabel: "Labour cost saved",
   },
@@ -558,7 +558,7 @@ const USE_CASES = [
     label: "Mining Operations",
     description:
       "Navigate rugged underground terrain carrying ore, equipment, and supplies over steep grades up to 20°.",
-    image: "/mmr-images/mmr-images-3.jpg",
+    image: "/mmr-images/mmr-images-3.webp",
     stat: "20°",
     statLabel: "Max grade handled",
   },
@@ -566,7 +566,7 @@ const USE_CASES = [
     label: "Warehousing & Logistics",
     description:
       "Automate repetitive internal transport runs, freeing your workforce for higher-value tasks.",
-    image: "/mmr-images/mmr-images-2.jpg",
+    image: "/mmr-images/mmr-images-2.webp",
     stat: "6x",
     statLabel: "Efficiency gain",
   },

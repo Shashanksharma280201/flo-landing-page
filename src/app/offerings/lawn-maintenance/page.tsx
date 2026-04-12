@@ -111,12 +111,11 @@ function VideoEmbed({ videoId, title }: { videoId: string; title: string }) {
       ) : (
         <>
           <Image
-            src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+            src={`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`}
             alt={title}
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
-            unoptimized
           />
           <div className="absolute inset-0 bg-black/30" />
           <button
