@@ -98,6 +98,7 @@ function SectionRule({ label }: { label: string }) {
 
 function VideoEmbed({ videoId, title }: { videoId: string; title: string }) {
   const [playing, setPlaying] = useState(false);
+  const [thumbSrc, setThumbSrc] = useState(`https://i.ytimg.com/vi/${videoId}/sddefault.jpg`);
   return (
     <div className="relative w-full aspect-video rounded-2xl overflow-hidden border" style={{ borderColor: DIM }}>
       {playing ? (
@@ -111,11 +112,12 @@ function VideoEmbed({ videoId, title }: { videoId: string; title: string }) {
       ) : (
         <>
           <Image
-            src={`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`}
+            src={thumbSrc}
             alt={title}
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
+            onError={() => setThumbSrc(`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`)}
           />
           <div className="absolute inset-0 bg-black/30" />
           <button
@@ -863,9 +865,9 @@ export default function LawnMaintenancePage() {
       <HeroSection />
       <ProofBar />
       <CapabilitiesSection />
-      <ProcessSection />
-      <UseCasesSection />
       <SpecsSection />
+      <UseCasesSection />
+      <ProcessSection />
       <CTASection />
     </div>
   );

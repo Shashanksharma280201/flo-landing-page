@@ -149,7 +149,7 @@ function VideoEmbed({ videoId, title }: { videoId: string; title: string }) {
 
 const HERO_STATS = [
   { value: "6x",      label: "Efficiency boost" },
-  { value: "700 kg",  label: "Max payload" },
+  { value: "500 kg",  label: "Max payload" },
   { value: "20°",     label: "Gradeability" },
   { value: "8–10 hrs",label: "Battery life" },
 ];
@@ -277,7 +277,7 @@ function HeroSection() {
 
 const TICKER = [
   { value: "6x",       label: "Efficiency Gain" },
-  { value: "700 kg",   label: "Max Payload" },
+  { value: "500 kg",   label: "Max Payload" },
   { value: "20°",      label: "Gradeability" },
   { value: "<1 day",   label: "Commissioning" },
   { value: "8–10 hrs", label: "Battery Life" },
@@ -849,9 +849,9 @@ export default function MaterialMovementPage() {
       <HeroSection />
       <ProofBar />
       <CapabilitiesSection />
-      <ProcessSection />
-      <UseCasesSection />
       <SpecsSection />
+      <UseCasesSection />
+      <ProcessSection />
       <CTASection />
     </div>
   );

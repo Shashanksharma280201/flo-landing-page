@@ -935,9 +935,9 @@ export default function FleetControlPage() {
       <ProofBar />
       <ShowcaseSection />
       <CapabilitiesSection />
-      <ProcessSection />
-      <UseCasesSection />
       <SpecsSection />
+      <UseCasesSection />
+      <ProcessSection />
       <CTASection />
     </div>
   );
