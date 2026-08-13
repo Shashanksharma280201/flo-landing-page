@@ -144,3 +144,172 @@ export const JOBS = [
     jdLink: "/docs/robot-operators-jd.pdf",
   },
 ];
+
+export type MediaCategory = "press" | "video" | "event";
+
+export type MediaItem = {
+  id: string;
+  title: string;
+  outlet: string;
+  /** ISO date — sorts the grid and feeds the NewsArticle/VideoObject schema. */
+  date: string;
+  /** Label shown on the card. Omit when the exact date isn't confirmed. */
+  dateLabel?: string;
+  description: string;
+  category: MediaCategory;
+  /** Exactly one item should be featured — it gets the large hero card. */
+  featured?: boolean;
+  url?: string;
+  image?: string;
+  /** YouTube ID — renders an inline player instead of a link. */
+  videoId?: string;
+  cta?: string;
+};
+
+export const MEDIA_COVERAGE: MediaItem[] = [
+  {
+    id: "yourstory-haul-materials",
+    title: "Flo Mobility builds robots that haul construction materials. L&T and Godrej use them",
+    outlet: "YourStory",
+    date: "2026-07-01",
+    dateLabel: "July 2026",
+    description:
+      "The Bengaluru-based startup's autonomous robot carries up to 1.5 tonnes across building sites. It raised $2.5 million in a pre-Series A round.",
+    category: "press",
+    featured: true,
+    url: "https://yourstory.com/2026/07/flo-mobility-construction-robots",
+    image: "/media-coverage/yourstory.avif",
+  },
+  {
+    id: "builtworlds-robotics-top-50",
+    title: "Flo Mobility named to the 2026 Robotics Top 50",
+    outlet: "BuiltWorlds",
+    date: "2026-07-08",
+    dateLabel: "July 2026",
+    description:
+      "Listed under Material Transport for its electric autonomous material movers built for construction sites.",
+    category: "press",
+    url: "https://builtworlds.com/insights/2026-robotics-50/",
+    image: "/media-coverage/builtworlds-robotics-top-50.avif",
+    cta: "See the list",
+  },
+  {
+    id: "economic-times-ai-innovators",
+    title: "Mindful Construction Inc",
+    outlet: "The Economic Times",
+    date: "2026-02-01",
+    dateLabel: "Feb 2026",
+    description:
+      "ET's NuE Trends on how AI-powered startups — Flo Mobility among them — are tackling labour shortages and speeding up construction's digital transformation.",
+    category: "press",
+    image: "/media-coverage/economic-times.avif",
+  },
+  {
+    id: "construction-world-flow-not-move",
+    title: "We're building robots that flow, not just move",
+    outlet: "Construction World",
+    date: "2025-07-01",
+    dateLabel: "July 2025",
+    description:
+      "Founder Manesh Jain on Flo Mobility's origin, its LiDAR-free vision-AI stack, and expansion into the Middle East.",
+    category: "press",
+    url: "https://www.constructionworld.in/latest-construction-technology/we---re-building-robots-that-flow--not-just-move/75547",
+    image: "/media-coverage/construction-world.avif",
+  },
+  {
+    id: "india-deeptech-report-2025",
+    title: "Mapped in the India Deeptech Report 2025",
+    outlet: "TDK Ventures & Kae Capital",
+    date: "2025-09-01",
+    dateLabel: "Sept 2025",
+    description:
+      "Flo Mobility features under Construction & Heavy Duty Robots in the robotics chapter of the India Deeptech Report.",
+    category: "press",
+    url: "https://kae-capital.com/reports/india-deeptech-2025/",
+    image: "/media-coverage/india-deeptech-report.avif",
+    cta: "Read the report",
+  },
+  {
+    id: "srx-podcast-manesh-jain",
+    title: "SRX E3 | The Art of Execution is the Key to Success",
+    outlet: "SRX Podcast",
+    date: "2026-03-01",
+    description:
+      "Founder Manesh Jain on building construction site robots in India, and why execution decides which startups survive.",
+    category: "video",
+    image: "/media-coverage/srx-podcast.avif",
+  },
+  {
+    id: "nicmar-agni-ignite",
+    title: "Agni Ignite 2026 — North Conclave",
+    outlet: "NICMAR University",
+    date: "2026-01-01",
+    dateLabel: "2026",
+    description:
+      "Manesh Jain on the panel 'Startup Environment in Construction Sector: Myth or Reality'.",
+    category: "event",
+    image: "/media-coverage/nicmar-agni-ignite.avif",
+  },
+  {
+    id: "bengaluru-tech-summit-hauler",
+    title: "The Flo Hauler on show at Bengaluru Tech Summit",
+    outlet: "Bengaluru Tech Summit",
+    date: "2025-11-01",
+    dateLabel: "Nov 2025",
+    description:
+      "Flo's autonomous material mover on display outside Bangalore Palace during the summit.",
+    category: "event",
+    image: "/media-coverage/bengaluru-tech-summit-hauler.avif",
+  },
+  {
+    id: "credai-new-india-summit",
+    title: "Recognised at the CREDAI New India Summit",
+    outlet: "CREDAI",
+    date: "2025-03-01",
+    dateLabel: "March 2025",
+    description:
+      "Felicitated at Viksit Bharat — Unlocking the Potential of Emerging Cities, Nashik, Maharashtra.",
+    category: "event",
+    image: "/media-coverage/credai-new-india-summit.avif",
+  },
+  {
+    id: "artpark-startup-mahakumbh",
+    title: "At Startup Mahakumbh with ARTPARK",
+    outlet: "Startup Mahakumbh",
+    date: "2025-04-01",
+    description:
+      "Showcasing autonomous material movement at the ARTPARK Robotics & Connected Autonomous Systems pavilion.",
+    category: "event",
+    image: "/media-coverage/artpark-startup-mahakumbh.avif",
+  },
+  {
+    id: "kerala-launch",
+    title: "Autonomous robotic wheelbarrow launched in Kerala",
+    outlet: "Kerala Launch",
+    date: "2025-06-01",
+    description:
+      "Demonstrating the impact of autonomous material movement to builders and officials in Kerala.",
+    category: "event",
+    image: "/media-coverage/kerala-launch.avif",
+  },
+  {
+    id: "elevate-x",
+    title: "Selected for Elevate X",
+    outlet: "Elevate X",
+    date: "2025-08-01",
+    description:
+      "Flo Mobility among the cohort of startups selected for the Elevate X programme.",
+    category: "event",
+    image: "/media-coverage/elevate-x.avif",
+  },
+];
+
+/** Rendered in the "As featured in" band. `logo` falls back to the outlet name. */
+export const MEDIA_OUTLETS: { name: string; logo?: string }[] = [
+  { name: "YourStory" },
+  { name: "The Economic Times" },
+  { name: "Construction World" },
+  { name: "BuiltWorlds" },
+  { name: "TDK Ventures" },
+  { name: "Kae Capital" },
+];
