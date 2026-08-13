@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 interface CounterProps {
   end: number;
@@ -9,7 +9,12 @@ interface CounterProps {
   className?: string;
 }
 
-export function Counter({ end, duration = 2000, suffix = "", className = "" }: CounterProps) {
+export function Counter({
+  end,
+  duration = 2000,
+  suffix = '',
+  className = '',
+}: CounterProps) {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -26,8 +31,8 @@ export function Counter({ end, duration = 2000, suffix = "", className = "" }: C
       },
       {
         threshold: 0.1,
-        rootMargin: "50px",
-      }
+        rootMargin: '50px',
+      },
     );
 
     if (ref.current) {
@@ -69,7 +74,8 @@ export function Counter({ end, duration = 2000, suffix = "", className = "" }: C
 
   return (
     <div ref={ref} className={className}>
-      {count}{suffix}
+      {count}
+      {suffix}
     </div>
   );
 }

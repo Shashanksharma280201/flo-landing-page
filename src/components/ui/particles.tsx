@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 interface ParticlesProps {
   className?: string;
@@ -20,10 +20,10 @@ interface Particle {
 }
 
 export function Particles({
-  className = "",
+  className = '',
   quantity = 30,
   ease = 50,
-  color = "#7ccd54",
+  color = '#7ccd54',
   refresh = false,
 }: ParticlesProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -33,7 +33,7 @@ export function Particles({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
@@ -67,7 +67,7 @@ export function Particles({
     };
 
     updateDimensions();
-    window.addEventListener("resize", updateDimensions);
+    window.addEventListener('resize', updateDimensions);
 
     let animationFrameId: number;
 
@@ -105,7 +105,7 @@ export function Particles({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", updateDimensions);
+      window.removeEventListener('resize', updateDimensions);
     };
   }, [quantity, ease, color, refresh]);
 
@@ -118,11 +118,7 @@ export function Particles({
 
   return (
     <div className={className} aria-hidden="true">
-      <canvas
-        ref={canvasRef}
-        className="h-full w-full"
-        style={{ display: "block" }}
-      />
+      <canvas ref={canvasRef} className="h-full w-full" style={{ display: 'block' }} />
     </div>
   );
 }

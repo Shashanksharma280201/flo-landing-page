@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+import { cn } from '@/lib/utils';
+import React, { useEffect, useState } from 'react';
 
 export const InfiniteMovingCards = ({
   items,
-  direction = "left",
-  speed = "fast",
+  direction = 'left',
+  speed = 'fast',
   pauseOnHover = true,
   className,
 }: {
@@ -15,8 +15,8 @@ export const InfiniteMovingCards = ({
     name: string;
     title: string;
   }[];
-  direction?: "left" | "right";
-  speed?: "fast" | "normal" | "slow";
+  direction?: 'left' | 'right';
+  speed?: 'fast' | 'normal' | 'slow';
   pauseOnHover?: boolean;
   className?: string;
 }) => {
@@ -56,28 +56,22 @@ export const InfiniteMovingCards = ({
 
   const getDirection = () => {
     if (containerRef.current) {
-      if (direction === "left") {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "forwards"
-        );
+      if (direction === 'left') {
+        containerRef.current.style.setProperty('--animation-direction', 'forwards');
       } else {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "reverse"
-        );
+        containerRef.current.style.setProperty('--animation-direction', 'reverse');
       }
     }
   };
 
   const getSpeed = () => {
     if (containerRef.current) {
-      if (speed === "fast") {
-        containerRef.current.style.setProperty("--animation-duration", "20s");
-      } else if (speed === "normal") {
-        containerRef.current.style.setProperty("--animation-duration", "40s");
+      if (speed === 'fast') {
+        containerRef.current.style.setProperty('--animation-duration', '20s');
+      } else if (speed === 'normal') {
+        containerRef.current.style.setProperty('--animation-duration', '40s');
       } else {
-        containerRef.current.style.setProperty("--animation-duration", "80s");
+        containerRef.current.style.setProperty('--animation-duration', '80s');
       }
     }
   };
@@ -86,8 +80,8 @@ export const InfiniteMovingCards = ({
     <div
       ref={containerRef}
       className={cn(
-        "scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
-        className
+        'scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]',
+        className,
       )}
       onMouseEnter={() => pauseOnHover && setIsPaused(true)}
       onMouseLeave={() => pauseOnHover && setIsPaused(false)}
@@ -95,32 +89,32 @@ export const InfiniteMovingCards = ({
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap",
-          start && "animate-scroll"
+          'flex w-max min-w-full shrink-0 flex-nowrap gap-4 py-4',
+          start && 'animate-scroll',
         )}
         style={{
-          animationPlayState: isPaused ? "paused" : "running",
+          animationPlayState: isPaused ? 'paused' : 'running',
         }}
       >
         {items.map((item, idx) => (
           <li
-            className="w-[350px] max-w-full relative rounded-2xl border-2 border-[#7ccd54]/30 px-8 py-6 md:w-[450px] bg-white shadow-lg hover:shadow-2xl hover:scale-105 hover:border-[#7ccd54] transition-all duration-300"
+            className="relative w-[350px] max-w-full rounded-2xl border-2 border-[#7ccd54]/30 bg-white px-8 py-6 shadow-lg transition-all duration-300 hover:scale-105 hover:border-[#7ccd54] hover:shadow-2xl md:w-[450px]"
             key={item.name + idx}
           >
             <blockquote>
               <div
                 aria-hidden="true"
-                className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
+                className="user-select-none pointer-events-none absolute -top-0.5 -left-0.5 -z-1 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
               ></div>
-              <span className="relative z-20 text-sm leading-[1.6] text-gray-700 font-normal">
+              <span className="relative z-20 text-sm leading-[1.6] font-normal text-gray-700">
                 "{item.quote}"
               </span>
               <div className="relative z-20 mt-6 flex flex-row items-center">
                 <span className="flex flex-col gap-1">
-                  <span className="text-sm leading-[1.6] text-gray-900 font-semibold">
+                  <span className="text-sm leading-[1.6] font-semibold text-gray-900">
                     {item.name}
                   </span>
-                  <span className="text-xs leading-[1.6] text-[#5ba83d] font-medium">
+                  <span className="text-xs leading-[1.6] font-medium text-[#5ba83d]">
                     {item.title}
                   </span>
                 </span>

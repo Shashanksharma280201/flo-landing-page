@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import React, { useMemo, useRef } from "react";
-import * as THREE from "three";
-import { cn } from "@/lib/utils";
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import React, { useMemo, useRef } from 'react';
+import * as THREE from 'three';
+import { cn } from '@/lib/utils';
 
 interface AntigravityProps {
   count?: number;
@@ -19,7 +19,7 @@ interface AntigravityProps {
   rotationSpeed?: number;
   depthFactor?: number;
   pulseSpeed?: number;
-  particleShape?: "capsule" | "sphere" | "box" | "tetrahedron";
+  particleShape?: 'capsule' | 'sphere' | 'box' | 'tetrahedron';
   fieldStrength?: number;
   drift?: boolean; // New prop for random drifting
   driftSpeed?: number;
@@ -104,13 +104,13 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
   waveAmplitude = 1,
   particleSize = 2,
   lerpSpeed = 0.1,
-  color = "#FF9FFC",
+  color = '#FF9FFC',
   autoAnimate = false,
   particleVariance = 1,
   rotationSpeed = 0,
   depthFactor = 1,
   pulseSpeed = 3,
-  particleShape = "capsule",
+  particleShape = 'capsule',
   fieldStrength = 10,
   drift = false,
   driftSpeed = 1,
@@ -156,7 +156,7 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
 
           if (distSq < minSafe && distSq > 0.0001) {
             const dist = Math.sqrt(distSq);
-            const force = (minSafe - distSq) / minSafe * repulsionStrength;
+            const force = ((minSafe - distSq) / minSafe) * repulsionStrength;
             const nx = dx / dist;
             const ny = dy / dist;
             const nz = dz / dist;
@@ -275,8 +275,7 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
 
         targetPos.x = projectedTargetX + currentRingRadius * Math.cos(angle);
         targetPos.y = projectedTargetY + currentRingRadius * Math.sin(angle);
-        targetPos.z =
-          mz * depthFactor + Math.sin(t) * (1 * waveAmplitude * depthFactor);
+        targetPos.z = mz * depthFactor + Math.sin(t) * (1 * waveAmplitude * depthFactor);
       }
 
       particle.cx += (targetPos.x - particle.cx) * lerpSpeed;
@@ -314,12 +313,10 @@ const AntigravityInner: React.FC<AntigravityProps> = ({
 
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-      {particleShape === "capsule" && (
-        <capsuleGeometry args={[0.1, 0.4, 4, 8]} />
-      )}
-      {particleShape === "sphere" && <sphereGeometry args={[0.2, 16, 16]} />}
-      {particleShape === "box" && <boxGeometry args={[0.3, 0.3, 0.3]} />}
-      {particleShape === "tetrahedron" && <tetrahedronGeometry args={[0.3]} />}
+      {particleShape === 'capsule' && <capsuleGeometry args={[0.1, 0.4, 4, 8]} />}
+      {particleShape === 'sphere' && <sphereGeometry args={[0.2, 16, 16]} />}
+      {particleShape === 'box' && <boxGeometry args={[0.3, 0.3, 0.3]} />}
+      {particleShape === 'tetrahedron' && <tetrahedronGeometry args={[0.3]} />}
       <meshBasicMaterial color={color} />
     </instancedMesh>
   );
@@ -334,7 +331,7 @@ export const Antigravity: React.FC<AntigravityProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={containerRef} className={cn("relative", containerClassName)}>
+    <div ref={containerRef} className={cn('relative', containerClassName)}>
       <div className="absolute inset-0 z-0 h-full blur-xl">
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           <Canvas
@@ -346,7 +343,7 @@ export const Antigravity: React.FC<AntigravityProps> = ({
           </Canvas>
         </div>
       </div>
-      <div className={cn("relative z-10", className)}>{children}</div>
+      <div className={cn('relative z-10', className)}>{children}</div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 interface UseIntersectionObserverOptions extends IntersectionObserverInit {
   triggerOnce?: boolean;
@@ -7,7 +7,7 @@ interface UseIntersectionObserverOptions extends IntersectionObserverInit {
 export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>({
   threshold = 0,
   root = null,
-  rootMargin = "0px",
+  rootMargin = '0px',
   triggerOnce = false,
 }: UseIntersectionObserverOptions = {}) {
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
@@ -27,7 +27,7 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
           observer.unobserve(element);
         }
       },
-      { threshold, root, rootMargin }
+      { threshold, root, rootMargin },
     );
 
     observer.observe(element);

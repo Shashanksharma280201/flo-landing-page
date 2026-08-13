@@ -1,7 +1,7 @@
-"use client";
-import { cn } from "@/lib/utils";
-import React, { useEffect, useRef, useState, useMemo } from "react";
-import { createNoise3D } from "simplex-noise";
+'use client';
+import { cn } from '@/lib/utils';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { createNoise3D } from 'simplex-noise';
 
 export const WavyBackground = ({
   children,
@@ -11,7 +11,7 @@ export const WavyBackground = ({
   waveWidth,
   backgroundFill,
   blur = 10,
-  speed = "fast",
+  speed = 'fast',
   waveOpacity = 0.5,
   ...props
 }: {
@@ -22,44 +22,43 @@ export const WavyBackground = ({
   waveWidth?: number;
   backgroundFill?: string;
   blur?: number;
-  speed?: "slow" | "fast";
+  speed?: 'slow' | 'fast';
   waveOpacity?: number;
   [key: string]: unknown;
 }) => {
   const noise = useMemo(() => createNoise3D(), []);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  
+
   // Performance optimization: Render at a lower resolution and scale up
   // Since we use blur, the user won't notice the lower resolution.
-  const scale = 0.5; 
+  const scale = 0.5;
 
   const getSpeed = () => {
     switch (speed) {
-      case "slow": return 0.001;
-      case "fast": return 0.002;
-      default: return 0.001;
+      case 'slow':
+        return 0.001;
+      case 'fast':
+        return 0.002;
+      default:
+        return 0.001;
     }
   };
 
-  const waveColors = colors ?? [
-    "#7ccd54",
-    "#A5E089",
-    "#C8F2B7",
-    "#D9F9CC",
-    "#E6FBE0",
-  ];
+  const waveColors = colors ?? ['#7ccd54', '#A5E089', '#C8F2B7', '#D9F9CC', '#E6FBE0'];
 
   useEffect(() => {
     // Check for reduced motion preference
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mediaQuery.matches) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: false }); // Optimization: disable alpha if possible
+    const ctx = canvas.getContext('2d', { alpha: false }); // Optimization: disable alpha if possible
     if (!ctx) return;
 
-    let w: number, h: number, nt = 0;
+    let w: number,
+      h: number,
+      nt = 0;
     let animationId: number;
 
     const resize = () => {
@@ -84,33 +83,38 @@ export const WavyBackground = ({
     };
 
     const render = () => {
-      ctx.fillStyle = backgroundFill || "#FEFDFB";
+      ctx.fillStyle = backgroundFill || '#FEFDFB';
       ctx.globalAlpha = waveOpacity || 0.5;
       ctx.fillRect(0, 0, w, h);
       drawWave(5);
       animationId = requestAnimationFrame(render);
     };
 
-    window.addEventListener("resize", resize);
+    window.addEventListener('resize', resize);
     resize();
     render();
 
     return () => {
-      window.removeEventListener("resize", resize);
+      window.removeEventListener('resize', resize);
       cancelAnimationFrame(animationId);
     };
   }, [blur, speed, waveOpacity, waveWidth, backgroundFill, noise, waveColors]);
 
   return (
-    <div className={cn("relative flex flex-col items-center justify-center", containerClassName)}>
+    <div
+      className={cn(
+        'relative flex flex-col items-center justify-center',
+        containerClassName,
+      )}
+    >
       <canvas
-        className="absolute inset-0 z-0 w-full h-full"
+        className="absolute inset-0 z-0 h-full w-full"
         ref={canvasRef}
         style={{
-          imageRendering: "auto",
+          imageRendering: 'auto',
         }}
       ></canvas>
-      <div className={cn("relative z-10", className)} {...props}>
+      <div className={cn('relative z-10', className)} {...props}>
         {children}
       </div>
     </div>

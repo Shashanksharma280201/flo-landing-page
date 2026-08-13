@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
@@ -283,7 +283,7 @@ export const LaserFlow = ({
   decay = 1.1,
   falloffStart = 1.2,
   fogFallSpeed = 0.6,
-  color = '#7ccd54'
+  color = '#7ccd54',
 }: LaserFlowProps) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -305,7 +305,7 @@ export const LaserFlow = ({
     if (c.length === 3)
       c = c
         .split('')
-        .map(x => x + x)
+        .map((x) => x + x)
         .join('');
     const n = parseInt(c, 16) || 0xffffff;
     return { r: ((n >> 16) & 255) / 255, g: ((n >> 8) & 255) / 255, b: (n & 255) / 255 };
@@ -324,7 +324,7 @@ export const LaserFlow = ({
       premultipliedAlpha: false,
       preserveDrawingBuffer: false,
       failIfMajorPerformanceCaveat: false,
-      logarithmicDepthBuffer: false
+      logarithmicDepthBuffer: false,
     });
     rendererRef.current = renderer;
 
@@ -344,7 +344,10 @@ export const LaserFlow = ({
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3));
+    geometry.setAttribute(
+      'position',
+      new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3),
+    );
 
     const uniforms = {
       iTime: { value: 0 },
@@ -368,7 +371,7 @@ export const LaserFlow = ({
       uFalloffStart: { value: falloffStart },
       uFogFallSpeed: { value: fogFallSpeed },
       uColor: { value: new THREE.Vector3(1, 1, 1) },
-      uFade: { value: hasFadedRef.current ? 1 : 0 }
+      uFade: { value: hasFadedRef.current ? 1 : 0 },
     };
     uniformsRef.current = uniforms;
 
@@ -379,7 +382,7 @@ export const LaserFlow = ({
       transparent: true,
       depthTest: false,
       depthWrite: false,
-      blending: THREE.NormalBlending
+      blending: THREE.NormalBlending,
     });
 
     const mesh = new THREE.Mesh(geometry, material);
@@ -399,7 +402,8 @@ export const LaserFlow = ({
       const pr = currentDprRef.current;
 
       const last = lastSizeRef.current;
-      const sizeChanged = Math.abs(w - last.width) > 0.5 || Math.abs(h - last.height) > 0.5;
+      const sizeChanged =
+        Math.abs(w - last.width) > 0.5 || Math.abs(h - last.height) > 0.5;
       const dprChanged = Math.abs(pr - last.dpr) > 0.01;
       if (!sizeChanged && !dprChanged) {
         return;
@@ -427,10 +431,10 @@ export const LaserFlow = ({
     ro.observe(mount);
 
     const io = new IntersectionObserver(
-      entries => {
+      (entries) => {
         inViewRef.current = entries[0]?.isIntersecting ?? true;
       },
-      { root: null, threshold: 0 }
+      { root: null, threshold: 0 },
     );
     io.observe(mount);
 
@@ -495,7 +499,10 @@ export const LaserFlow = ({
         next = clamp(currentDprRef.current * 1.1, dprFloor, base);
       }
 
-      if (Math.abs(next - currentDprRef.current) > 0.01 && now - lastDprChangeRef > dprChangeCooldown) {
+      if (
+        Math.abs(next - currentDprRef.current) > 0.01 &&
+        now - lastDprChangeRef > dprChangeCooldown
+      ) {
         currentDprRef.current = next;
         lastDprChangeRef = now;
         setSizeNow();
@@ -601,10 +608,16 @@ export const LaserFlow = ({
     decay,
     falloffStart,
     fogFallSpeed,
-    color
+    color,
   ]);
 
-  return <div ref={mountRef} className={`laser-flow-container ${className || ''}`} style={style} />;
+  return (
+    <div
+      ref={mountRef}
+      className={`laser-flow-container ${className || ''}`}
+      style={style}
+    />
+  );
 };
 
 export default LaserFlow;

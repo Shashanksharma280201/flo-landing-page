@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useRef } from "react";
-import { useScroll, useTransform, motion, MotionValue, useSpring } from "framer-motion";
+import React, { useRef } from 'react';
+import { useScroll, useTransform, motion, MotionValue, useSpring } from 'framer-motion';
 
 export const ContainerScroll = ({
   titleComponent,
@@ -13,7 +13,7 @@ export const ContainerScroll = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ['start start', 'end end'],
   });
 
   const scaleDimensions = () => {
@@ -46,13 +46,13 @@ export const ContainerScroll = ({
 
   return (
     <div
-      className="h-[50rem] md:h-[60rem] flex items-center justify-center relative p-2 md:p-10"
+      className="relative flex h-[50rem] items-center justify-center p-2 md:h-[60rem] md:p-10"
       ref={containerRef}
     >
       <div
-        className="py-6 md:py-20 w-full relative"
+        className="relative w-full py-6 md:py-20"
         style={{
-          perspective: "1500px",
+          perspective: '1500px',
         }}
       >
         <Header translate={translateSpring} titleComponent={titleComponent} />
@@ -76,7 +76,7 @@ export const Header = ({
       style={{
         translateY: translate,
       }}
-      className="div max-w-5xl mx-auto text-center"
+      className="div mx-auto max-w-5xl text-center"
     >
       {titleComponent}
     </motion.div>
@@ -98,11 +98,11 @@ export const Card = ({
         rotateX: rotate,
         scale,
         boxShadow:
-          "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
+          '0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003',
       }}
-      className="max-w-5xl -mt-12 mx-auto h-[28rem] md:h-[36rem] w-full border-4 border-[#6C6C6C] p-2 md:p-4 bg-[#222222] rounded-[30px] shadow-2xl"
+      className="mx-auto -mt-12 h-[28rem] w-full max-w-5xl rounded-[30px] border-4 border-[#6C6C6C] bg-[#222222] p-2 shadow-2xl md:h-[36rem] md:p-4"
     >
-      <div className="h-full w-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl md:p-4">
+      <div className="h-full w-full overflow-hidden rounded-2xl bg-gray-100 md:rounded-2xl md:p-4 dark:bg-zinc-900">
         {children}
       </div>
     </motion.div>

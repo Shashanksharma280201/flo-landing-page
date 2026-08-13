@@ -1,45 +1,58 @@
-"use client";
+'use client';
 
-import React, { useRef, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import React, { useRef, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowRight,
   ArrowUpRight,
   ChevronDown,
-  Play,
   ShieldCheck,
   Zap,
   Truck,
   Battery,
   Cpu,
   LineChart,
-} from "lucide-react";
+} from 'lucide-react';
+import { TrackedYouTubeIframe } from '@/components/shared/tracked-youtube-iframe';
 
 // ─── Design tokens — FLO brand light theme ───────────────────────────────────
-const BG      = "#ffffff";
-const BG2     = "#f5f5f5";
-const GREEN   = "#7ccd54";
-const GREEN_D = "#286c00";
-const TEXT    = "#191c1a";
-const MUTED   = "rgba(25,28,26,0.55)";
-const DIM     = "rgba(25,28,26,0.15)";
+const BG = '#ffffff';
+const BG2 = '#f5f5f5';
+const GREEN = '#7ccd54';
+const GREEN_D = '#286c00';
+const TEXT = '#191c1a';
+const MUTED = 'rgba(25,28,26,0.55)';
+const DIM = 'rgba(25,28,26,0.15)';
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 // ─── Shared animation primitives ─────────────────────────────────────────────
 
 function RevealText({
-  children, delay = 0, className = "",
-}: { children: React.ReactNode; delay?: number; className?: string }) {
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
+  const inView = useInView(ref, { once: true, margin: '-8% 0px' });
   return (
     <div ref={ref} className={className}>
-      <div style={{ overflow: "hidden", paddingBottom: "0.35em", marginBottom: "-0.35em" }}>
+      <div
+        style={{
+          clipPath: 'inset(-0.18em -0.08em -0.34em -0.08em)',
+          overflow: 'visible',
+          paddingBlock: '0.18em 0.34em',
+          marginBlock: '-0.18em -0.34em',
+        }}
+      >
         <motion.div
-          initial={{ y: "110%", opacity: 0 }}
-          animate={inView ? { y: "0%", opacity: 1 } : {}}
+          initial={{ y: '110%', opacity: 0 }}
+          animate={inView ? { y: '0%', opacity: 1 } : {}}
           transition={{ duration: 1.0, delay, ease: EASE }}
         >
           {children}
@@ -50,10 +63,16 @@ function RevealText({
 }
 
 function FadeUp({
-  children, delay = 0, className = "",
-}: { children: React.ReactNode; delay?: number; className?: string }) {
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-6% 0px" });
+  const inView = useInView(ref, { once: true, margin: '-6% 0px' });
   return (
     <motion.div
       ref={ref}
@@ -69,20 +88,23 @@ function FadeUp({
 
 function SectionRule({ label }: { label: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-5% 0px" });
+  const inView = useInView(ref, { once: true, margin: '-5% 0px' });
   return (
     <motion.div
       ref={ref}
-      className="flex items-center gap-5 mb-16"
+      className="mb-16 flex items-center gap-5"
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : {}}
       transition={{ duration: 0.6 }}
     >
-      <span className="text-sm font-bold tracking-[0.26em] uppercase whitespace-nowrap" style={{ color: DIM }}>
+      <span
+        className="text-sm font-bold tracking-[0.26em] whitespace-nowrap uppercase"
+        style={{ color: DIM }}
+      >
         {label}
       </span>
       <motion.div
-        className="flex-1 h-px"
+        className="h-px flex-1"
         style={{ background: DIM }}
         initial={{ scaleX: 0, originX: 0 }}
         animate={inView ? { scaleX: 1 } : {}}
@@ -94,179 +116,112 @@ function SectionRule({ label }: { label: string }) {
 
 // ─── YouTube embed with thumbnail play ───────────────────────────────────────
 
-function VideoEmbed({ videoId, title }: { videoId: string; title: string }) {
-  const [playing, setPlaying] = useState(false);
+function VideoEmbed({
+  videoId,
+  title,
+  startSeconds = 0,
+}: {
+  videoId: string;
+  title: string;
+  startSeconds?: number;
+}) {
+  const startParam = startSeconds > 0 ? `&start=${Math.floor(startSeconds)}` : '';
+
   return (
-    <div className="relative w-full aspect-video rounded-2xl overflow-hidden border" style={{ borderColor: DIM }}>
-      {playing ? (
-        <iframe
-          className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
-          title={title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      ) : (
-        <>
-          <Image
-            src={`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`}
-            alt={title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black/30" />
-          {/* Play button */}
-          <button
-            onClick={() => setPlaying(true)}
-            className="absolute inset-0 flex items-center justify-center group"
-            aria-label="Play video"
-          >
-            <motion.div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
-              style={{ background: GREEN }}
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.25, ease: EASE }}
-            >
-              <Play className="w-8 h-8 fill-white text-white ml-1" />
-            </motion.div>
-          </button>
-          {/* Caption chip */}
-          <div
-            className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-sm font-semibold uppercase tracking-[0.16em]"
-            style={{ background: "rgba(25,28,26,0.6)", color: "#fff" }}
-          >
-            Watch the robot in action
-          </div>
-        </>
-      )}
+    <div
+      className="relative aspect-video w-full overflow-hidden rounded-2xl border"
+      style={{ borderColor: DIM }}
+    >
+      <TrackedYouTubeIframe
+        videoId={videoId}
+        className="absolute inset-0 h-full w-full"
+        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&rel=0${startParam}`}
+        title={title}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
     </div>
   );
 }
 
 // ─── Section 1 — Hero ────────────────────────────────────────────────────────
 
-const HERO_STATS = [
-  { value: "6x",      label: "Efficiency boost" },
-  { value: "500 kg",  label: "Max payload" },
-  { value: "20°",     label: "Gradeability" },
-  { value: "8–10 hrs",label: "Battery life" },
-];
-
 function HeroSection() {
   return (
-    <section className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-24 md:pt-28 pb-0" style={{ background: BG2 }}>
-      <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center pb-0">
+    <section
+      className="mt-[40px] w-full px-6 pt-24 pb-0 md:px-16 md:pt-28 lg:px-24 xl:px-32"
+      style={{ background: BG2 }}
+    >
+      <div className="align-start grid items-center gap-10 pb-0 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:gap-14">
         {/* Left — text */}
         <div>
-          {/* Eyebrow */}
-          <FadeUp className="mb-8">
-            <div className="inline-flex items-center gap-2.5">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: GREEN }} />
-                <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: GREEN }} />
-              </span>
-              <span className="text-sm font-bold tracking-[0.26em] uppercase" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-                Autonomous Material Mover
-              </span>
-            </div>
-          </FadeUp>
-
           {/* Headline */}
           <div className="mb-8">
             <RevealText>
               <h1
-                className="text-[clamp(3rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                className="text-[clamp(2.75rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
               >
-                Logistics that
+                Any Material
               </h1>
             </RevealText>
             <RevealText delay={0.06}>
               <h1
-                className="text-[clamp(3rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+                className="text-[clamp(2.75rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{
+                  color: 'rgba(4 104 37 / 0.86)',
+                  fontFamily: 'var(--font-dm-sans)',
+                }}
               >
-                move with your
+                All Terrain
               </h1>
             </RevealText>
             <RevealText delay={0.12}>
               <h1
-                className="text-[clamp(3rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                className="text-[clamp(2.75rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
               >
-                business.
+                Any Time
               </h1>
             </RevealText>
           </div>
 
           {/* Separator */}
           <FadeUp delay={0.2}>
-            <div className="w-16 h-px mb-8" style={{ background: DIM }} />
-          </FadeUp>
-
-          {/* Description */}
-          <FadeUp delay={0.25} className="mb-10">
-            <p className="text-lg leading-[1.85] max-w-lg" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              Flo's autonomous material mover delivers safer, faster, and fully driverless
-              payload transport — purpose-built for construction, mining, and industrial worksites.
-            </p>
+            <div className="mb-8 h-px w-16" style={{ background: DIM }} />
           </FadeUp>
 
           {/* CTAs */}
-          <FadeUp delay={0.35} className="flex flex-wrap gap-4 mb-14">
+          <FadeUp delay={0.35} className="mb-14 flex flex-wrap gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full text-base font-bold uppercase tracking-wide transition-all duration-300 hover:scale-105"
-              style={{ background: GREEN, color: "#fff", fontFamily: "var(--font-dm-sans)" }}
+              className="inline-flex items-center gap-2.5 rounded-full px-[clamp(1.125rem,1.5vw,2rem)] py-[clamp(0.7rem,0.8vw,1rem)] text-[clamp(0.75rem,0.68rem_+_0.32vw,0.9375rem)] font-bold tracking-wide uppercase transition-all duration-300 hover:scale-105"
+              style={{
+                background: GREEN,
+                color: '#fff',
+                fontFamily: 'var(--font-dm-sans)',
+              }}
             >
-              Request a Demo <ArrowRight className="w-4 h-4" />
+              Request a Demo{' '}
+              <ArrowRight className="h-[clamp(0.875rem,1vw,1rem)] w-[clamp(0.875rem,1vw,1rem)]" />
             </Link>
-            <a
-              href="#features"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-bold border transition-all duration-300 hover:bg-white"
-              style={{ borderColor: DIM, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-            >
-              Explore Features <ChevronDown className="w-4 h-4" />
-            </a>
-          </FadeUp>
-
-          {/* Stats strip */}
-          <FadeUp delay={0.4}>
-            <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-b" style={{ borderColor: DIM }}>
-              {HERO_STATS.map((s, i) => (
-                <div
-                  key={s.label}
-                  className={`py-6 px-4 text-center ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b sm:border-b-0" : ""}`}
-                  style={{ borderColor: DIM }}
-                >
-                  <div
-                    className="text-[clamp(1.4rem,2.5vw,2.4rem)] font-black leading-none mb-1 tracking-[-0.02em]"
-                    style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-                  >
-                    {s.value}
-                  </div>
-                  <div className="text-sm font-semibold uppercase tracking-[0.18em] mt-1" style={{ color: MUTED }}>
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* <a */}
+            {/*   href="#features" */}
+            {/*   className="inline-flex items-center gap-2 rounded-full border px-8 py-4 text-base font-bold transition-all duration-300 hover:bg-white" */}
+            {/*   style={{ borderColor: DIM, color: TEXT, fontFamily: 'var(--font-dm-sans)' }} */}
+            {/* > */}
+            {/*   Explore Features <ChevronDown className="h-4 w-4" /> */}
+            {/* </a> */}
           </FadeUp>
         </div>
 
-        {/* Right — video + product image */}
-        <FadeUp delay={0.15} className="flex flex-col gap-6">
-          <VideoEmbed videoId="KMTNnYjulQE" title="Flo Autonomous Material Mover" />
-          {/* Product image strip */}
-          <div className="grid grid-cols-2 gap-4">
-            {["/mmr-images/mmr-images-1.webp", "/mmr-images/mmr-images-2.webp"].map((src, i) => (
-              <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden border" style={{ borderColor: DIM }}>
-                <Image src={src} alt="Material mover" fill className="object-cover" sizes="25vw" priority />
-              </div>
-            ))}
-          </div>
+        {/* Right — video */}
+        <FadeUp delay={0.15} className="lg:-mr-4 xl:-mr-8">
+          <VideoEmbed
+            videoId="tjNgvmXFnTE"
+            title="Flo Autonomous Material Mover"
+            startSeconds={21}
+          />
         </FadeUp>
       </div>
     </section>
@@ -276,38 +231,70 @@ function HeroSection() {
 // ─── Section 2 — Proof ticker ─────────────────────────────────────────────────
 
 const TICKER = [
-  { value: "6x",       label: "Efficiency Gain" },
-  { value: "500 kg",   label: "Max Payload" },
-  { value: "20°",      label: "Gradeability" },
-  { value: "<1 day",   label: "Commissioning" },
-  { value: "8–10 hrs", label: "Battery Life" },
-  { value: "200+",     label: "Sites Deployed" },
-  { value: "0",        label: "Emissions" },
-  { value: "24/7",     label: "Operation" },
+  { value: '6x', label: 'Efficiency Gain' },
+  { value: '500 kg', label: 'Max Payload' },
+  { value: '12°', label: 'Gradeability' },
+  // { value: '<1 day', label: 'Deploy Time' },
+  { value: '12 hours', label: 'Battery Life' },
+  { value: '70+', label: 'Robots Deployed' },
+  { value: '0', label: 'Emissions' },
+  { value: '24/7', label: 'Operation' },
 ];
 
 function ProofBar() {
   return (
-    <section className="relative w-full overflow-hidden border-b border-t mt-0" style={{ background: BG2, borderColor: DIM }}>
-      <div className="absolute inset-0 pointer-events-none z-10">
-        <div className="absolute left-0 top-0 bottom-0 w-24" style={{ background: `linear-gradient(to right, ${BG2} 60%, transparent)` }} />
-        <div className="absolute right-0 top-0 bottom-0 w-24" style={{ background: `linear-gradient(to left, ${BG2} 60%, transparent)` }} />
+    <section
+      className="relative mt-0 w-full overflow-hidden border-t border-b"
+      style={{ background: BG2, borderColor: DIM }}
+    >
+      <div className="pointer-events-none absolute inset-0 z-10">
+        <div
+          className="absolute top-0 bottom-0 left-0 w-24"
+          style={{ background: `linear-gradient(to right, ${BG2} 60%, transparent)` }}
+        />
+        <div
+          className="absolute top-0 right-0 bottom-0 w-24"
+          style={{ background: `linear-gradient(to left, ${BG2} 60%, transparent)` }}
+        />
       </div>
-      <div className="flex animate-mmr-ticker items-center">
+      <div className="animate-mmr-ticker flex items-center">
         {[...TICKER, ...TICKER, ...TICKER].map((m, i) => (
-          <div key={i} className="flex items-center gap-6 shrink-0 px-10 py-6 border-r" style={{ borderColor: DIM }}>
-            <span className="text-3xl font-black tracking-tight tabular-nums" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+          <div
+            key={i}
+            className="flex shrink-0 items-center gap-6 border-r px-10 py-6"
+            style={{ borderColor: DIM }}
+          >
+            <span
+              className="text-3xl font-black tracking-tight tabular-nums"
+              style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+            >
               {m.value}
             </span>
-            <span className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap" style={{ color: MUTED }}>
+            <span
+              className="text-sm font-semibold tracking-[0.2em] whitespace-nowrap uppercase"
+              style={{ color: MUTED }}
+            >
               {m.label}
             </span>
           </div>
         ))}
       </div>
       <style jsx>{`
-        @keyframes mmr-ticker { from { transform: translateX(0); } to { transform: translateX(-33.333%); } }
-        .animate-mmr-ticker { animation: mmr-ticker 36s linear infinite; }
+        @keyframes mmr-ticker {
+          from {
+            transform: translate3d(0, 0, 0);
+          }
+          to {
+            transform: translate3d(-50%, 0, 0);
+          }
+        }
+
+        .animate-mmr-ticker {
+          animation: mmr-ticker 24s linear infinite;
+          display: flex;
+          width: max-content;
+          will-change: transform;
+        }
       `}</style>
     </section>
   );
@@ -318,40 +305,46 @@ function ProofBar() {
 const FEATURES = [
   {
     icon: ShieldCheck,
-    title: "Driverless Operation",
-    body: "Eliminates human error and optimises performance through advanced autonomous navigation — no operator required on-site.",
+    title: 'Driverless Operation',
+    body: 'Eliminates human error and optimises performance through advanced autonomous navigation. Remote Control option also available.',
   },
   {
     icon: Zap,
-    title: "Electric Power Train",
-    body: "Instant torque and uncompromised power for all terrains, with zero tailpipe emissions and lower fuel costs.",
+    title: 'Electric Power Train',
+    body: 'Instant torque and uncompromised power for all terrains, with zero tailpipe emissions and precise control.',
   },
   {
     icon: Truck,
-    title: "Customisable Dumper",
-    body: "Versatile payload platform carrying 500 kg. Swap body configurations to match your site requirements.",
+    title: 'Rugged Design',
+    body: '4-Wheel Drive to handle tough and uneven terrain in any weather across construction sites',
   },
   {
     icon: Battery,
-    title: "Swappable Batteries",
-    body: "Hot-swap battery packs keep the robot running continuously across shifts — zero waiting for a full recharge cycle.",
+    title: 'Swappable Batteries',
+    body: 'Easy to swap battery packs keep the robot running continuously across multiple shifts.',
   },
   {
     icon: Cpu,
-    title: "Sensor-Based Intelligence",
-    body: "LiDAR + camera fusion delivers real-time spatial awareness, obstacle avoidance, and precise path following.",
+    title: 'Sensor Based Intelligence',
+    body: 'LiDAR + camera fusion delivers real-time spatial awareness, obstacle avoidance, and precise path following.',
   },
   {
     icon: LineChart,
-    title: "Low OpEx & Maintenance",
-    body: "Fewer moving parts, predictive diagnostics via Fleet Control, and remote servicing reduce your total cost of ownership.",
+    title: 'Low OpEx & Maintenance',
+    body: 'Fewer moving parts, predictive diagnostics via Fleet Control, and periodic servicing reduce your total cost of ownership.',
   },
 ];
 
-function FeatureCell({ feature, index }: { feature: (typeof FEATURES)[0]; index: number }) {
+function FeatureCell({
+  feature,
+  index,
+}: {
+  feature: (typeof FEATURES)[0];
+  index: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
+  const inView = useInView(ref, { once: true, margin: '-8% 0px' });
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current || !glowRef.current) return;
@@ -359,14 +352,16 @@ function FeatureCell({ feature, index }: { feature: (typeof FEATURES)[0]; index:
     const x = ((e.clientX - r.left) / r.width) * 100;
     const y = ((e.clientY - r.top) / r.height) * 100;
     glowRef.current.style.background = `radial-gradient(ellipse 160% 130% at ${x}% ${y}%, ${GREEN}60 0%, ${GREEN}25 40%, rgba(255,255,255,0.06) 70%, transparent 85%)`;
-    glowRef.current.style.opacity = "1";
+    glowRef.current.style.opacity = '1';
   };
-  const onLeave = () => { if (glowRef.current) glowRef.current.style.opacity = "0"; };
+  const onLeave = () => {
+    if (glowRef.current) glowRef.current.style.opacity = '0';
+  };
 
   return (
     <motion.div
       ref={ref}
-      className="relative flex flex-col p-6 border-r border-b overflow-hidden cursor-default group"
+      className="group relative flex cursor-default flex-col overflow-hidden border-r border-b p-6"
       style={{ borderColor: DIM }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
@@ -374,24 +369,43 @@ function FeatureCell({ feature, index }: { feature: (typeof FEATURES)[0]; index:
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: 0.05 * index, ease: EASE }}
     >
-      <div ref={glowRef} className="absolute inset-0 pointer-events-none" style={{ opacity: 0, transition: "opacity 0.35s ease" }} />
+      <div
+        ref={glowRef}
+        className="pointer-events-none absolute inset-0"
+        style={{ opacity: 0, transition: 'opacity 0.35s ease' }}
+      />
       {/* Top accent bar */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" style={{ background: `linear-gradient(90deg, ${GREEN}, ${GREEN}60)` }} />
+      <div
+        className="absolute top-0 right-0 left-0 h-[2px] origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
+        style={{ background: `linear-gradient(90deg, ${GREEN}, ${GREEN}60)` }}
+      />
       {/* Icon + Number row */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-105" style={{ background: `${GREEN}18` }}>
-          <feature.icon className="w-5 h-5" style={{ color: GREEN }} />
+      <div className="mb-4 flex items-center justify-between">
+        <div
+          className="flex h-11 w-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105"
+          style={{ background: `${GREEN}18` }}
+        >
+          <feature.icon className="h-5 w-5" style={{ color: GREEN }} />
         </div>
-        <span className="text-sm font-bold tracking-[0.24em] uppercase" style={{ color: DIM }}>
-          {String(index + 1).padStart(2, "0")}
+        <span
+          className="text-sm font-bold tracking-[0.24em] uppercase"
+          style={{ color: DIM }}
+        >
+          {String(index + 1).padStart(2, '0')}
         </span>
       </div>
       {/* Title */}
-      <h3 className="text-lg font-black mb-2 leading-snug tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+      <h3
+        className="mb-2 text-lg leading-snug font-black tracking-[-0.02em]"
+        style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+      >
         {feature.title}
       </h3>
       {/* Body */}
-      <p className="text-base leading-[1.75]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+      <p
+        className="text-base leading-[1.75]"
+        style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+      >
         {feature.body}
       </p>
     </motion.div>
@@ -400,34 +414,35 @@ function FeatureCell({ feature, index }: { feature: (typeof FEATURES)[0]; index:
 
 function CapabilitiesSection() {
   return (
-    <section id="features" className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
-      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-8 md:pb-16">
+    <section
+      id="features"
+      className="w-full border-t"
+      style={{ background: BG, borderColor: DIM }}
+    >
+      <div className="w-full px-6 pt-16 pb-8 md:px-16 md:pt-32 md:pb-16 lg:px-24 xl:px-32">
         <SectionRule label="Capabilities" />
-        <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-end">
+        <div className="grid items-end gap-16 lg:grid-cols-[1fr_420px]">
           <div>
             <RevealText className="mb-1">
               <h2
-                className="text-[clamp(2.8rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                className="text-[clamp(2.65rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
               >
                 Built for the hardest
               </h2>
             </RevealText>
             <RevealText delay={0.06}>
               <h2
-                className="text-[clamp(2.8rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+                className="text-[clamp(2.65rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{
+                  color: 'rgba(4 104 37 / 0.86)',
+                  fontFamily: 'var(--font-dm-sans)',
+                }}
               >
                 environments on earth.
               </h2>
             </RevealText>
           </div>
-          <FadeUp delay={0.2} className="pb-2">
-            <p className="text-base leading-relaxed" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              From underground mines to urban construction sites — our autonomous
-              mover adapts to every terrain and use case without missing a beat.
-            </p>
-          </FadeUp>
         </div>
       </div>
 
@@ -447,19 +462,19 @@ function CapabilitiesSection() {
 
 const STEPS = [
   {
-    number: "01",
-    title: "Deploy on Your Site",
+    number: '01',
+    title: 'Deploy on Your Site',
     body: "Our team arrives, maps your site with LiDAR, and programmes the robot's routes. Typical commissioning takes less than a day.",
   },
   {
-    number: "02",
-    title: "Monitor via Fleet Control",
-    body: "Track every robot in real time — speed, payload, battery level, and route deviations — from a single dashboard on any device.",
+    number: '02',
+    title: 'Monitor via Fleet Control',
+    body: 'Track every robot in real time: speed, payload, battery level, and route deviations, from a single dashboard on any device.',
   },
   {
-    number: "03",
-    title: "Scale as You Grow",
-    body: "Add more robots on demand. Our RaaS subscription means no large capex — just a predictable monthly cost that scales with your operation.",
+    number: '03',
+    title: 'Scale as You Grow',
+    body: 'Add more robots on demand. Our RaaS subscription means no large capex, just a predictable monthly cost that scales with your operation.',
   },
 ];
 
@@ -468,27 +483,36 @@ function StepRow({ step, i }: { step: (typeof STEPS)[0]; i: number }) {
   return (
     <FadeUp delay={0.1 + i * 0.1}>
       <div
-        className="flex gap-8 py-12 border-b group cursor-default"
+        className="group flex cursor-default gap-8 border-b py-12"
         style={{ borderColor: DIM }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
         <div
-          className="text-[5rem] font-black leading-none w-24 shrink-0 pt-1 tabular-nums transition-colors duration-500"
-          style={{ color: hovered ? GREEN : "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+          className="w-24 shrink-0 pt-1 text-[5rem] leading-none font-black tabular-nums transition-colors duration-500"
+          style={{
+            color: hovered ? GREEN : 'rgba(4 104 37 / 0.86)',
+            fontFamily: 'var(--font-dm-sans)',
+          }}
         >
           {step.number}
         </div>
         <div className="flex-1 pt-3">
-          <h3 className="text-2xl font-black mb-4" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+          <h3
+            className="mb-4 text-2xl font-black"
+            style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+          >
             {step.title}
           </h3>
-          <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+          <p
+            className="text-base leading-[1.85]"
+            style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+          >
             {step.body}
           </p>
         </div>
-        <div className="flex items-start pt-5 shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1">
-          <ArrowUpRight className="w-5 h-5" style={{ color: GREEN }} />
+        <div className="flex shrink-0 items-start pt-5 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">
+          <ArrowUpRight className="h-5 w-5" style={{ color: GREEN }} />
         </div>
       </div>
     </FadeUp>
@@ -497,38 +521,47 @@ function StepRow({ step, i }: { step: (typeof STEPS)[0]; i: number }) {
 
 function ProcessSection() {
   return (
-    <section className="w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40 border-t" style={{ background: BG2, borderColor: DIM }}>
+    <section
+      className="w-full border-t px-6 py-20 md:px-16 md:py-40 lg:px-24 xl:px-32"
+      style={{ background: BG2, borderColor: DIM }}
+    >
       <SectionRule label="How It Works" />
-      <div className="grid lg:grid-cols-[520px_1fr] gap-24 items-start">
+      <div className="grid items-start gap-24 lg:grid-cols-[520px_1fr]">
         <div className="lg:sticky lg:top-32">
           <RevealText className="mb-1">
             <h2
-              className="text-[clamp(2.8rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]"
-              style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              className="text-[clamp(2.6rem,5vw,5.75rem)] leading-[0.96] font-black tracking-[-0.04em]"
+              style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
             >
               Up and running
             </h2>
           </RevealText>
           <RevealText delay={0.05} className="mb-1">
             <h2
-              className="text-[clamp(2.8rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]"
-              style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+              className="text-[clamp(2.6rem,5vw,5.75rem)] leading-[0.96] font-black tracking-[-0.04em]"
+              style={{
+                color: 'rgba(4 104 37 / 0.86)',
+                fontFamily: 'var(--font-dm-sans)',
+              }}
             >
               in under
             </h2>
           </RevealText>
           <RevealText delay={0.1}>
             <h2
-              className="text-[clamp(2.8rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]"
-              style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              className="text-[clamp(2.6rem,5vw,5.75rem)] leading-[0.96] font-black tracking-[-0.04em]"
+              style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
             >
               a day.
             </h2>
           </RevealText>
           <FadeUp delay={0.3} className="mt-8">
-            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              From site survey to first autonomous run — our deployment process
-              is designed to be fast, low-friction, and reversible.
+            <p
+              className="text-base leading-[1.85]"
+              style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+            >
+              From site survey to first autonomous run. Our deployment process is designed
+              to be fast, low-friction, and reversible.
             </p>
           </FadeUp>
         </div>
@@ -547,36 +580,39 @@ function ProcessSection() {
 
 const USE_CASES = [
   {
-    label: "Construction Sites",
+    label: 'Construction Sites',
     description:
-      "Move concrete blocks, steel rebar, and aggregate between floors and work zones without manual labour.",
-    image: "/mmr-images/mmr-images-1.webp",
-    stat: "50%",
-    statLabel: "Labour cost saved",
+      'Move concrete blocks, steel rebar, and aggregate between floors and work zones without manual labour.',
+    image: '/mmr-images/mmr-images-1.avif',
+    stat: '50%',
+    statLabel: 'Labour cost saved',
   },
   {
-    label: "Mining Operations",
+    label: 'Mining Operations',
     description:
-      "Navigate rugged underground terrain carrying ore, equipment, and supplies over steep grades up to 20°.",
-    image: "/mmr-images/mmr-images-3.webp",
-    stat: "20°",
-    statLabel: "Max grade handled",
+      'Navigate rugged underground terrain carrying ore, equipment, and supplies over steep grades up to 12°.',
+    image: '/mmr-images/mmr-images-3.avif',
+    stat: '20°',
+    statLabel: 'Max grade handled',
   },
   {
-    label: "Warehousing & Logistics",
+    label: 'Warehousing & Logistics',
     description:
-      "Automate repetitive internal transport runs, freeing your workforce for higher-value tasks.",
-    image: "/mmr-images/mmr-images-2.webp",
-    stat: "6x",
-    statLabel: "Efficiency gain",
+      'Automate repetitive internal transport runs, freeing your workforce for higher-value tasks.',
+    image: '/mmr-images/mmr-images-2.avif',
+    stat: '6x',
+    statLabel: 'Efficiency gain',
   },
 ];
 
 function UseCaseCard({ uc, index }: { uc: (typeof USE_CASES)[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-6% 0px" });
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const inView = useInView(ref, { once: true, margin: '-6% 0px' });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
 
   return (
     <motion.div
@@ -590,28 +626,46 @@ function UseCaseCard({ uc, index }: { uc: (typeof USE_CASES)[0]; index: number }
       {/* Image with parallax */}
       <div className="relative h-64 overflow-hidden">
         <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
-          <Image src={uc.image} alt={uc.label} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 33vw" />
+          <Image
+            src={uc.image}
+            alt={uc.label}
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 33vw"
+          />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
         {/* Stat overlay */}
         <div className="absolute bottom-4 left-4">
-          <div className="text-4xl font-black leading-none text-white" style={{ fontFamily: "var(--font-dm-sans)" }}>
+          <div
+            className="text-4xl leading-none font-black text-white"
+            style={{ fontFamily: 'var(--font-dm-sans)' }}
+          >
             {uc.stat}
           </div>
-          <div className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70 mt-1">
+          <div className="mt-1 text-sm font-semibold tracking-[0.2em] text-white/70 uppercase">
             {uc.statLabel}
           </div>
         </div>
       </div>
       {/* Content */}
       <div className="p-8" style={{ background: BG }}>
-        <div className="text-sm font-bold tracking-[0.22em] uppercase mb-3" style={{ color: DIM }}>
-          {String(index + 1).padStart(2, "0")}
+        <div
+          className="mb-3 text-sm font-bold tracking-[0.22em] uppercase"
+          style={{ color: DIM }}
+        >
+          {String(index + 1).padStart(2, '0')}
         </div>
-        <h3 className="text-xl font-black mb-3 tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+        <h3
+          className="mb-3 text-xl font-black tracking-[-0.02em]"
+          style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+        >
           {uc.label}
         </h3>
-        <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+        <p
+          className="text-base leading-[1.85]"
+          style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+        >
           {uc.description}
         </p>
       </div>
@@ -619,118 +673,145 @@ function UseCaseCard({ uc, index }: { uc: (typeof USE_CASES)[0]; index: number }
   );
 }
 
-function UseCasesSection() {
-  return (
-    <section className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
-      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-16 md:pt-32 pb-12 md:pb-24">
-        <SectionRule label="Where We Deploy" />
-        <div className="grid lg:grid-cols-[1fr_400px] gap-16 items-end mb-20">
-          <div>
-            <RevealText className="mb-1">
-              <h2
-                className="text-[clamp(2.8rem,6vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-              >
-                Built for every
-              </h2>
-            </RevealText>
-            <RevealText delay={0.06} className="mb-1">
-              <h2
-                className="text-[clamp(2.8rem,6vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
-              >
-                industrial
-              </h2>
-            </RevealText>
-            <RevealText delay={0.12}>
-              <h2
-                className="text-[clamp(2.8rem,6vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-              >
-                environment.
-              </h2>
-            </RevealText>
-          </div>
-          <FadeUp delay={0.3} className="pb-2">
-            <div className="w-px h-10 mb-8" style={{ background: GREEN }} />
-            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              The Flo AMR has been field-tested across the three most demanding
-              material-handling sectors in India.
-            </p>
-          </FadeUp>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {USE_CASES.map((uc, i) => (
-            <UseCaseCard key={uc.label} uc={uc} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+// function UseCasesSection() {
+//   return (
+//     <section className="w-full border-t" style={{ background: BG, borderColor: DIM }}>
+//       <div className="w-full px-6 pt-16 pb-12 md:px-16 md:pt-32 md:pb-24 lg:px-24 xl:px-32">
+//         <SectionRule label="Where We Deploy" />
+//         <div className="mb-20 grid items-end gap-16 lg:grid-cols-[1fr_400px]">
+//           <div>
+//             <RevealText className="mb-1">
+//               <h2
+//                 className="text-[clamp(2.8rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+//                 style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+//               >
+//                 Built for every
+//               </h2>
+//             </RevealText>
+//             <RevealText delay={0.06} className="mb-1">
+//               <h2
+//                 className="text-[clamp(2.8rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+//                 style={{
+//                   color: 'rgba(4 104 37 / 0.86)',
+//                   fontFamily: 'var(--font-dm-sans)',
+//                 }}
+//               >
+//                 industrial
+//               </h2>
+//             </RevealText>
+//             <RevealText delay={0.12}>
+//               <h2
+//                 className="text-[clamp(2.8rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+//                 style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+//               >
+//                 environment.
+//               </h2>
+//             </RevealText>
+//           </div>
+//           <FadeUp delay={0.3} className="pb-2">
+//             <div className="mb-8 h-10 w-px" style={{ background: GREEN }} />
+//             <p
+//               className="text-base leading-[1.85]"
+//               style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+//             >
+//               The Flo AMR has been field-tested across the three most demanding
+//               material-handling sectors in India.
+//             </p>
+//           </FadeUp>
+//         </div>
+//
+//         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+//           {USE_CASES.map((uc, i) => (
+//             <UseCaseCard key={uc.label} uc={uc} index={i} />
+//           ))}
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 
 // ─── Section 6 — Technical Specs ─────────────────────────────────────────────
 
 const SPECS = [
-  { label: "Load Capacity",   value: "500 kg" },
-  { label: "Max Speed",       value: "5 km/h" },
-  { label: "Gradeability",    value: "Up to 20°" },
-  { label: "Battery Life",    value: "8–10 hours" },
-  { label: "Charging Time",   value: "3 hrs (fast charge)" },
-  { label: "Navigation",      value: "LiDAR + Camera Fusion" },
+  { label: 'Load Capacity', value: '500 - 1000 kgs' },
+  { label: 'Dimensions', value: '1560mm x 850mm x 1172mm' },
+  { label: 'Ground Clearance', value: '200mm' },
+  { label: 'Max Speed', value: '5 km/h' },
+  { label: 'Gradeability', value: '12°' },
+  { label: 'Operational Runtime', value: '12 hours' },
+  { label: 'Drive Train', value: '4-Wheel BLDC' },
+  { label: 'Mode of Operations', value: 'Autonomous/Remote Controlled' },
+  { label: 'Unloading', value: 'Hydraulic Tipper' },
 ];
 
 function SpecsSection() {
   return (
-    <section id="specs" className="w-full border-t" style={{ background: BG2, borderColor: DIM }}>
-      <div className="w-full px-6 md:px-16 lg:px-24 xl:px-32 py-20 md:py-40">
+    <section
+      id="specs"
+      className="w-full border-t"
+      style={{ background: BG2, borderColor: DIM }}
+    >
+      <div className="w-full px-6 py-20 md:px-16 md:py-40 lg:px-24 xl:px-32">
         <SectionRule label="Technical Specifications" />
-        <div className="grid lg:grid-cols-2 gap-24 items-start">
-
+        <div className="grid items-start gap-24 lg:grid-cols-2">
           {/* Left — specs */}
           <div>
             <RevealText className="mb-1">
               <h2
-                className="text-[clamp(2.5rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                className="text-[clamp(2.35rem,5vw,5.5rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
               >
                 Built to last.
               </h2>
             </RevealText>
             <RevealText delay={0.06} className="mb-12">
               <h2
-                className="text-[clamp(2.5rem,5vw,6rem)] font-black leading-[0.86] tracking-[-0.04em]"
-                style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+                className="text-[clamp(2.35rem,5vw,5.5rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{
+                  color: 'rgba(4 104 37 / 0.86)',
+                  fontFamily: 'var(--font-dm-sans)',
+                }}
               >
                 Engineered to perform.
               </h2>
             </RevealText>
 
-            <FadeUp delay={0.15} className="mb-10">
-              <p className="text-base leading-[1.85] max-w-md" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-                Industrial-grade components designed for continuous operation
-                across construction, mining, and warehouse environments.
-              </p>
-            </FadeUp>
+            {/* <FadeUp delay={0.15} className="mb-10"> */}
+            {/*   <p */}
+            {/*     className="max-w-md text-base leading-[1.85]" */}
+            {/*     style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }} */}
+            {/*   > */}
+            {/*     Industrial-grade components designed for continuous operation across */}
+            {/*     construction, mining, and warehouse environments. */}
+            {/*   </p> */}
+            {/* </FadeUp> */}
 
             {/* Specs table */}
             <div className="border-t" style={{ borderColor: DIM }}>
               {SPECS.map((spec, i) => (
                 <FadeUp key={spec.label} delay={0.1 + i * 0.06}>
                   <div
-                    className="flex items-center justify-between py-5 border-b"
+                    className="flex items-center justify-between border-b py-5"
                     style={{ borderColor: DIM }}
                   >
                     <div className="flex items-center gap-5">
-                      <span className="text-sm font-bold w-6 shrink-0" style={{ color: DIM }}>
-                        {String(i + 1).padStart(2, "0")}
+                      <span
+                        className="w-6 shrink-0 text-sm font-bold"
+                        style={{ color: DIM }}
+                      >
+                        {String(i + 1).padStart(2, '0')}
                       </span>
-                      <span className="text-base font-medium" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                      <span
+                        className="text-base font-medium"
+                        style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+                      >
                         {spec.label}
                       </span>
                     </div>
-                    <span className="text-base font-black tracking-[-0.01em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                    <span
+                      className="text-base font-black tracking-[-0.01em]"
+                      style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+                    >
                       {spec.value}
                     </span>
                   </div>
@@ -739,15 +820,29 @@ function SpecsSection() {
             </div>
           </div>
 
-          {/* Right — video */}
+          {/* Right — vertical image stack */}
           <FadeUp delay={0.2} className="lg:pt-24">
-            <VideoEmbed videoId="KMTNnYjulQE" title="Flo AMR Technical Overview" />
-            <div className="mt-4 flex items-center gap-2 text-sm" style={{ color: DIM }}>
-              <div className="w-1.5 h-1.5 rounded-full" style={{ background: GREEN }} />
-              <span style={{ fontFamily: "var(--font-dm-sans)" }}>Flo AMR v2 — Field performance overview</span>
+            <div className="flex flex-col gap-4">
+              {['/mmr-images/mmr-images-1.avif', '/mmr-images/mmr-images-2.avif'].map(
+                (src, i) => (
+                  <div
+                    key={src}
+                    className="relative aspect-[4/3] overflow-hidden rounded-2xl border"
+                    style={{ borderColor: DIM }}
+                  >
+                    <Image
+                      src={src}
+                      alt={`Material mover showcase ${i + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                  </div>
+                ),
+              )}
             </div>
           </FadeUp>
-
         </div>
       </div>
     </section>
@@ -758,83 +853,87 @@ function SpecsSection() {
 
 function CTASection() {
   return (
-    <section className="w-full relative overflow-hidden py-24 md:py-48 px-6 md:px-16 lg:px-24 xl:px-32 border-t" style={{ background: BG, borderColor: DIM }}>
-      <div className="absolute inset-0 pointer-events-none">
+    <section
+      className="relative w-full overflow-hidden border-t px-6 py-24 md:px-16 md:py-48 lg:px-24 xl:px-32"
+      style={{ background: BG, borderColor: DIM }}
+    >
+      <div className="pointer-events-none absolute inset-0">
         <div
           className="absolute inset-0 opacity-20"
           style={{
             backgroundImage: `linear-gradient(${GREEN}18 1px, transparent 1px), linear-gradient(90deg, ${GREEN}18 1px, transparent 1px)`,
-            backgroundSize: "80px 80px",
+            backgroundSize: '80px 80px',
           }}
         />
         <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-[140px]"
+          className="absolute bottom-0 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full blur-[140px]"
           style={{ background: `${GREEN}18` }}
         />
       </div>
 
       <div className="relative text-center">
         <FadeUp>
-          <p className="text-sm font-black tracking-[0.32em] uppercase mb-12" style={{ color: MUTED }}>
+          <p
+            className="mb-12 text-sm font-black tracking-[0.32em] uppercase"
+            style={{ color: MUTED }}
+          >
             Get started today
           </p>
         </FadeUp>
         <RevealText className="mb-1">
           <h2
-            className="text-[clamp(3.5rem,10vw,13rem)] font-black leading-[0.83] tracking-[-0.04em]"
-            style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+            className="text-[clamp(3.5rem,10vw,13rem)] leading-[0.94] font-black tracking-[-0.04em]"
+            style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
           >
             Ready to
           </h2>
         </RevealText>
         <RevealText delay={0.05} className="mb-1">
           <h2
-            className="text-[clamp(3.5rem,10vw,13rem)] font-black leading-[0.83] tracking-[-0.04em]"
-            style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}
+            className="text-[clamp(3.5rem,10vw,13rem)] leading-[0.94] font-black tracking-[-0.04em]"
+            style={{ color: 'rgba(4 104 37 / 0.86)', fontFamily: 'var(--font-dm-sans)' }}
           >
             automate your
           </h2>
         </RevealText>
         <RevealText delay={0.1} className="mb-20">
           <h2
-            className="text-[clamp(3.5rem,10vw,13rem)] font-black leading-[0.83] tracking-[-0.04em]"
-            style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+            className="text-[clamp(3.5rem,10vw,13rem)] leading-[0.94] font-black tracking-[-0.04em]"
+            style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
           >
             site?
           </h2>
         </RevealText>
 
-        <FadeUp delay={0.3}>
-          <p className="text-lg leading-relaxed mb-12 max-w-xl mx-auto" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-            Talk to our team and get a deployment plan tailored to your worksite
-            within 48 hours — no commitment required.
-          </p>
-        </FadeUp>
+        {/* <FadeUp delay={0.3}> */}
+        {/*   <p */}
+        {/*     className="mx-auto mb-12 max-w-xl text-lg leading-relaxed" */}
+        {/*     style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }} */}
+        {/*   > */}
+        {/*     Talk to our team and get a deployment plan tailored to your worksite within 48 */}
+        {/*     hours. No commitment required. */}
+        {/*   </p> */}
+        {/* </FadeUp> */}
 
-        <FadeUp delay={0.4} className="flex flex-col sm:flex-row gap-4 justify-center">
+        <FadeUp delay={0.4} className="flex flex-col justify-center gap-4 sm:flex-row">
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2.5 px-12 py-5 rounded-full text-base font-black transition-all duration-300 hover:scale-105 shadow-lg"
-            style={{ background: GREEN, color: "#ffffff", fontFamily: "var(--font-dm-sans)" }}
+            className="inline-flex items-center justify-center gap-2.5 rounded-full px-12 py-5 text-base font-black shadow-lg transition-all duration-300 hover:scale-105"
+            style={{
+              background: GREEN,
+              color: '#ffffff',
+              fontFamily: 'var(--font-dm-sans)',
+            }}
           >
-            Book a Free Consultation <ArrowRight className="w-4 h-4" />
+            Contact Us <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             href="/offerings/fleet-control"
-            className="inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full text-base font-bold border transition-all duration-300 hover:bg-white"
-            style={{ borderColor: DIM, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+            className="inline-flex items-center justify-center gap-2 rounded-full border px-12 py-5 text-base font-bold transition-all duration-300 hover:bg-white"
+            style={{ borderColor: DIM, color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
           >
             Explore Fleet Control
           </Link>
-        </FadeUp>
-
-        <FadeUp delay={0.5} className="mt-16 flex flex-wrap items-center justify-center gap-8">
-          {["500 kg Payload", "< 1 Day Deploy", "24/7 Operation", "0 Emissions"].map((t) => (
-            <div key={t} className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em]" style={{ color: DIM }}>
-              <span className="w-1 h-1 rounded-full" style={{ background: GREEN }} />
-              {t}
-            </div>
-          ))}
         </FadeUp>
       </div>
     </section>
@@ -850,8 +949,8 @@ export default function MaterialMovementPage() {
       <ProofBar />
       <CapabilitiesSection />
       <SpecsSection />
-      <UseCasesSection />
-      <ProcessSection />
+      {/* <UseCasesSection /> */}
+      {/* <ProcessSection /> */}
       <CTASection />
     </div>
   );

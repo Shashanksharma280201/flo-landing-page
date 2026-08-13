@@ -5,7 +5,7 @@ export interface BlogPost {
   excerpt?: string;
   content?: string;
   coverImage: string;
-  
+
   status: 'draft' | 'published' | 'archived';
   tags: string[];
   readTimeMinutes: number;

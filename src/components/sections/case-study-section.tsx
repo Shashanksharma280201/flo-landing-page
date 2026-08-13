@@ -1,7 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, ShieldCheck, TrendingUp, Zap } from "lucide-react";
-import { MagicDotPattern } from "@/components/ui/magicui-dot-pattern";
+import Image from 'next/image';
+import Link from 'next/link';
+import { ArrowRight, ShieldCheck, TrendingUp, Zap } from 'lucide-react';
+import { MagicDotPattern } from '@/components/ui/magicui-dot-pattern';
+import { CUSTOMERS } from '@/lib/constants';
 
 interface CaseStudyStat {
   value: string;
@@ -31,65 +32,65 @@ interface SupportingCaseStudy {
 }
 
 const PROOF_PILLS = [
-  { value: "50%", label: "lower cost & time" },
-  { value: "30%", label: "fewer accidents" },
-  { value: "6x", label: "efficiency gain" },
+  { value: '50%', label: 'lower cost & time' },
+  { value: '30%', label: 'fewer accidents' },
+  { value: '6x', label: 'efficiency gain' },
 ];
 
 const FEATURED_CUSTOMERS = [
-  { name: "L&T", logo: "/customers/LT.png" },
-  { name: "PSP Projects", logo: "/customers/PSP-Projects.png" },
-  { name: "Total Environment", logo: "/customers/Total-environment-2.png" },
+  { name: 'L&T', logo: '/customers/LT.avif' },
+  { name: 'PSP Projects', logo: '/customers/PSP-Projects.avif' },
+  { name: 'Total Environment', logo: '/customers/Total-environment-2.avif' },
 ];
 
 const FEATURED_CASE_STUDY: FeaturedCaseStudy = {
-  eyebrow: "Material Movement",
-  title: "50% lower cost and time on last-mile material movement",
+  eyebrow: 'Material Movement',
+  title: '50% lower cost and time on last-mile material movement',
   summary:
     "Across active construction deployments, Flo's autonomous hauler replaces repetitive site transport with predictable, trackable movement that scales without fresh capex. Flo's public materials point to usage across large construction contractors including L&T, PSP Projects, Sobha, Capacite Infra, and Total Environment, where the system is positioned to reduce movement cost and time by up to 50% while improving site safety. With 500 kg payload handling, route-level fleet visibility, and commissioning that can begin in under a day, the product is built for real site logistics rather than controlled pilot environments.",
-  image: "/mmr-images/mmr-images-1.webp",
-  href: "/offerings/material-movement",
-  hrefLabel: "Explore Material Movement",
+  image: '/mmr-images/mmr-images-1.avif',
+  href: '/offerings/material-movement',
+  hrefLabel: 'Explore Material Movement',
   stats: [
-    { value: "50%", label: "cost reduction" },
-    { value: "50%", label: "time saved" },
-    { value: "30%", label: "fewer accidents" },
+    { value: '50%', label: 'cost reduction' },
+    { value: '50%', label: 'time saved' },
+    { value: '30%', label: 'fewer accidents' },
   ],
   proofPoints: [
-    "500 kg payload capacity for dense site runs",
-    "Commissioning can start in under a day",
-    "Fleet visibility and route tracking built in",
+    '500 kg payload capacity for dense site runs',
+    'Commissioning can start in under a day',
+    'Fleet visibility and route tracking built in',
   ],
 };
 
 const SUPPORTING_CASE_STUDIES: SupportingCaseStudy[] = [
   {
-    eyebrow: "Project Progress AI",
-    title: "Daily progress visibility without manual dumper counting",
+    eyebrow: 'Project Progress AI',
+    title: 'Daily progress visibility without manual dumper counting',
     summary:
       "Flo's camera-based detection work turns movement on site into structured reporting, with automated counts, timestamps, and operational alerts.",
-    image: "/blog/yolov8-cover.png",
-    href: "https://flomobility.com/transforming-construction-site-efficiency-with-ai-a-detailed-look-at-a-yolov8-based-object-detection-and-tracking-model/",
-    hrefLabel: "Read Case Study",
+    image: '/blog/yolov8-cover.png',
+    href: 'https://flomobility.com/transforming-construction-site-efficiency-with-ai-a-detailed-look-at-a-yolov8-based-object-detection-and-tracking-model/',
+    hrefLabel: 'Read Case Study',
     stats: [
-      { value: "1080p", label: "camera feed" },
-      { value: "23 fps", label: "processing stream" },
-      { value: "Daily", label: "summary reports" },
+      { value: '1080p', label: 'camera feed' },
+      { value: '23 fps', label: 'processing stream' },
+      { value: 'Daily', label: 'summary reports' },
     ],
     icon: TrendingUp,
   },
   {
-    eyebrow: "Safety Monitoring",
-    title: "Timestamped PPE alerts for faster site intervention",
+    eyebrow: 'Safety Monitoring',
+    title: 'Timestamped PPE alerts for faster site intervention',
     summary:
-      "The safety system detects missing helmets, vests, and masks in real time, records breach evidence, and surfaces trends before incidents compound.",
-    image: "/blog/safety-ai-cover.jpg",
-    href: "https://flomobility.com/ensuring-safety-and-efficiency-on-construction-sites-with-ai/",
-    hrefLabel: "Read Case Study",
+      'The safety system detects missing helmets, vests, and masks in real time, records breach evidence, and surfaces trends before incidents compound.',
+    image: '/blog/safety-ai-cover.jpg',
+    href: 'https://flomobility.com/ensuring-safety-and-efficiency-on-construction-sites-with-ai/',
+    hrefLabel: 'Read Case Study',
     stats: [
-      { value: "GPS", label: "location tagging" },
-      { value: "Live", label: "manager alerts" },
-      { value: "Trend", label: "violation analysis" },
+      { value: 'GPS', label: 'location tagging' },
+      { value: 'Live', label: 'manager alerts' },
+      { value: 'Trend', label: 'violation analysis' },
     ],
     icon: ShieldCheck,
   },
@@ -103,21 +104,21 @@ export function CaseStudySection() {
         width={36}
         height={36}
         cr={1}
-        className="text-[#7ccd54]/[0.14] [mask-image:radial-gradient(ellipse_90%_90%_at_50%_50%,#000_35%,transparent_100%)]"
+        className="[mask-image:radial-gradient(ellipse_90%_90%_at_50%_50%,#000_35%,transparent_100%)] text-[#7ccd54]/[0.14]"
       />
-      <div className="pointer-events-none absolute left-[-6rem] top-12 h-72 w-72 rounded-full bg-[#7ccd54]/10 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-0 right-[-8rem] h-80 w-80 rounded-full bg-[#1a3a1f]/8 blur-[140px]" />
+      <div className="pointer-events-none absolute top-12 left-[-6rem] h-72 w-72 rounded-full bg-[#7ccd54]/10 blur-[120px]" />
+      <div className="pointer-events-none absolute right-[-8rem] bottom-0 h-80 w-80 rounded-full bg-[#1a3a1f]/8 blur-[140px]" />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] lg:items-end">
           <div className="max-w-3xl">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#7ccd54]/25 bg-[#7ccd54]/10 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#5ba83d]">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#7ccd54]/25 bg-[#7ccd54]/10 px-4 py-2 text-[0.7rem] font-semibold tracking-[0.24em] text-[#5ba83d] uppercase">
               <Zap className="h-3.5 w-3.5" />
               Proof of Work
             </div>
             <h2
-              className="max-w-3xl text-[clamp(2rem,4vw,3.6rem)] font-bold leading-[1.02] tracking-tight text-gray-900"
-              style={{ fontFamily: "var(--font-dm-sans)" }}
+              className="max-w-3xl text-[clamp(2rem,4vw,3.6rem)] leading-[1.02] font-bold tracking-tight text-gray-900"
+              style={{ fontFamily: 'var(--font-dm-sans)' }}
             >
               Case studies that make the business case before the sales call.
             </h2>
@@ -125,10 +126,9 @@ export function CaseStudySection() {
 
           <div className="space-y-4">
             <p className="max-w-2xl text-sm leading-6 text-gray-600 sm:text-base">
-              Flo is already being used across construction deployments for
-              material movement, progress visibility, and safety monitoring.
-              This section turns that work into sharp proof, not generic
-              marketing claims.
+              Flo is already being used across construction deployments for material
+              movement, progress visibility, and safety monitoring. This section turns
+              that work into sharp proof, not generic marketing claims.
             </p>
 
             <div className="grid gap-3 sm:grid-cols-3">
@@ -139,7 +139,7 @@ export function CaseStudySection() {
                 >
                   <div
                     className="text-xl font-bold text-[#9be06d]"
-                    style={{ fontFamily: "var(--font-space-grotesk)" }}
+                    style={{ fontFamily: 'var(--font-space-grotesk)' }}
                   >
                     {pill.value}
                   </div>
@@ -162,7 +162,7 @@ export function CaseStudySection() {
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#102012]/90 via-[#102012]/20 to-transparent" />
-              <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-[#0f1d10]/76 px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#9be06d] backdrop-blur-sm">
+              <div className="absolute top-5 left-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-[#0f1d10]/76 px-3 py-2 text-[0.68rem] font-semibold tracking-[0.2em] text-[#9be06d] uppercase backdrop-blur-sm">
                 <TrendingUp className="h-3.5 w-3.5" />
                 {FEATURED_CASE_STUDY.eyebrow}
               </div>
@@ -184,7 +184,7 @@ export function CaseStudySection() {
                         sizes="56px"
                       />
                     </div>
-                    <span className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gray-700">
+                    <span className="text-[0.68rem] font-semibold tracking-[0.2em] text-gray-700 uppercase">
                       {customer.name}
                     </span>
                   </div>
@@ -193,8 +193,8 @@ export function CaseStudySection() {
 
               <div>
                 <h3
-                  className="text-[1.65rem] font-bold leading-tight text-gray-900"
-                  style={{ fontFamily: "var(--font-dm-sans)" }}
+                  className="text-[1.65rem] leading-tight font-bold text-gray-900"
+                  style={{ fontFamily: 'var(--font-dm-sans)' }}
                 >
                   {FEATURED_CASE_STUDY.title}
                 </h3>
@@ -211,11 +211,11 @@ export function CaseStudySection() {
                   >
                     <div
                       className="text-lg font-bold text-[#7ccd54]"
-                      style={{ fontFamily: "var(--font-space-grotesk)" }}
+                      style={{ fontFamily: 'var(--font-space-grotesk)' }}
                     >
                       {stat.value}
                     </div>
-                    <p className="mt-1 text-[0.65rem] uppercase tracking-[0.18em] text-gray-500">
+                    <p className="mt-1 text-[0.65rem] tracking-[0.18em] text-gray-500 uppercase">
                       {stat.label}
                     </p>
                   </div>
@@ -261,7 +261,7 @@ export function CaseStudySection() {
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#102012]/90 via-[#102012]/20 to-transparent" />
-                    <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/12 bg-[#0f1d10]/76 px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#9be06d] backdrop-blur-sm">
+                    <div className="absolute top-5 left-5 inline-flex items-center gap-2 rounded-full border border-white/12 bg-[#0f1d10]/76 px-3 py-2 text-[0.68rem] font-semibold tracking-[0.2em] text-[#9be06d] uppercase backdrop-blur-sm">
                       <Icon className="h-3.5 w-3.5" />
                       {caseStudy.eyebrow}
                     </div>
@@ -270,8 +270,8 @@ export function CaseStudySection() {
                   <div className="flex flex-1 flex-col space-y-4 p-4 sm:p-5">
                     <div>
                       <h3
-                        className="text-[1.35rem] font-bold leading-tight text-gray-900"
-                        style={{ fontFamily: "var(--font-dm-sans)" }}
+                        className="text-[1.35rem] leading-tight font-bold text-gray-900"
+                        style={{ fontFamily: 'var(--font-dm-sans)' }}
                       >
                         {caseStudy.title}
                       </h3>
@@ -288,11 +288,11 @@ export function CaseStudySection() {
                         >
                           <div
                             className="text-base font-bold text-[#7ccd54]"
-                            style={{ fontFamily: "var(--font-space-grotesk)" }}
+                            style={{ fontFamily: 'var(--font-space-grotesk)' }}
                           >
                             {stat.value}
                           </div>
-                          <p className="mt-1 text-[0.6rem] uppercase tracking-[0.16em] text-gray-500">
+                          <p className="mt-1 text-[0.6rem] tracking-[0.16em] text-gray-500 uppercase">
                             {stat.label}
                           </p>
                         </div>

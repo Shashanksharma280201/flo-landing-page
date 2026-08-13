@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { BELIEVERS } from "@/lib/constants";
-import { useEffect, useRef } from "react";
+import Image from 'next/image';
+import { BELIEVERS } from '@/lib/constants';
+import { useEffect, useRef } from 'react';
 
 interface LogoSectionProps {
   title: string;
@@ -10,10 +10,17 @@ interface LogoSectionProps {
   logos: { name: string; logo: string }[];
   bgColor?: string;
   speed?: number;
-  direction?: "left" | "right";
+  direction?: 'left' | 'right';
 }
 
-function LogoScrollingSection({ title, subtitle, logos, bgColor, speed = 0.5, direction = "left" }: LogoSectionProps) {
+function LogoScrollingSection({
+  title,
+  subtitle,
+  logos,
+  bgColor,
+  speed = 0.5,
+  direction = 'left',
+}: LogoSectionProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
 
@@ -37,7 +44,7 @@ function LogoScrollingSection({ title, subtitle, logos, bgColor, speed = 0.5, di
 
         // Auto-scroll if not paused
         if (!isPaused.current) {
-          if (direction === "left") {
+          if (direction === 'left') {
             scrollContainer.scrollLeft += speed;
           } else {
             scrollContainer.scrollLeft -= speed;
@@ -60,17 +67,19 @@ function LogoScrollingSection({ title, subtitle, logos, bgColor, speed = 0.5, di
   }, [logos, speed, direction]);
 
   return (
-    <section className={`${bgColor || "bg-transparent"} py-12 sm:py-16 lg:py-20 relative overflow-hidden`}>
+    <section
+      className={`${bgColor || 'bg-transparent'} relative overflow-hidden py-12 sm:py-16 lg:py-20`}
+    >
       <div className="w-full">
-        <div className="mb-10 sm:mb-12 text-center px-4">
+        <div className="mb-10 px-4 text-center sm:mb-12">
           <h2
-            className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl mb-3"
+            className="mb-3 text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl"
             style={{ fontFamily: 'var(--font-space-grotesk)' }}
           >
             {title}
           </h2>
           {subtitle && (
-            <p className="text-sm sm:text-base text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-500 sm:text-base">
               {subtitle}
             </p>
           )}
@@ -78,8 +87,8 @@ function LogoScrollingSection({ title, subtitle, logos, bgColor, speed = 0.5, di
 
         {/* Scrolling Container — edge fade masks */}
         <div className="relative w-full">
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-24 z-10 bg-gradient-to-r from-white to-transparent" />
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-24 z-10 bg-gradient-to-l from-white to-transparent" />
+          <div className="pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-24" />
+          <div className="pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-24" />
           <style>
             {`
               .no-scrollbar::-webkit-scrollbar {
@@ -89,27 +98,35 @@ function LogoScrollingSection({ title, subtitle, logos, bgColor, speed = 0.5, di
           </style>
           <div
             ref={scrollRef}
-            className="flex overflow-x-auto gap-3 sm:gap-5 lg:gap-6 pb-4 no-scrollbar touch-pan-y"
+            className="no-scrollbar flex touch-pan-y gap-3 overflow-x-auto pb-4 sm:gap-5 lg:gap-6"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
             }}
-            onMouseEnter={() => { isPaused.current = true; }}
-            onMouseLeave={() => { isPaused.current = false; }}
-            onTouchStart={() => { isPaused.current = true; }}
-            onTouchEnd={() => { isPaused.current = false; }}
+            onMouseEnter={() => {
+              isPaused.current = true;
+            }}
+            onMouseLeave={() => {
+              isPaused.current = false;
+            }}
+            onTouchStart={() => {
+              isPaused.current = true;
+            }}
+            onTouchEnd={() => {
+              isPaused.current = false;
+            }}
           >
             {duplicatedLogos.map((logo, index) => (
               <div
                 key={`${logo.name}-${index}`}
-                className="flex-shrink-0 group cursor-pointer"
+                className="group flex-shrink-0 cursor-pointer"
               >
-                <div className="relative w-24 h-14 sm:w-32 sm:h-20 lg:w-40 lg:h-24 flex items-center justify-center overflow-hidden rounded-lg lg:rounded-xl hover:scale-105 transition-all duration-300">
+                <div className="relative flex h-14 w-24 items-center justify-center overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 sm:h-20 sm:w-32 lg:h-24 lg:w-40 lg:rounded-xl">
                   <Image
                     src={logo.logo}
                     alt={`${logo.name} logo`}
                     fill
-                    className="object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                    className="object-contain opacity-70 grayscale filter transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0"
                     sizes="(max-width: 640px) 96px, (max-width: 1024px) 128px, 160px"
                     quality={85}
                   />

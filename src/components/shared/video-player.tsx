@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { Play } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
-import { useHasMounted } from "@/hooks/use-has-mounted";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { Play } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
+import { useHasMounted } from '@/hooks/use-has-mounted';
+import { TrackedYouTubeIframe } from '@/components/shared/tracked-youtube-iframe';
 
 interface VideoPlayerProps {
   videoId: string;
@@ -25,26 +26,30 @@ export function VideoPlayer({
   const hasMounted = useHasMounted();
   // Never auto-load on mount — always start with thumbnail/poster
   const [isLoaded, setIsLoaded] = useState(false);
-  const { ref: containerRef, isIntersecting: shouldPreconnect } =
-    useIntersectionObserver({
-      rootMargin: "200px",
+  const { ref: containerRef, isIntersecting: shouldPreconnect } = useIntersectionObserver(
+    {
+      rootMargin: '200px',
       triggerOnce: true,
-    });
+    },
+  );
 
   // For background (hero) videos: defer iframe until browser is idle
   // This keeps the YouTube iframe off the critical render path
   useEffect(() => {
     if (!isBackground) return;
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     let handle: ReturnType<typeof setTimeout>;
-    if ("requestIdleCallback" in window) {
-      const id = (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
-        () => setIsLoaded(true),
-        { timeout: 2000 },
-      );
+    if ('requestIdleCallback' in window) {
+      const id = (
+        window as Window & {
+          requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number;
+        }
+      ).requestIdleCallback(() => setIsLoaded(true), { timeout: 2000 });
       return () => {
-        (window as Window & { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(id);
+        (
+          window as Window & { cancelIdleCallback: (id: number) => void }
+        ).cancelIdleCallback(id);
       };
     } else {
       handle = setTimeout(() => setIsLoaded(true), 1000);
@@ -68,9 +73,9 @@ export function VideoPlayer({
       <div
         ref={containerRef}
         className={cn(
-          "group relative overflow-hidden bg-muted",
-          !isBackground ? "aspect-video rounded-xl shadow-2xl" : "h-full w-full",
-          className
+          'group bg-muted relative overflow-hidden',
+          !isBackground ? 'aspect-video rounded-xl shadow-2xl' : 'h-full w-full',
+          className,
         )}
       >
         {!isLoaded ? (
@@ -89,13 +94,14 @@ export function VideoPlayer({
             />
             <div className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/10" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-xl transition-transform duration-300 group-hover:scale-110">
+              <div className="bg-primary text-primary-foreground flex h-16 w-16 items-center justify-center rounded-full shadow-xl transition-transform duration-300 group-hover:scale-110">
                 <Play className="ml-1 h-8 w-8 fill-current" />
               </div>
             </div>
           </button>
         ) : (
-          <iframe
+          <TrackedYouTubeIframe
+            videoId={videoId}
             src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=${
               isBackground ? 1 : 0
             }&loop=1&playlist=${videoId}&controls=${
@@ -105,8 +111,8 @@ export function VideoPlayer({
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
             className={cn(
-              "h-full w-full border-0",
-              isBackground && "pointer-events-none scale-125"
+              'h-full w-full border-0',
+              isBackground && 'pointer-events-none scale-125',
             )}
           />
         )}

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { HexagonGrid } from "@/components/patterns/hexagon-grid";
-import { CUSTOMERS } from "@/lib/constants";
-import { useEffect, useRef } from "react";
+import Image from 'next/image';
+import { HexagonGrid } from '@/components/patterns/hexagon-grid';
+import { CUSTOMERS } from '@/lib/constants';
+import { useEffect, useRef } from 'react';
 
 export function GallerySection() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -48,15 +48,18 @@ export function GallerySection() {
   }, []);
 
   return (
-    <section className="relative bg-transparent py-16 sm:py-24 lg:py-32 overflow-hidden">
+    <section className="relative overflow-hidden bg-transparent py-16 sm:py-24 lg:py-32">
       <HexagonGrid opacity={0.02} />
-      <div className="w-full relative z-10">
+      <div className="relative z-10 w-full">
         {/* Section Header */}
-        <div className="mb-10 sm:mb-14 lg:mb-16 text-center px-4">
-          <div className="inline-block rounded-full bg-[#fdfcf0] px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 mb-4 border border-gray-200 uppercase shadow-sm">
+        <div className="mb-10 px-4 text-center sm:mb-14 lg:mb-16">
+          <div className="mb-4 inline-block rounded-full border border-gray-200 bg-[#fdfcf0] px-4 py-1.5 text-xs font-semibold tracking-wider text-gray-600 uppercase shadow-sm">
             Trusted By
           </div>
-          <h2 className="text-2xl font-medium tracking-tight text-gray-900 sm:text-3xl lg:text-4xl" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+          <h2
+            className="text-2xl font-medium tracking-tight text-gray-900 sm:text-3xl lg:text-4xl"
+            style={{ fontFamily: 'var(--font-space-grotesk)' }}
+          >
             Our Customers
           </h2>
         </div>
@@ -64,8 +67,8 @@ export function GallerySection() {
         {/* Scrolling Container — edge fade masks for depth */}
         <div className="relative w-full">
           {/* Left/right fade masks */}
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-24 z-10 bg-gradient-to-r from-[#fdfcf0] to-transparent" />
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-24 z-10 bg-gradient-to-l from-[#fdfcf0] to-transparent" />
+          <div className="pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-16 bg-gradient-to-r from-[#fdfcf0] to-transparent sm:w-24" />
+          <div className="pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-16 bg-gradient-to-l from-[#fdfcf0] to-transparent sm:w-24" />
           <style>
             {`
               .no-scrollbar::-webkit-scrollbar {
@@ -75,27 +78,35 @@ export function GallerySection() {
           </style>
           <div
             ref={scrollRef}
-            className="flex overflow-x-auto gap-5 sm:gap-8 lg:gap-10 pb-4 no-scrollbar touch-pan-y"
+            className="no-scrollbar flex touch-pan-y gap-5 overflow-x-auto pb-4 sm:gap-8 lg:gap-10"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
             }}
-            onMouseEnter={() => { isPaused.current = true; }}
-            onMouseLeave={() => { isPaused.current = false; }}
-            onTouchStart={() => { isPaused.current = true; }}
-            onTouchEnd={() => { isPaused.current = false; }}
+            onMouseEnter={() => {
+              isPaused.current = true;
+            }}
+            onMouseLeave={() => {
+              isPaused.current = false;
+            }}
+            onTouchStart={() => {
+              isPaused.current = true;
+            }}
+            onTouchEnd={() => {
+              isPaused.current = false;
+            }}
           >
             {duplicatedLogos.map((customer, index) => (
               <div
                 key={`${customer.name}-${index}`}
-                className="flex-shrink-0 group cursor-pointer"
+                className="group flex-shrink-0 cursor-pointer"
               >
-                <div className="relative w-40 h-24 sm:w-56 sm:h-36 lg:w-72 lg:h-44 flex items-center justify-center overflow-hidden rounded-xl lg:rounded-2xl hover:scale-105 transition-all duration-300">
+                <div className="relative flex h-24 w-40 items-center justify-center overflow-hidden rounded-xl transition-all duration-300 hover:scale-105 sm:h-36 sm:w-56 lg:h-44 lg:w-72 lg:rounded-2xl">
                   <Image
                     src={customer.logo}
                     alt={`${customer.name} logo`}
                     fill
-                    className="object-cover filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                    className="object-cover opacity-70 grayscale filter transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0"
                   />
                 </div>
               </div>

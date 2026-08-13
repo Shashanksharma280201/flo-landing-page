@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface HexagonGridProps {
   className?: string;
@@ -7,11 +7,8 @@ interface HexagonGridProps {
 
 export function HexagonGrid({ className, opacity = 0.03 }: HexagonGridProps) {
   return (
-    <div className={cn("absolute inset-0 -z-10 pointer-events-none", className)}>
-      <svg
-        className="w-full h-full"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+    <div className={cn('pointer-events-none absolute inset-0 -z-10', className)}>
+      <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern
             id="hexagons"

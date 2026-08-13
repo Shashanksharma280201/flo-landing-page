@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface TrianglePatternProps {
   className?: string;
@@ -10,7 +10,7 @@ interface TrianglePatternProps {
 export function TrianglePattern({
   className,
   triangleSize = 8,
-  triangleColor = "rgba(0, 0, 0, 0.1)",
+  triangleColor = 'rgba(0, 0, 0, 0.1)',
   gap = 30,
 }: TrianglePatternProps) {
   // Create SVG triangle pattern
@@ -24,11 +24,11 @@ export function TrianglePattern({
 
   return (
     <div
-      className={cn("absolute inset-0 -z-10", className)}
+      className={cn('absolute inset-0 -z-10', className)}
       style={{
         backgroundImage: `url("data:image/svg+xml,${encodedSvg}")`,
         backgroundSize: `${gap}px ${gap}px`,
-        backgroundRepeat: "repeat",
+        backgroundRepeat: 'repeat',
       }}
     />
   );

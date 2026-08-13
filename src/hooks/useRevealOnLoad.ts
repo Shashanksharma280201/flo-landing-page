@@ -1,4 +1,4 @@
-import { useEffect, RefObject } from "react";
+import { useEffect, RefObject } from 'react';
 
 /**
  * useRevealOnLoad
@@ -15,7 +15,7 @@ import { useEffect, RefObject } from "react";
 export function useRevealOnLoad(
   ref: RefObject<HTMLElement | null>,
   ready: boolean,
-  staggerMs = 90
+  staggerMs = 90,
 ): void {
   useEffect(() => {
     if (!ready || !ref.current) return;
@@ -23,21 +23,21 @@ export function useRevealOnLoad(
     const el = ref.current;
 
     // Stagger reveal-word spans (hero headline)
-    const words = el.querySelectorAll<HTMLElement>(".reveal-word");
+    const words = el.querySelectorAll<HTMLElement>('.reveal-word');
     words.forEach((word, i) => {
       const tid = setTimeout(() => {
-        word.classList.add("revealed");
+        word.classList.add('revealed');
       }, i * staggerMs);
       // No need to clean up — the timeouts are tiny and one-shot
       return () => clearTimeout(tid);
     });
 
     // Fade-up elements (subtitle, CTA, etc.) — slightly delayed after words
-    const fadeEls = el.querySelectorAll<HTMLElement>(".fade-up");
+    const fadeEls = el.querySelectorAll<HTMLElement>('.fade-up');
     fadeEls.forEach((el, i) => {
       const tid = setTimeout(
-        () => el.classList.add("revealed"),
-        words.length * staggerMs + i * 120 + 100
+        () => el.classList.add('revealed'),
+        words.length * staggerMs + i * 120 + 100,
       );
       return () => clearTimeout(tid);
     });

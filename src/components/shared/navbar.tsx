@@ -1,24 +1,29 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
-import { NAV_CONFIG } from "@/lib/constants";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import * as React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import { NAV_CONFIG } from '@/lib/constants';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { trackNavSelect } from '@/lib/analytics';
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
-const GREEN       = "#7ccd54";   // brand green — used for CTA button only
-const ACTIVE_GREEN = "#2d7a1f";  // deep green — active link / hover / open indicator
-const TEXT   = "#191c1a";
-const MUTED  = "rgba(25,28,26,0.55)";
-const DIM    = "rgba(25,28,26,0.15)";
-const BORDER = "rgba(25,28,26,0.10)";
-const EASE: [number,number,number,number] = [0.16, 1, 0.3, 1];
+const GREEN = '#7ccd54'; // brand green — used for CTA button only
+const ACTIVE_GREEN = '#2d7a1f'; // deep green — active link / hover / open indicator
+const TEXT = '#191c1a';
+const MUTED = 'rgba(25,28,26,0.55)';
+const DIM = 'rgba(25,28,26,0.15)';
+const BORDER = 'rgba(25,28,26,0.10)';
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 // ─── Dropdown ─────────────────────────────────────────────────────────────────
-function Dropdown({ items }: { items: { title: string; href: string; description: string }[] }) {
+function Dropdown({
+  items,
+}: {
+  items: { title: string; href: string; description: string }[];
+}) {
   return (
     <AnimatePresence>
       <motion.div
@@ -26,44 +31,51 @@ function Dropdown({ items }: { items: { title: string; href: string; description
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 10, scale: 0.96 }}
         transition={{ duration: 0.18, ease: EASE }}
-        className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50"
+        className="absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4"
       >
         <div
-          className="rounded-2xl shadow-2xl overflow-hidden"
+          className="overflow-hidden rounded-2xl shadow-2xl"
           style={{
-            background: "rgba(255,255,255,0.97)",
-            backdropFilter: "blur(24px)",
-            WebkitBackdropFilter: "blur(24px)",
+            background: 'rgba(255,255,255,0.97)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
             border: `1px solid ${BORDER}`,
-            minWidth: "300px",
-            boxShadow: "0 24px 48px rgba(25,28,26,0.10), 0 4px 16px rgba(25,28,26,0.06)",
+            minWidth: '300px',
+            boxShadow: '0 24px 48px rgba(25,28,26,0.10), 0 4px 16px rgba(25,28,26,0.06)',
           }}
         >
           {items.map((item, i) => (
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-start gap-4 px-5 py-4 transition-colors duration-200 group"
-              style={{ borderBottom: i < items.length - 1 ? `1px solid ${BORDER}` : "none" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#f9f9f8"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+              onClick={() => trackNavSelect(item.href, 'desktop_dropdown_nav')}
+              className="group flex items-start gap-4 px-5 py-4 transition-colors duration-200"
+              style={{
+                borderBottom: i < items.length - 1 ? `1px solid ${BORDER}` : 'none',
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background = '#f9f9f8';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = 'transparent';
+              }}
             >
               <span
-                className="text-[11px] font-bold mt-0.5 shrink-0 tabular-nums"
-                style={{ color: DIM, fontFamily: "var(--font-dm-sans)" }}
+                className="mt-0.5 shrink-0 text-[11px] font-bold tabular-nums"
+                style={{ color: DIM, fontFamily: 'var(--font-dm-sans)' }}
               >
                 0{i + 1}
               </span>
-              <div className="flex-1 min-w-0">
+              <div className="min-w-0 flex-1">
                 <div
-                  className="text-[17px] font-semibold mb-0.5 transition-colors duration-200 group-hover:text-[#2d7a1f]"
-                  style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+                  className="mb-0.5 text-[17px] font-semibold transition-colors duration-200 group-hover:text-[#2d7a1f]"
+                  style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
                 >
                   {item.title}
                 </div>
                 <div
                   className="text-[13px] leading-relaxed"
-                  style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
+                  style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
                 >
                   {item.description}
                 </div>
@@ -81,21 +93,29 @@ function NavItem({
   item,
   isActive,
 }: {
-  item: typeof NAV_CONFIG.mainNav[number];
+  item: (typeof NAV_CONFIG.mainNav)[number];
   isActive: boolean;
 }) {
   const [open, setOpen] = React.useState(false);
 
-  if (!("items" in item) || !item.items) {
-    const href = "href" in item ? (item as { href: string }).href : "#";
+  if (!('items' in item) || !item.items) {
+    const href = 'href' in item ? (item as { href: string }).href : '#';
     return (
       <div className="relative">
         <Link
           href={href}
+          onClick={() => trackNavSelect(href, 'desktop_nav')}
           className="flex items-center gap-1 text-[17px] font-semibold transition-colors duration-200"
-          style={{ color: isActive ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = ACTIVE_GREEN; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive ? ACTIVE_GREEN : TEXT; }}
+          style={{
+            color: isActive ? ACTIVE_GREEN : TEXT,
+            fontFamily: 'var(--font-dm-sans)',
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.color = ACTIVE_GREEN;
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.color = isActive ? ACTIVE_GREEN : TEXT;
+          }}
         >
           {item.title}
         </Link>
@@ -111,9 +131,17 @@ function NavItem({
     >
       <button
         className="flex items-center gap-1 text-[17px] font-semibold transition-colors duration-200"
-        style={{ color: isActive || open ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = ACTIVE_GREEN; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = isActive || open ? ACTIVE_GREEN : TEXT; }}
+        style={{
+          color: isActive || open ? ACTIVE_GREEN : TEXT,
+          fontFamily: 'var(--font-dm-sans)',
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLElement).style.color = ACTIVE_GREEN;
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLElement).style.color =
+            isActive || open ? ACTIVE_GREEN : TEXT;
+        }}
       >
         {item.title}
         <motion.span
@@ -137,87 +165,109 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [mobileExpanded, setMobileExpanded] = React.useState<string | null>(null);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
+  useMotionValueEvent(scrollY, 'change', (latest) => {
     setScrolled(latest > 40);
   });
 
   React.useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [mobileOpen]);
 
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
   return (
     <>
+      {/* SEO/a11y: flat, always-rendered nav so every destination (incl. the
+          Offerings/Resources dropdown items) is a real anchor in the static
+          HTML. The animated desktop dropdowns mount only on hover, so their
+          links would otherwise be absent from the crawled markup. */}
+      <nav className="sr-only" aria-label="All pages">
+        {NAV_CONFIG.mainNav.flatMap((item) => {
+          if ('items' in item && item.items) {
+            return item.items.map((sub) => (
+              <Link key={sub.href} href={sub.href}>
+                {sub.title}
+              </Link>
+            ));
+          }
+          if ('href' in item && item.href) {
+            return [
+              <Link key={item.href} href={item.href}>
+                {item.title}
+              </Link>,
+            ];
+          }
+          return [];
+        })}
+      </nav>
+
       {/* ── Desktop header — centered pill ── */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4 pointer-events-none">
+      <div className="pointer-events-none fixed top-0 right-0 left-0 z-50 flex justify-center px-3 pt-3 sm:px-4 sm:pt-4">
         <motion.div
           className="pointer-events-auto w-full"
-          style={{ maxWidth: "min(75vw, 1080px)" }}
+          style={{ maxWidth: 'min(75vw, 1080px)' }}
           initial={{ y: -72, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: EASE }}
         >
           <motion.div
-            className="flex h-[84px] items-center justify-between px-6 rounded-2xl"
+            className="flex h-16 items-center justify-between rounded-xl px-4 lg:h-[84px] lg:rounded-2xl lg:px-6"
             style={{
-              WebkitBackdropFilter: scrolled ? "blur(28px) saturate(180%)" : "blur(16px) saturate(140%)",
+              WebkitBackdropFilter: scrolled
+                ? 'blur(28px) saturate(180%)'
+                : 'blur(16px) saturate(140%)',
             }}
             animate={{
-              background: scrolled
-                ? "rgba(255,255,255,0.86)"
-                : "rgba(255,255,255,0.60)",
-              backdropFilter: scrolled ? "blur(28px) saturate(180%)" : "blur(16px) saturate(140%)",
+              background: scrolled ? 'rgba(255,255,255,0.86)' : 'rgba(255,255,255,0.60)',
+              backdropFilter: scrolled
+                ? 'blur(28px) saturate(180%)'
+                : 'blur(16px) saturate(140%)',
               boxShadow: scrolled
-                ? "0 8px 32px rgba(25,28,26,0.10), 0 1px 0 rgba(255,255,255,0.8) inset, 0 0 0 1px rgba(25,28,26,0.07)"
-                : "0 2px 16px rgba(25,28,26,0.06), 0 1px 0 rgba(255,255,255,0.7) inset, 0 0 0 1px rgba(25,28,26,0.06)",
+                ? '0 8px 32px rgba(25,28,26,0.10), 0 1px 0 rgba(255,255,255,0.8) inset, 0 0 0 1px rgba(25,28,26,0.07)'
+                : '0 2px 16px rgba(25,28,26,0.06), 0 1px 0 rgba(255,255,255,0.7) inset, 0 0 0 1px rgba(25,28,26,0.06)',
             }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
           >
-
-            {/* Logo — bigger */}
-            <Link href="/" className="flex items-center shrink-0">
+            <Link
+              href="/"
+              className="flex shrink-0 items-center"
+              onClick={() => trackNavSelect('home_logo', 'desktop_nav')}
+            >
               <Image
                 src="/logo.webp"
                 alt="FLO Mobility"
                 width={200}
                 height={80}
                 priority
-                className="h-[72px] w-auto object-contain"
+                className="h-12 w-auto object-contain lg:h-[45px]"
               />
             </Link>
 
             {/* Desktop nav — centered */}
-            <nav className="hidden lg:flex items-center gap-7">
+            <nav className="hidden items-center gap-7 lg:flex">
               {NAV_CONFIG.mainNav.map((item) => {
-                const active = "href" in item && item.href
-                  ? isActive(item.href as string)
-                  : item.items?.some((s) => isActive(s.href)) ?? false;
+                const active =
+                  'href' in item && item.href
+                    ? isActive(item.href as string)
+                    : (item.items?.some((s) => isActive(s.href)) ?? false);
                 return <NavItem key={item.title} item={item} isActive={active} />;
               })}
             </nav>
 
             {/* Desktop actions */}
-            <div className="hidden lg:flex items-center gap-4">
-              <Link
-                href={NAV_CONFIG.actions.fleet}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 text-[17px] font-semibold transition-colors duration-200"
-                style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = GREEN; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = MUTED; }}
-              >
-                Fleet
-                <ArrowUpRight style={{ width: 13, height: 13 }} />
-              </Link>
+            <div className="hidden items-center gap-4 lg:flex">
               <Link
                 href={NAV_CONFIG.actions.contact}
-                className="inline-flex items-center px-5 py-2 rounded-full text-[17px] font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                onClick={() =>
+                  trackNavSelect(NAV_CONFIG.actions.contact, 'desktop_nav_cta')
+                }
+                className="inline-flex items-center rounded-full px-5 py-2 text-[17px] font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 style={{
                   background: GREEN,
-                  fontFamily: "var(--font-dm-sans)",
+                  fontFamily: 'var(--font-dm-sans)',
                   boxShadow: `0 4px 14px ${GREEN}50`,
                 }}
               >
@@ -228,13 +278,12 @@ export function Navbar() {
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(true)}
-              className="lg:hidden flex items-center justify-center w-9 h-9 rounded-full transition-colors duration-200"
-              style={{ color: TEXT, background: "rgba(25,28,26,0.06)" }}
+              className="flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-200 lg:hidden"
+              style={{ color: TEXT, background: 'rgba(25,28,26,0.06)' }}
               aria-label="Open menu"
             >
               <Menu style={{ width: 18, height: 18 }} />
             </button>
-
           </motion.div>
         </motion.div>
       </div>
@@ -251,23 +300,27 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              style={{ background: "rgba(25,28,26,0.35)", backdropFilter: "blur(4px)" }}
+              style={{ background: 'rgba(25,28,26,0.35)', backdropFilter: 'blur(4px)' }}
               onClick={() => setMobileOpen(false)}
             />
 
             {/* Panel */}
             <motion.div
               key="panel"
-              className="fixed top-0 right-0 bottom-0 z-50 lg:hidden flex flex-col overflow-y-auto"
-              initial={{ x: "100%" }}
+              className="fixed top-0 right-0 bottom-0 z-50 flex flex-col overflow-y-auto lg:hidden"
+              initial={{ x: '100%' }}
               animate={{ x: 0 }}
-              exit={{ x: "100%" }}
+              exit={{ x: '100%' }}
               transition={{ duration: 0.35, ease: EASE }}
-              style={{ width: "min(400px, 100vw)", background: "#ffffff", borderLeft: `1px solid ${BORDER}` }}
+              style={{
+                width: 'min(400px, 100vw)',
+                background: '#ffffff',
+                borderLeft: `1px solid ${BORDER}`,
+              }}
             >
               {/* Panel header */}
               <div
-                className="flex items-center justify-between px-7 py-5 shrink-0"
+                className="flex shrink-0 items-center justify-between px-7 py-5"
                 style={{ borderBottom: `1px solid ${BORDER}` }}
               >
                 <Image
@@ -279,8 +332,8 @@ export function Navbar() {
                 />
                 <button
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center justify-center w-9 h-9 rounded-full transition-colors duration-200"
-                  style={{ background: "rgba(25,28,26,0.06)", color: TEXT }}
+                  className="flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200"
+                  style={{ background: 'rgba(25,28,26,0.06)', color: TEXT }}
                   aria-label="Close menu"
                 >
                   <X style={{ width: 18, height: 18 }} />
@@ -288,9 +341,10 @@ export function Navbar() {
               </div>
 
               {/* Panel nav links */}
-              <nav className="flex-1 px-7 py-6 flex flex-col gap-1">
+              <nav className="flex flex-1 flex-col gap-1 px-7 py-6">
                 {NAV_CONFIG.mainNav.map((item) => {
-                  const hasChildren = "items" in item && item.items && item.items.length > 0;
+                  const hasChildren =
+                    'items' in item && item.items && item.items.length > 0;
                   const expanded = mobileExpanded === item.title;
 
                   return (
@@ -298,16 +352,22 @@ export function Navbar() {
                       {hasChildren ? (
                         <>
                           <button
-                            className="w-full flex items-center justify-between py-4 text-xl font-bold transition-colors duration-200"
-                            style={{ color: expanded ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
-                            onClick={() => setMobileExpanded(expanded ? null : item.title)}
+                            className="flex w-full items-center justify-between py-4 text-xl font-bold transition-colors duration-200"
+                            style={{
+                              color: expanded ? ACTIVE_GREEN : TEXT,
+                              fontFamily: 'var(--font-dm-sans)',
+                            }}
+                            onClick={() =>
+                              setMobileExpanded(expanded ? null : item.title)
+                            }
                           >
                             {item.title}
                             <ChevronDown
                               style={{
-                                width: 18, height: 18,
-                                transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-                                transition: "transform 0.2s",
+                                width: 18,
+                                height: 18,
+                                transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                                transition: 'transform 0.2s',
                                 color: expanded ? ACTIVE_GREEN : MUTED,
                               }}
                             />
@@ -316,29 +376,45 @@ export function Navbar() {
                             {expanded && (
                               <motion.div
                                 initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
+                                animate={{ height: 'auto', opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
                                 transition={{ duration: 0.25, ease: EASE }}
                                 className="overflow-hidden"
                               >
                                 <div
-                                  className="flex flex-col gap-0 rounded-xl mb-3 overflow-hidden"
-                                  style={{ background: "#f7f7f6", border: `1px solid ${BORDER}` }}
+                                  className="mb-3 flex flex-col gap-0 overflow-hidden rounded-xl"
+                                  style={{
+                                    background: '#f7f7f6',
+                                    border: `1px solid ${BORDER}`,
+                                  }}
                                 >
                                   {item.items!.map((sub, i) => (
                                     <Link
                                       key={sub.href}
                                       href={sub.href}
-                                      onClick={() => setMobileOpen(false)}
+                                      onClick={() => {
+                                        trackNavSelect(sub.href, 'mobile_dropdown_nav');
+                                        setMobileOpen(false);
+                                      }}
                                       className="flex items-center gap-3 px-5 py-4 transition-colors duration-200"
                                       style={{
-                                        borderBottom: i < item.items!.length - 1 ? `1px solid ${BORDER}` : "none",
+                                        borderBottom:
+                                          i < item.items!.length - 1
+                                            ? `1px solid ${BORDER}`
+                                            : 'none',
                                         color: isActive(sub.href) ? ACTIVE_GREEN : TEXT,
-                                        fontFamily: "var(--font-dm-sans)",
+                                        fontFamily: 'var(--font-dm-sans)',
                                       }}
                                     >
-                                      <span className="text-[11px] font-bold" style={{ color: DIM }}>0{i + 1}</span>
-                                      <span className="text-[15px] font-semibold">{sub.title}</span>
+                                      <span
+                                        className="text-[11px] font-bold"
+                                        style={{ color: DIM }}
+                                      >
+                                        0{i + 1}
+                                      </span>
+                                      <span className="text-[15px] font-semibold">
+                                        {sub.title}
+                                      </span>
                                     </Link>
                                   ))}
                                 </div>
@@ -346,12 +422,18 @@ export function Navbar() {
                             )}
                           </AnimatePresence>
                         </>
-                      ) : "href" in item && item.href ? (
+                      ) : 'href' in item && item.href ? (
                         <Link
                           href={item.href as string}
-                          onClick={() => setMobileOpen(false)}
+                          onClick={() => {
+                            trackNavSelect(item.href as string, 'mobile_nav');
+                            setMobileOpen(false);
+                          }}
                           className="flex items-center py-4 text-xl font-bold transition-colors duration-200"
-                          style={{ color: isActive(item.href as string) ? ACTIVE_GREEN : TEXT, fontFamily: "var(--font-dm-sans)" }}
+                          style={{
+                            color: isActive(item.href as string) ? ACTIVE_GREEN : TEXT,
+                            fontFamily: 'var(--font-dm-sans)',
+                          }}
                         >
                           {item.title}
                         </Link>
@@ -362,28 +444,22 @@ export function Navbar() {
               </nav>
 
               {/* Panel actions */}
-              <div className="px-7 pb-8 flex flex-col gap-3 shrink-0" style={{ borderTop: `1px solid ${BORDER}`, paddingTop: "24px" }}>
-                <Link
-                  href={NAV_CONFIG.actions.fleet}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center justify-center gap-2 py-3.5 rounded-full text-[15px] font-semibold border transition-all duration-200"
-                  style={{ color: TEXT, borderColor: DIM, fontFamily: "var(--font-dm-sans)" }}
-                >
-                  Fleet
-                  <ArrowUpRight style={{ width: 15, height: 15 }} />
-                </Link>
+              <div
+                className="flex shrink-0 flex-col gap-3 px-7 pb-8"
+                style={{ borderTop: `1px solid ${BORDER}`, paddingTop: '24px' }}
+              >
                 <Link
                   href={NAV_CONFIG.actions.contact}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center justify-center py-3.5 rounded-full text-[15px] font-bold text-white transition-all duration-200"
-                  style={{ background: GREEN, fontFamily: "var(--font-dm-sans)" }}
+                  onClick={() => {
+                    trackNavSelect(NAV_CONFIG.actions.contact, 'mobile_nav_cta');
+                    setMobileOpen(false);
+                  }}
+                  className="flex items-center justify-center rounded-full py-3.5 text-[15px] font-bold text-white transition-all duration-200"
+                  style={{ background: GREEN, fontFamily: 'var(--font-dm-sans)' }}
                 >
                   Contact Us
                 </Link>
               </div>
-
             </motion.div>
           </>
         )}

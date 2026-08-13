@@ -25,7 +25,7 @@ export function BlogGrid({ posts }: BlogGridProps) {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
-      className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3"
+      className="grid gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3"
     >
       {posts.map((post) => (
         <BlogCard key={post.slug} post={post as BlogPost} />

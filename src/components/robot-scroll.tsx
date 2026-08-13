@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, AnimatePresence, useInView } from "framer-motion";
+import { useRef, useEffect, useState } from 'react';
+import { motion, useScroll, AnimatePresence, useInView } from 'framer-motion';
 
 const TOTAL_FRAMES = 1516;
-const FRAME_PATH = "/frames/frame_";
-const FRAME_EXTENSION = ".webp";
+const FRAME_PATH = '/frames4/frame_';
+const FRAME_EXTENSION = '.webp';
 const INITIAL_LOAD_COUNT = 10; // Minimal initial load for fast start (<2 seconds)
 const PRELOAD_BUFFER = 100; // Large buffer for aggressive preloading
 
 // Loading component with Stitch-designed wireframe drawing animation
 function LoadingScreen({ progress }: { progress: number }) {
-  const [statusMessage, setStatusMessage] = useState("Initializing Systems...");
+  const [statusMessage, setStatusMessage] = useState('Initializing Systems...');
 
   useEffect(() => {
     const messages = [
-      "Initializing Systems...",
-      "Loading Neural Pathfinding...",
-      "Calibrating Sensors...",
-      "Synchronizing Fleet Data...",
-      "Preparing Autonomous Controls...",
+      'Initializing Systems...',
+      'Loading Neural Pathfinding...',
+      'Calibrating Sensors...',
+      'Synchronizing Fleet Data...',
+      'Preparing Autonomous Controls...',
     ];
 
     const interval = setInterval(() => {
@@ -34,19 +34,22 @@ function LoadingScreen({ progress }: { progress: number }) {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 1.1 }}
       transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-      className="fixed inset-0 flex flex-col items-center justify-center bg-[#f5f5f5] z-50 overflow-hidden"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden bg-[#f5f5f5]"
     >
       {/* Subtle Technical Grid Background */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `
+      <div
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `
           linear-gradient(#191c1a 1px, transparent 1px),
           linear-gradient(90deg, #191c1a 1px, transparent 1px)
         `,
-        backgroundSize: '50px 50px'
-      }} />
+          backgroundSize: '50px 50px',
+        }}
+      />
 
       {/* Wireframe Logo with Drawing Animation */}
-      <div className="relative mb-12 sm:mb-16 md:mb-20 lg:mb-24 w-full px-4 sm:px-8 md:px-12">
+      <div className="relative mb-12 w-full px-4 sm:mb-16 sm:px-8 md:mb-20 md:px-12 lg:mb-24">
         <svg
           viewBox="0 0 1000 150"
           className="w-full"
@@ -82,10 +85,7 @@ function LoadingScreen({ progress }: { progress: number }) {
 
       {/* Loading Progress Ring */}
       <div className="relative mb-8 sm:mb-10">
-        <svg
-          className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48"
-          viewBox="0 0 200 200"
-        >
+        <svg className="h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48" viewBox="0 0 200 200">
           <circle cx="100" cy="100" r="85" fill="none" stroke="#e1e3df" strokeWidth="4" />
           <circle
             cx="100"
@@ -108,26 +108,39 @@ function LoadingScreen({ progress }: { progress: number }) {
         </svg>
 
         <div className="absolute inset-0 flex items-center justify-center">
-          <p className="text-4xl sm:text-5xl md:text-6xl font-bold" style={{ fontFamily: "var(--font-dm-sans)", color: "#7ccd54" }}>
+          <p
+            className="text-4xl font-bold sm:text-5xl md:text-6xl"
+            style={{ fontFamily: 'var(--font-dm-sans)', color: '#7ccd54' }}
+          >
             {progress}%
           </p>
         </div>
       </div>
 
       {/* Loading Status */}
-      <div className="text-center px-4">
-        <p className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight mb-2" style={{ fontFamily: "var(--font-inter)", color: "#191c1a" }}>
+      <div className="px-4 text-center">
+        <p
+          className="mb-2 text-lg font-medium tracking-tight sm:text-xl md:text-2xl"
+          style={{ fontFamily: 'var(--font-inter)', color: '#191c1a' }}
+        >
           Loading Experience
         </p>
-        <p className="text-xs sm:text-sm md:text-base font-medium uppercase tracking-[0.1em] transition-all duration-500" style={{ fontFamily: "var(--font-mono)", color: "#717a68" }}>
+        <p
+          className="text-xs font-medium tracking-[0.1em] uppercase transition-all duration-500 sm:text-sm md:text-base"
+          style={{ fontFamily: 'var(--font-mono)', color: '#717a68' }}
+        >
           {statusMessage}
         </p>
       </div>
 
       <style jsx>{`
         @keyframes draw-text {
-          0% { stroke-dasharray: 0 2000; }
-          100% { stroke-dasharray: 2000 0; }
+          0% {
+            stroke-dasharray: 0 2000;
+          }
+          100% {
+            stroke-dasharray: 2000 0;
+          }
         }
         .animate-draw-text {
           animation: draw-text 3s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
@@ -138,7 +151,9 @@ function LoadingScreen({ progress }: { progress: number }) {
 }
 
 export function RobotScroll() {
-  const [images, setImages] = useState<(HTMLImageElement | null)[]>(Array(TOTAL_FRAMES).fill(null));
+  const [images, setImages] = useState<(HTMLImageElement | null)[]>(
+    Array(TOTAL_FRAMES).fill(null),
+  );
   const [initialLoaded, setInitialLoaded] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showContent, setShowContent] = useState(false);
@@ -153,13 +168,13 @@ export function RobotScroll() {
       if (loadedFramesRef.current.has(index)) return;
 
       const img = new Image();
-      const frameNumber = String(index).padStart(6, "0");
+      const frameNumber = String(index).padStart(6, '0');
       img.src = `${FRAME_PATH}${frameNumber}${FRAME_EXTENSION}`;
 
       img.onload = () => {
         loadedCount++;
         loadedFramesRef.current.add(index);
-        setImages(prev => {
+        setImages((prev) => {
           const newImages = [...prev];
           newImages[index] = img;
           return newImages;
@@ -212,7 +227,13 @@ export function RobotScroll() {
 }
 
 // Scroll content component
-function ScrollContent({ images, loadedFrames }: { images: (HTMLImageElement | null)[], loadedFrames: React.MutableRefObject<Set<number>> }) {
+function ScrollContent({
+  images,
+  loadedFrames,
+}: {
+  images: (HTMLImageElement | null)[];
+  loadedFrames: React.MutableRefObject<Set<number>>;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [localImages, setLocalImages] = useState(images);
@@ -224,7 +245,7 @@ function ScrollContent({ images, loadedFrames }: { images: (HTMLImageElement | n
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ['start start', 'end end'],
   });
 
   // Aggressive lazy loading with background preloading
@@ -234,13 +255,13 @@ function ScrollContent({ images, loadedFrames }: { images: (HTMLImageElement | n
       loadingQueueRef.current.add(index);
 
       const img = new Image();
-      const frameNumber = String(index).padStart(6, "0");
+      const frameNumber = String(index).padStart(6, '0');
       img.src = `${FRAME_PATH}${frameNumber}${FRAME_EXTENSION}`;
 
       img.onload = () => {
         loadedFrames.current.add(index);
         loadingQueueRef.current.delete(index);
-        setLocalImages(prev => {
+        setLocalImages((prev) => {
           const newImages = [...prev];
           newImages[index] = img;
           return newImages;
@@ -253,9 +274,12 @@ function ScrollContent({ images, loadedFrames }: { images: (HTMLImageElement | n
     };
 
     // Scroll-based loading
-    const unsubscribe = scrollYProgress.on("change", () => {
+    const unsubscribe = scrollYProgress.on('change', () => {
       const progress = scrollYProgress.get();
-      const currentFrame = Math.min(Math.floor(progress * TOTAL_FRAMES), TOTAL_FRAMES - 1);
+      const currentFrame = Math.min(
+        Math.floor(progress * TOTAL_FRAMES),
+        TOTAL_FRAMES - 1,
+      );
 
       if (currentFrame === lastFrameRef.current) return;
       lastFrameRef.current = currentFrame;
@@ -299,7 +323,7 @@ function ScrollContent({ images, loadedFrames }: { images: (HTMLImageElement | n
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const context = canvas.getContext("2d", { alpha: false });
+    const context = canvas.getContext('2d', { alpha: false });
     if (!context) return;
 
     let currentFrameIndex = -1;
@@ -326,7 +350,10 @@ function ScrollContent({ images, loadedFrames }: { images: (HTMLImageElement | n
       const containerHeight = rect.height;
 
       // Only update canvas size if dimensions changed
-      if (dimensionsCache.width !== containerWidth || dimensionsCache.height !== containerHeight) {
+      if (
+        dimensionsCache.width !== containerWidth ||
+        dimensionsCache.height !== containerHeight
+      ) {
         canvas.width = containerWidth;
         canvas.height = containerHeight;
         dimensionsCache = { width: containerWidth, height: containerHeight };
@@ -366,18 +393,18 @@ function ScrollContent({ images, loadedFrames }: { images: (HTMLImageElement | n
       rafId = requestAnimationFrame(render);
     };
 
-    const unsubscribe = scrollYProgress.on("change", scheduleRender);
+    const unsubscribe = scrollYProgress.on('change', scheduleRender);
 
     // Also render on resize
     const handleResize = () => scheduleRender();
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     scheduleRender(); // Initial render
 
     return () => {
       unsubscribe();
       cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [scrollYProgress, localImages]);
 
@@ -387,21 +414,17 @@ function ScrollContent({ images, loadedFrames }: { images: (HTMLImageElement | n
       initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-      className="relative h-[400vh] sm:h-[500vh] lg:h-[600vh] bg-[#f5f5f5] w-full"
+      className="relative h-[400vh] w-full bg-[#f5f5f5] sm:h-[500vh] lg:h-[600vh]"
     >
       {/* Sticky Canvas Container */}
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.95, opacity: 0 }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-        className="sticky top-0 h-screen w-full flex items-center justify-center bg-[#f5f5f5] overflow-hidden"
+        className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-[#f5f5f5]"
       >
-        <canvas
-          ref={canvasRef}
-          className="w-full h-full"
-        />
+        <canvas ref={canvasRef} className="h-full w-full" />
       </motion.div>
     </motion.div>
   );
 }
-

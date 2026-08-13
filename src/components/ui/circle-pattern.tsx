@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface CirclePatternProps {
   className?: string;
@@ -10,12 +10,12 @@ interface CirclePatternProps {
 export function CirclePattern({
   className,
   circleSize = 2,
-  circleColor = "rgba(0, 0, 0, 0.1)",
+  circleColor = 'rgba(0, 0, 0, 0.1)',
   gap = 20,
 }: CirclePatternProps) {
   return (
     <div
-      className={cn("absolute inset-0 -z-10", className)}
+      className={cn('absolute inset-0 -z-10', className)}
       style={{
         backgroundImage: `radial-gradient(circle, ${circleColor} ${circleSize}px, transparent ${circleSize}px)`,
         backgroundSize: `${gap}px ${gap}px`,

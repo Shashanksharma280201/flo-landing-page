@@ -1,34 +1,62 @@
-"use client";
+'use client';
 
-import React, { useRef } from "react";
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
-import { motion, useInView } from "framer-motion";
-import { Loader2, Zap, Users, Cpu, TrendingUp, BookOpen, MapPin, ArrowRight, ArrowUpRight, Download } from "lucide-react";
-import { JOBS } from "@/lib/constants";
-import { submitFormAction } from "@/app/actions/form-actions";
-import Link from "next/link";
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import {
+  CheckCircle2,
+  Loader2,
+  Zap,
+  Users,
+  Cpu,
+  TrendingUp,
+  BookOpen,
+  MapPin,
+  Phone,
+  Mail,
+  ArrowRight,
+  ArrowUpRight,
+  Download,
+} from 'lucide-react';
+import { JOBS } from '@/lib/constants';
+import Link from 'next/link';
+import { trackLead } from '@/lib/analytics';
 
 // ─── Design tokens ─────────────────────────────────────────────────────────────
-const BG      = "#ffffff";
-const BG2     = "#f5f5f5";
-const GREEN   = "#7ccd54";
-const TEXT    = "#191c1a";
-const MUTED   = "rgba(25,28,26,0.55)";
-const DIM     = "rgba(25,28,26,0.15)";
+const BG = '#ffffff';
+const BG2 = '#f5f5f5';
+const GREEN = '#7ccd54';
+const TEXT = '#191c1a';
+const MUTED = 'rgba(25,28,26,0.55)';
+const DIM = 'rgba(25,28,26,0.15)';
+const FORM_DIM = 'rgba(25,28,26,0.55)';
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 // ─── Animation primitives ──────────────────────────────────────────────────────
 
-function RevealText({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function RevealText({
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
+  const inView = useInView(ref, { once: true, margin: '-8% 0px' });
   return (
     <div ref={ref} className={className}>
-      <div style={{ overflow: "hidden", paddingBottom: "0.35em", marginBottom: "-0.35em" }}>
+      <div
+        style={{
+          clipPath: 'inset(-0.18em -0.08em -0.34em -0.08em)',
+          overflow: 'visible',
+          paddingBlock: '0.18em 0.34em',
+          marginBlock: '-0.18em -0.34em',
+        }}
+      >
         <motion.div
-          initial={{ y: "110%", opacity: 0 }}
-          animate={inView ? { y: "0%", opacity: 1 } : {}}
+          initial={{ y: '110%', opacity: 0 }}
+          animate={inView ? { y: '0%', opacity: 1 } : {}}
           transition={{ duration: 1.0, delay, ease: EASE }}
         >
           {children}
@@ -38,9 +66,17 @@ function RevealText({ children, delay = 0, className = "" }: { children: React.R
   );
 }
 
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function FadeUp({
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-6% 0px" });
+  const inView = useInView(ref, { once: true, margin: '-6% 0px' });
   return (
     <motion.div
       ref={ref}
@@ -56,20 +92,23 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
 
 function SectionRule({ label }: { label: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-5% 0px" });
+  const inView = useInView(ref, { once: true, margin: '-5% 0px' });
   return (
     <motion.div
       ref={ref}
-      className="flex items-center gap-5 mb-16"
+      className="mb-16 flex items-center gap-5"
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : {}}
       transition={{ duration: 0.6 }}
     >
-      <span className="text-[10px] font-bold tracking-[0.26em] uppercase whitespace-nowrap" style={{ color: DIM }}>
+      <span
+        className="text-[10px] font-bold tracking-[0.26em] whitespace-nowrap uppercase"
+        style={{ color: DIM }}
+      >
         {label}
       </span>
       <motion.div
-        className="flex-1 h-px"
+        className="h-px flex-1"
         style={{ background: DIM }}
         initial={{ scaleX: 0, originX: 0 }}
         animate={inView ? { scaleX: 1 } : {}}
@@ -81,101 +120,143 @@ function SectionRule({ label }: { label: string }) {
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
+// prettier-ignore
 const WHY_JOIN = [
-  { icon: Zap,        title: "Mission-Driven Work",      body: "Build real autonomous robots deployed on active construction and logistics sites across India — not prototypes." },
-  { icon: Users,      title: "Fast-Moving Team",         body: "A small, senior team where you own your work and ship things that matter — without red tape." },
+  { icon: Zap,        title: "Mission Driven Work",      body: "Build real autonomous robots deployed on active construction and logistics sites across India. Not prototypes." },
+  { icon: Users,      title: "Fast Moving Team",         body: "A small, senior team where you own your work and ship things that matter, without red tape." },
   { icon: Cpu,        title: "Hands-on Robotics",        body: "Work directly with hardware, embedded systems, and AI on products already operating in the field." },
   { icon: TrendingUp, title: "Competitive Compensation", body: "Market-rate salaries with ESOP potential for early-stage hires who grow with the company." },
   { icon: BookOpen,   title: "Learning & Growth",        body: "Direct mentorship from founders and access to cutting-edge robotics R&D from day one." },
-  { icon: MapPin,     title: "Bengaluru HQ",             body: "Based in HSR Layout — one of India's most vibrant startup neighbourhoods." },
+  { icon: MapPin,     title: "Bengaluru HQ",             body: "Based in HSR Layout, one of India's most vibrant startup neighbourhoods." },
 ];
 
 // ─── Submit button ─────────────────────────────────────────────────────────────
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
+function SubmitButton({ isSubmitting }: { isSubmitting: boolean }) {
   return (
     <button
       type="submit"
-      disabled={pending}
-      className="w-full h-12 rounded-full text-white text-sm font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] disabled:opacity-60 flex items-center justify-center gap-2"
-      style={{ background: GREEN, fontFamily: "var(--font-dm-sans)" }}
+      disabled={isSubmitting}
+      className="flex h-14 w-full items-center justify-center gap-2 rounded-full text-base font-black tracking-wide uppercase transition-all duration-300 hover:scale-[1.02] disabled:scale-100 disabled:opacity-60"
+      style={{ background: GREEN, color: '#fff', fontFamily: 'var(--font-dm-sans)' }}
     >
-      {pending ? (
-        <><Loader2 className="h-4 w-4 animate-spin" />Submitting…</>
+      {isSubmitting ? (
+        <>
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Submitting…
+        </>
       ) : (
-        <>Submit Application <ArrowRight className="w-4 h-4" /></>
+        'Submit Application'
       )}
     </button>
   );
+}
+
+// ─── Form style helpers ───────────────────────────────────────────────────────
+
+const inputBase =
+  'w-full h-12 rounded-xl border px-4 text-base outline-none transition-colors duration-200';
+const inputStyle = {
+  borderColor: FORM_DIM,
+  background: BG,
+  color: TEXT,
+  fontFamily: 'var(--font-dm-sans)',
+};
+const labelBase = 'block text-xs font-bold uppercase tracking-[0.18em] mb-2';
+const labelStyle = { color: FORM_DIM };
+
+function focusFormField(event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  event.currentTarget.style.borderColor = GREEN;
+}
+
+function blurFormField(event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  event.currentTarget.style.borderColor = FORM_DIM;
 }
 
 // ─── Sections ──────────────────────────────────────────────────────────────────
 
 function HeroSection() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-28 pb-24" style={{ background: BG2 }}>
+    <section
+      className="mt-[40px] w-full px-8 pt-28 pb-24 md:px-16 lg:px-24 xl:px-32"
+      style={{ background: BG2 }}
+    >
       {/* Breadcrumb */}
       <FadeUp className="mb-12">
-        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: DIM }}>
-          <Link href="/" className="hover:underline" style={{ color: DIM }}>Home</Link>
+        <div
+          className="flex items-center gap-2 text-[10px] font-bold tracking-[0.24em] uppercase"
+          style={{ color: DIM }}
+        >
+          <Link href="/" className="hover:underline" style={{ color: DIM }}>
+            Home
+          </Link>
           <span>/</span>
           <span style={{ color: TEXT }}>Careers</span>
         </div>
       </FadeUp>
 
-      <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-end">
+      <div className="grid items-end gap-16 lg:grid-cols-2 lg:gap-24">
         {/* Left — headline */}
         <div>
-          <FadeUp className="mb-8">
-            <div className="inline-flex items-center gap-2.5">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: GREEN }} />
-                <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: GREEN }} />
-              </span>
-              <span className="text-[10px] font-bold tracking-[0.26em] uppercase" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-                {JOBS.length} Open Roles · Bengaluru, India
-              </span>
-            </div>
-          </FadeUp>
-
           <RevealText>
-            <h1 className="text-[clamp(3rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
-              Build the future
+            <h1
+              className="text-[clamp(2.75rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+              style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+            >
+              Team that builds
             </h1>
           </RevealText>
           <RevealText delay={0.06}>
-            <h1 className="text-[clamp(3rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
-              of autonomous
+            <h1
+              className="text-[clamp(2.75rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+              style={{
+                color: 'rgba(4 104 37 / 0.86)',
+                fontFamily: 'var(--font-dm-sans)',
+              }}
+            >
+              what others imagine
             </h1>
           </RevealText>
-          <RevealText delay={0.12}>
-            <h1 className="text-[clamp(3rem,6vw,7.5rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
-              robotics.
-            </h1>
-          </RevealText>
+          {/* <RevealText delay={0.12}> */}
+          {/*   <h1 */}
+          {/*     className="text-[clamp(2.75rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]" */}
+          {/*     style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }} */}
+          {/*   > */}
+          {/*     robotics. */}
+          {/*   </h1> */}
+          {/* </RevealText> */}
         </div>
 
         {/* Right — description + CTAs */}
         <FadeUp delay={0.2} className="pb-2">
-          <div className="w-16 h-px mb-8" style={{ background: DIM }} />
-          <p className="text-lg leading-[1.85] mb-10" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-            Join a small, ambitious team deploying real robots on real job sites — and help shape how India moves, builds, and grows.
+          <div className="mb-8 h-px w-16" style={{ background: DIM }} />
+          <p
+            className="mb-10 text-lg leading-[1.85]"
+            style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+          >
+            Join our ambitious and passionate team deploying robots on production on real
+            job sites and help shape how India moves, builds, and grows.
           </p>
           <div className="flex flex-wrap gap-4">
             <a
               href="#roles"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:scale-105"
-              style={{ background: GREEN, color: "#fff", fontFamily: "var(--font-dm-sans)" }}
+              className="inline-flex items-center gap-2.5 rounded-full px-[clamp(1.125rem,1.5vw,2rem)] py-[clamp(0.7rem,0.8vw,1rem)] text-[clamp(0.75rem,0.68rem_+_0.32vw,0.9375rem)] font-bold tracking-wide uppercase transition-all duration-300 hover:scale-105"
+              style={{
+                background: GREEN,
+                color: '#fff',
+                fontFamily: 'var(--font-dm-sans)',
+              }}
             >
-              View Open Roles <ArrowRight className="w-4 h-4" />
+              View Open Roles{' '}
+              <ArrowRight className="h-[clamp(0.875rem,1vw,1rem)] w-[clamp(0.875rem,1vw,1rem)]" />
             </a>
             <a
               href="#apply"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold border transition-all duration-300 hover:bg-white"
-              style={{ borderColor: DIM, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
+              className="inline-flex items-center gap-2 rounded-full border px-[clamp(1.125rem,1.5vw,2rem)] py-[clamp(0.7rem,0.8vw,1rem)] text-[clamp(0.75rem,0.68rem_+_0.32vw,0.9375rem)] font-bold transition-all duration-300 hover:bg-white"
+              style={{ borderColor: DIM, color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
             >
-              Apply Now <ArrowUpRight className="w-4 h-4" />
+              Apply Now{' '}
+              <ArrowUpRight className="h-[clamp(0.875rem,1vw,1rem)] w-[clamp(0.875rem,1vw,1rem)]" />
             </a>
           </div>
         </FadeUp>
@@ -186,43 +267,66 @@ function HeroSection() {
 
 function RolesSection() {
   return (
-    <section id="roles" className="w-full border-t scroll-mt-24" style={{ background: BG, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-24">
+    <section
+      id="roles"
+      className="w-full scroll-mt-24 border-t"
+      style={{ background: BG, borderColor: DIM }}
+    >
+      <div className="w-full px-8 pt-32 pb-24 md:px-16 lg:px-24 xl:px-32">
         <SectionRule label="Open Positions" />
-        <div className="grid lg:grid-cols-[1fr_400px] gap-16 items-end mb-20">
+        <div className="mb-20 grid items-end gap-16 lg:grid-cols-[1fr_400px]">
           <div>
             <RevealText className="mb-1">
-              <h2 className="text-[clamp(2.8rem,6vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+              <h2
+                className="text-[clamp(2.8rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+              >
                 Find your
               </h2>
             </RevealText>
             <RevealText delay={0.06}>
-              <h2 className="text-[clamp(2.8rem,6vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
+              <h2
+                className="text-[clamp(2.8rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{
+                  color: 'rgba(4 104 37 / 0.86)',
+                  fontFamily: 'var(--font-dm-sans)',
+                }}
+              >
                 role.
               </h2>
             </RevealText>
           </div>
           <FadeUp delay={0.2} className="pb-2">
-            <div className="w-px h-10 mb-8" style={{ background: GREEN }} />
-            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              We're growing fast and looking for people who want to do the most meaningful work of their careers.
+            <div className="mb-8 h-10 w-px" style={{ background: GREEN }} />
+            <p
+              className="text-base leading-[1.85]"
+              style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+            >
+              We're growing fast and looking for people who want to do the most meaningful
+              work of their careers.
             </p>
           </FadeUp>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {JOBS.map((job, i) => (
             <FadeUp key={job.title} delay={0.08 * i}>
               <div
-                className="group flex flex-col p-10 rounded-2xl border transition-all duration-300 hover:border-[rgba(4,104,37,0.25)] hover:shadow-sm cursor-default"
+                className="group flex cursor-default flex-col rounded-2xl border p-10 transition-all duration-300 hover:border-[rgba(4,104,37,0.25)] hover:shadow-sm"
                 style={{ borderColor: DIM, background: BG }}
               >
-                <div className="flex items-start justify-between mb-6">
+                <div className="mb-6 flex items-start justify-between">
                   <div className="flex gap-2">
-                    <span className="text-xs font-semibold rounded-full px-3 py-1" style={{ background: `${GREEN}18`, color: "rgba(4 104 37 / 0.86)" }}>
+                    <span
+                      className="rounded-full px-3 py-1 text-xs font-semibold"
+                      style={{ background: `${GREEN}18`, color: 'rgba(4 104 37 / 0.86)' }}
+                    >
                       {job.location}
                     </span>
-                    <span className="text-xs font-semibold rounded-full px-3 py-1" style={{ background: BG2, color: MUTED }}>
+                    <span
+                      className="rounded-full px-3 py-1 text-xs font-semibold"
+                      style={{ background: BG2, color: MUTED }}
+                    >
                       {job.type}
                     </span>
                   </div>
@@ -230,26 +334,37 @@ function RolesSection() {
                     href={job.jdLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 text-xs font-bold uppercase tracking-[0.14em] transition-colors duration-200 opacity-0 group-hover:opacity-100"
-                    style={{ color: "rgba(4 104 37 / 0.86)" }}
+                    className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold tracking-[0.14em] uppercase transition-colors duration-200 hover:bg-[rgba(124,205,84,0.12)]"
+                    style={{
+                      color: 'rgba(4 104 37 / 0.86)',
+                      borderColor: 'rgba(4,104,37,0.25)',
+                      background: `${GREEN}10`,
+                    }}
                     aria-label={`Download JD for ${job.title}`}
                   >
-                    <Download className="w-3.5 h-3.5" />
+                    <Download className="h-3.5 w-3.5" />
                     JD
                   </a>
                 </div>
-                <h3 className="text-xl font-black mb-3 leading-snug tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                <h3
+                  className="mb-3 text-xl leading-snug font-black tracking-[-0.02em]"
+                  style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+                >
                   {job.title}
                 </h3>
-                <p className="text-sm leading-[1.85] flex-1 mb-8" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+                <p
+                  className="mb-8 flex-1 text-sm leading-[1.85]"
+                  style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+                >
                   {job.description}
                 </p>
                 <a
                   href="#apply"
                   className="inline-flex items-center gap-2 text-sm font-bold transition-all duration-200"
-                  style={{ color: "rgba(4 104 37 / 0.86)" }}
+                  style={{ color: 'rgba(4 104 37 / 0.86)' }}
                 >
-                  Apply for this role <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                  Apply for this role{' '}
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </a>
               </div>
             </FadeUp>
@@ -260,35 +375,50 @@ function RolesSection() {
   );
 }
 
-function WhyCell({ item, index }: { item: typeof WHY_JOIN[0]; index: number }) {
+function WhyCell({ item, index }: { item: (typeof WHY_JOIN)[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
+  const inView = useInView(ref, { once: true, margin: '-8% 0px' });
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current || !glowRef.current) return;
     const r = ref.current.getBoundingClientRect();
     glowRef.current.style.background = `radial-gradient(ellipse 80% 80% at ${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%, ${GREEN}28 0%, transparent 65%)`;
-    glowRef.current.style.opacity = "1";
+    glowRef.current.style.opacity = '1';
   };
   return (
     <motion.div
       ref={ref}
-      className="relative flex flex-col p-10 border-r border-b overflow-hidden cursor-default"
+      className="relative flex cursor-default flex-col overflow-hidden border-r border-b p-10"
       style={{ borderColor: DIM }}
       onMouseMove={onMove}
-      onMouseLeave={() => { if (glowRef.current) glowRef.current.style.opacity = "0"; }}
+      onMouseLeave={() => {
+        if (glowRef.current) glowRef.current.style.opacity = '0';
+      }}
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: 0.05 * index, ease: EASE }}
     >
-      <div ref={glowRef} className="absolute inset-0 pointer-events-none" style={{ opacity: 0, transition: "opacity 0.3s ease" }} />
-      <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-6" style={{ background: `${GREEN}18` }}>
-        <item.icon className="w-5 h-5" style={{ color: GREEN }} />
+      <div
+        ref={glowRef}
+        className="pointer-events-none absolute inset-0"
+        style={{ opacity: 0, transition: 'opacity 0.3s ease' }}
+      />
+      <div
+        className="mb-6 flex h-11 w-11 items-center justify-center rounded-xl"
+        style={{ background: `${GREEN}18` }}
+      >
+        <item.icon className="h-5 w-5" style={{ color: GREEN }} />
       </div>
-      <h3 className="text-lg font-black mb-3 leading-snug tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+      <h3
+        className="mb-3 text-lg leading-snug font-black tracking-[-0.02em]"
+        style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+      >
         {item.title}
       </h3>
-      <p className="text-sm leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
+      <p
+        className="text-sm leading-[1.85]"
+        style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+      >
         {item.body}
       </p>
     </motion.div>
@@ -298,32 +428,47 @@ function WhyCell({ item, index }: { item: typeof WHY_JOIN[0]; index: number }) {
 function WhySection() {
   return (
     <section className="w-full border-t" style={{ background: BG2, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-24">
+      <div className="w-full px-8 pt-32 pb-24 md:px-16 lg:px-24 xl:px-32">
         <SectionRule label="Why Flo" />
-        <div className="grid lg:grid-cols-[1fr_400px] gap-16 items-end mb-20">
+        <div className="mb-20 grid items-end gap-16 lg:grid-cols-[1fr_400px]">
           <div>
             <RevealText className="mb-1">
-              <h2 className="text-[clamp(2.8rem,6vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+              <h2
+                className="text-[clamp(2.8rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+              >
                 Work that
               </h2>
             </RevealText>
             <RevealText delay={0.06}>
-              <h2 className="text-[clamp(2.8rem,6vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
+              <h2
+                className="text-[clamp(2.8rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{
+                  color: 'rgba(4 104 37 / 0.86)',
+                  fontFamily: 'var(--font-dm-sans)',
+                }}
+              >
                 matters.
               </h2>
             </RevealText>
           </div>
           <FadeUp delay={0.2} className="pb-2">
-            <div className="w-px h-10 mb-8" style={{ background: GREEN }} />
-            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              We're not building software — we're deploying physical robots in the real world. Here's what that means for you.
+            <div className="mb-8 h-10 w-px" style={{ background: GREEN }} />
+            <p
+              className="text-base leading-[1.85]"
+              style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+            >
+              We're not building software. We're deploying physical robots in the real
+              world. Here's what that means for you.
             </p>
           </FadeUp>
         </div>
 
         <div className="w-full border-t border-l" style={{ borderColor: DIM }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {WHY_JOIN.map((item, i) => <WhyCell key={item.title} item={item} index={i} />)}
+            {WHY_JOIN.map((item, i) => (
+              <WhyCell key={item.title} item={item} index={i} />
+            ))}
           </div>
         </div>
       </div>
@@ -332,201 +477,383 @@ function WhySection() {
 }
 
 function ApplySection() {
-  const [state, formAction] = useActionState(submitFormAction, { success: false, message: "" });
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [successMessage, setSuccessMessage] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const apiBase = (process.env.NEXT_PUBLIC_MISSION_CONTROL_API_URL ?? '').replace(
+    /\/$/,
+    '',
+  );
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    setIsSubmitting(true);
+    setSuccessMessage('');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch(`${apiBase || ''}/api/public/forms/careers`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data: { success?: boolean; message?: string } = await response
+        .json()
+        .catch(() => ({}));
+      if (!response.ok || data.success === false) {
+        throw new Error(data.message || 'Something went wrong. Please try again.');
+      }
+
+      form.reset();
+      trackLead('careers');
+      setSuccessMessage(
+        data.message ||
+          "Thank you. We'll review your application and be in touch within 5 business days.",
+      );
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : 'Something went wrong. Please try again.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <section id="apply" className="w-full border-t scroll-mt-24" style={{ background: BG, borderColor: DIM }}>
-      <div className="w-full px-8 md:px-16 lg:px-24 xl:px-32 pt-32 pb-24">
+    <section
+      id="apply"
+      className="w-full scroll-mt-24 border-t"
+      style={{ background: BG, borderColor: DIM }}
+    >
+      <div className="w-full px-8 pt-32 pb-24 md:px-16 lg:px-24 xl:px-32">
         <SectionRule label="Apply" />
 
-        <div className="grid lg:grid-cols-[1fr_400px] gap-16 items-end mb-20">
+        <div className="mb-20 grid items-end gap-16 lg:grid-cols-[1fr_400px]">
           <div>
             <RevealText className="mb-1">
-              <h2 className="text-[clamp(2.8rem,6vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+              <h2
+                className="text-[clamp(2.8rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+              >
                 Ready to
               </h2>
             </RevealText>
             <RevealText delay={0.06}>
-              <h2 className="text-[clamp(2.8rem,6vw,7rem)] font-black leading-[0.86] tracking-[-0.04em]" style={{ color: "rgba(4 104 37 / 0.86)", fontFamily: "var(--font-dm-sans)" }}>
+              <h2
+                className="text-[clamp(2.8rem,6vw,7rem)] leading-[0.96] font-black tracking-[-0.04em]"
+                style={{
+                  color: 'rgba(4 104 37 / 0.86)',
+                  fontFamily: 'var(--font-dm-sans)',
+                }}
+              >
                 join the team?
               </h2>
             </RevealText>
           </div>
           <FadeUp delay={0.2} className="pb-2">
-            <div className="w-px h-10 mb-8" style={{ background: GREEN }} />
-            <p className="text-base leading-[1.85]" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-              Send us your application and we'll get back to you within 5 business days.
+            <div className="mb-8 h-10 w-px" style={{ background: GREEN }} />
+            <p
+              className="text-base leading-[1.85]"
+              style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+            >
+              Send us your application and we'll get back to you soon.
             </p>
           </FadeUp>
         </div>
 
         {/* Contact grid — matches contact page layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 border-t" style={{ borderColor: DIM }}>
-
+        <div
+          className="grid grid-cols-1 gap-0 border-t lg:grid-cols-5"
+          style={{ borderColor: FORM_DIM }}
+        >
           {/* Left — details */}
-          <div className="lg:col-span-2 py-16 pr-0 lg:pr-16 border-b lg:border-b-0 lg:border-r" style={{ borderColor: DIM }}>
-            <p className="text-[10px] font-bold tracking-[0.26em] uppercase mb-10" style={{ color: DIM }}>
-              Get in Touch
+          <div
+            className="border-b py-16 pr-0 lg:col-span-2 lg:border-r lg:border-b-0 lg:pr-16"
+            style={{ borderColor: FORM_DIM }}
+          >
+            <p
+              className="mb-10 text-[10px] font-bold tracking-[0.26em] uppercase"
+              style={{ color: FORM_DIM }}
+            >
+              Reach Us Directly
             </p>
-            <div className="flex flex-col gap-0 divide-y" style={{ borderColor: DIM }}>
+
+            <div className="space-y-0 divide-y" style={{ borderColor: FORM_DIM }}>
               {[
-                { label: "Call or WhatsApp", value: "+91 8446614346",           href: "https://wa.me/918446614346" },
-                { label: "Careers Email",    value: "contact@flomobility.com",  href: "mailto:contact@flomobility.com" },
-                { label: "Headquarters",     value: "HSR Layout, Bengaluru",    href: "https://maps.google.com/?q=HSR+Layout,+Bengaluru,+India" },
+                {
+                  icon: Mail,
+                  label: 'Careers Email',
+                  links: [
+                    {
+                      value: 'contact@flomobility.com',
+                      href: 'mailto:contact@flomobility.com',
+                    },
+                  ],
+                },
+                {
+                  icon: MapPin,
+                  label: 'Headquarters',
+                  links: [
+                    {
+                      value: 'Bengaluru, Karnataka, India',
+                      href: 'https://maps.google.com/?q=HSR+Layout,+Bengaluru,+India',
+                    },
+                  ],
+                },
               ].map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between py-5 group"
-                >
+                <div key={item.label} className="flex items-start gap-5 py-7">
+                  <div
+                    className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors duration-200"
+                    style={{ background: `${GREEN}12` }}
+                  >
+                    <item.icon
+                      className="h-4 w-4 transition-colors duration-200"
+                      style={{ color: GREEN }}
+                    />
+                  </div>
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] mb-1" style={{ color: DIM }}>
+                    <p
+                      className="mb-1.5 text-[10px] font-bold tracking-[0.2em] uppercase"
+                      style={{ color: FORM_DIM }}
+                    >
                       {item.label}
                     </p>
-                    <p className="text-sm font-semibold transition-colors duration-200 group-hover:opacity-70" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
-                      {item.value}
-                    </p>
+                    <div className="flex flex-col gap-1">
+                      {item.links.map((link) => (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-semibold underline-offset-2 transition-colors duration-200 hover:underline"
+                          style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+                        >
+                          {link.value}
+                        </a>
+                      ))}
+                    </div>
                   </div>
-                  <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ color: GREEN }} />
-                </a>
+                </div>
               ))}
             </div>
+
+            {/* <div className="mt-10 border-t pt-8" style={{ borderColor: FORM_DIM }}> */}
+            {/*   <p */}
+            {/*     className="mb-4 text-[10px] font-bold tracking-[0.26em] uppercase" */}
+            {/*     style={{ color: FORM_DIM }} */}
+            {/*   > */}
+            {/*     Response Time */}
+            {/*   </p> */}
+            {/*   <p */}
+            {/*     className="text-sm leading-[1.85]" */}
+            {/*     style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }} */}
+            {/*   > */}
+            {/*     We review all applications within 5 business days. For urgent enquiries, */}
+            {/*     WhatsApp is fastest. */}
+            {/*   </p> */}
+            {/* </div> */}
           </div>
 
-          {/* Right — bare form, no card wrapper */}
-          <div className="lg:col-span-3 py-16 lg:pl-16">
-            <p className="text-[10px] font-bold tracking-[0.26em] uppercase mb-10" style={{ color: DIM }}>
+          {/* Right — form */}
+          <div className="py-16 lg:col-span-3 lg:pl-16">
+            <p
+              className="mb-10 text-[10px] font-bold tracking-[0.26em] uppercase"
+              style={{ color: FORM_DIM }}
+            >
               Submit Application
             </p>
 
-            {state.success ? (
+            {successMessage ? (
               <FadeUp>
-                <div className="flex flex-col items-start gap-4">
-                  <div className="w-10 h-0.5" style={{ background: GREEN }} />
-                  <h3 className="text-2xl font-black tracking-[-0.02em]" style={{ color: TEXT, fontFamily: "var(--font-dm-sans)" }}>
+                <div
+                  className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl p-12 text-center"
+                  style={{
+                    background: 'rgba(124,205,84,0.06)',
+                    border: `1px solid ${FORM_DIM}`,
+                  }}
+                >
+                  <CheckCircle2 className="mb-6 h-10 w-10" style={{ color: GREEN }} />
+                  <h3
+                    className="mb-3 text-2xl font-black tracking-[-0.02em]"
+                    style={{ color: TEXT, fontFamily: 'var(--font-dm-sans)' }}
+                  >
                     Application Received
                   </h3>
-                  <p className="text-base leading-[1.85] max-w-sm" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-                    {state.message || "Thank you. We'll review your application and be in touch within 5 business days."}
+                  <p
+                    className="mx-auto mb-8 max-w-sm text-base leading-[1.85]"
+                    style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+                  >
+                    {successMessage}
                   </p>
                   <button
                     onClick={() => window.location.reload()}
-                    className="text-sm font-bold underline underline-offset-4 transition-colors duration-200 mt-4"
-                    style={{ color: GREEN }}
+                    className="text-sm font-bold underline underline-offset-4 transition-colors duration-200"
+                    style={{ color: GREEN, fontFamily: 'var(--font-dm-sans)' }}
                   >
                     Submit another application
                   </button>
                 </div>
               </FadeUp>
             ) : (
-              <form action={formAction} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-7">
                 <input type="hidden" name="formType" value="careers" />
 
                 {/* Name row */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   {[
-                    { id: "firstName", name: "firstName", label: "First Name", placeholder: "John",  required: true },
-                    { id: "lastName",  name: "lastName",  label: "Last Name",  placeholder: "Doe",   required: true },
+                    {
+                      id: 'firstName',
+                      name: 'firstName',
+                      label: 'First Name',
+                      placeholder: 'John',
+                      required: true,
+                    },
+                    {
+                      id: 'lastName',
+                      name: 'lastName',
+                      label: 'Last Name',
+                      placeholder: 'Doe',
+                      required: true,
+                    },
                   ].map((field) => (
-                    <div key={field.id} className="space-y-2">
-                      <label htmlFor={field.id} className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
-                        {field.label} {field.required && <span style={{ color: GREEN }}>*</span>}
+                    <div key={field.id}>
+                      <label htmlFor={field.id} className={labelBase} style={labelStyle}>
+                        {field.label}{' '}
+                        {field.required && <span style={{ color: GREEN }}>*</span>}
                       </label>
                       <input
-                        id={field.id} name={field.name} placeholder={field.placeholder} required={field.required}
-                        className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors"
-                        style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-                        onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
-                        onBlur={(e)  => { e.currentTarget.style.borderColor = DIM; }}
+                        id={field.id}
+                        name={field.name}
+                        placeholder={field.placeholder}
+                        required={field.required}
+                        className={inputBase}
+                        style={inputStyle}
+                        onFocus={focusFormField}
+                        onBlur={blurFormField}
                       />
                     </div>
                   ))}
                 </div>
 
                 {/* Email + Phone row */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="email" className={labelBase} style={labelStyle}>
                       Email <span style={{ color: GREEN }}>*</span>
                     </label>
                     <input
-                      id="email" name="email" type="email" placeholder="john@example.com" required
-                      className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors"
-                      style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-                      onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
-                      onBlur={(e)  => { e.currentTarget.style.borderColor = DIM; }}
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="john@example.com"
+                      required
+                      className={inputBase}
+                      style={inputStyle}
+                      onFocus={focusFormField}
+                      onBlur={blurFormField}
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label htmlFor="phone" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
-                      Phone
+                  <div>
+                    <label htmlFor="phone" className={labelBase} style={labelStyle}>
+                      Phone <span style={{ color: GREEN }}>*</span>
                     </label>
                     <input
-                      id="phone" name="phone" type="tel" placeholder="+91 00000 00000"
-                      className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors"
-                      style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-                      onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
-                      onBlur={(e)  => { e.currentTarget.style.borderColor = DIM; }}
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      placeholder="+91 00000 00000"
+                      required
+                      className={inputBase}
+                      style={inputStyle}
+                      onFocus={focusFormField}
+                      onBlur={blurFormField}
                     />
                   </div>
                 </div>
 
                 {/* Role */}
-                <div className="space-y-2">
-                  <label htmlFor="role" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                <div>
+                  <label htmlFor="role" className={labelBase} style={labelStyle}>
                     Role Applying For <span style={{ color: GREEN }}>*</span>
                   </label>
                   <input
-                    id="role" name="role" placeholder="e.g. Embedded Design Engineer" required
-                    className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors"
-                    style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = DIM; }}
+                    id="role"
+                    name="role"
+                    placeholder="e.g. Embedded Design Engineer"
+                    required
+                    className={inputBase}
+                    style={inputStyle}
+                    onFocus={focusFormField}
+                    onBlur={blurFormField}
                   />
                 </div>
 
                 {/* Message */}
-                <div className="space-y-2">
-                  <label htmlFor="message" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                <div>
+                  <label htmlFor="message" className={labelBase} style={labelStyle}>
                     Tell Us About Yourself <span style={{ color: GREEN }}>*</span>
                   </label>
                   <textarea
-                    id="message" name="message" required
+                    id="message"
+                    name="message"
+                    required
                     placeholder="Briefly describe your background and what excites you about this role…"
-                    className="w-full min-h-[140px] rounded-xl border px-4 py-3 text-sm outline-none transition-colors resize-none"
-                    style={{ borderColor: DIM, background: BG, color: TEXT, fontFamily: "var(--font-dm-sans)" }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = DIM; }}
+                    className="w-full resize-none rounded-xl border px-4 py-3.5 text-base transition-colors duration-200 outline-none"
+                    style={{ ...inputStyle, minHeight: '140px' }}
+                    onFocus={focusFormField}
+                    onBlur={blurFormField}
                   />
                 </div>
 
                 {/* Resume */}
-                <div className="space-y-2">
-                  <label htmlFor="resume" className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: DIM }}>
+                <div>
+                  <label htmlFor="resume" className={labelBase} style={labelStyle}>
                     Resume (PDF) <span style={{ color: GREEN }}>*</span>
                   </label>
                   <input
-                    id="resume" name="resume" type="file" accept=".pdf" required
-                    className="w-full h-12 rounded-xl border px-4 text-sm outline-none transition-colors cursor-pointer file:text-xs file:font-semibold file:bg-transparent file:border-0 file:mr-4"
-                    style={{ borderColor: DIM, background: BG, color: MUTED, fontFamily: "var(--font-dm-sans)" }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = GREEN; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = DIM; }}
+                    id="resume"
+                    name="resume"
+                    type="file"
+                    accept=".pdf"
+                    required
+                    className={`${inputBase} cursor-pointer file:mr-4 file:border-0 file:bg-transparent file:text-xs file:font-semibold`}
+                    style={{ ...inputStyle, color: MUTED }}
+                    onFocus={focusFormField}
+                    onBlur={blurFormField}
                   />
                 </div>
 
-                {state.message && !state.success && (
-                  <p className="text-sm rounded-xl px-4 py-3" style={{ color: "#ef4444", background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.2)" }}>
-                    {state.message}
+                {errorMessage && (
+                  <p
+                    className="rounded-xl px-4 py-3 text-sm"
+                    style={{
+                      color: '#ef4444',
+                      background: 'rgba(239,68,68,0.06)',
+                      border: '1px solid rgba(239,68,68,0.2)',
+                    }}
+                  >
+                    {errorMessage}
                   </p>
                 )}
 
-                <SubmitButton />
+                <SubmitButton isSubmitting={isSubmitting} />
 
-                <p className="text-xs text-center" style={{ color: MUTED, fontFamily: "var(--font-dm-sans)" }}>
-                  By submitting, you agree to our{" "}
-                  <Link href="/privacy" className="underline underline-offset-2 transition-colors" style={{ color: TEXT }}>
+                <p
+                  className="text-center text-xs"
+                  style={{ color: MUTED, fontFamily: 'var(--font-dm-sans)' }}
+                >
+                  By submitting, you agree to our{' '}
+                  <Link
+                    href="/privacy"
+                    className="underline underline-offset-2 transition-colors"
+                    style={{ color: TEXT }}
+                  >
                     privacy policy
                   </Link>
                   .
@@ -534,7 +861,6 @@ function ApplySection() {
               </form>
             )}
           </div>
-
         </div>
       </div>
     </section>

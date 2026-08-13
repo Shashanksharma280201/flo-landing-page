@@ -1,20 +1,26 @@
-"use client";
+'use client';
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback } from 'react';
+import { ExperienceLoader } from '@/components/loading/loader';
 import {
   motion,
   useScroll,
   useTransform,
   useMotionTemplate,
   AnimatePresence,
-} from "framer-motion";
+} from 'framer-motion';
+import { trackEvent } from '@/lib/analytics';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const TOTAL_FRAMES = 674;
-const FRAME_PATH = "/frames/frame_";
-const FRAME_EXT = ".webp";
-const INITIAL_LOAD_COUNT = 10;
-const PRELOAD_BUFFER = 80;  // frames to preload ahead/behind current position
+const TOTAL_FRAMES = 234;
+const FRAME_PATH = '/frames7/frame_';
+const FRAME_EXT = '.avif';
+const FRAME_NUMBER_OFFSET = 1;
+const INITIAL_PLAYABLE_FRAMES = 24;
+const LOOKAHEAD_FRAMES = 18;
+const LOOKBEHIND_FRAMES = 6;
+const MAX_CONCURRENT_LOADS = 6;
+const MAX_LOAD_RETRIES = 1;
 
 // Total scroll space
 const TOTAL_HEIGHT = 5900;
@@ -22,113 +28,84 @@ const TOTAL_HEIGHT = 5900;
 const EXPAND_END = 800;
 // Hero text fades over this range (desktop)
 const TEXT_FADE_START = 300;
-const TEXT_FADE_END   = 700;
+const TEXT_FADE_END = 700;
 // Hero text fades immediately on mobile (0 → 200 px)
 const MOBILE_FADE_END = 200;
 
-// ─── Loading Screen ───────────────────────────────────────────────────────────
-function LoadingScreen({ progress }: { progress: number }) {
-  const [msg, setMsg] = useState("Initializing Systems...");
-  useEffect(() => {
-    const msgs = [
-      "Initializing Systems...",
-      "Loading Neural Pathfinding...",
-      "Calibrating Sensors...",
-      "Synchronizing Fleet Data...",
-      "Preparing Autonomous Controls...",
-    ];
-    const t = setInterval(() => setMsg(msgs[Math.floor(Math.random() * msgs.length)]), 2000);
-    return () => clearInterval(t);
-  }, []);
-
-  return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 1.05 }}
-      transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-      className="fixed inset-0 flex flex-col items-center justify-center bg-[#f5f5f5] z-50 overflow-hidden"
-    >
-      <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `linear-gradient(#191c1a 1px, transparent 1px), linear-gradient(90deg, #191c1a 1px, transparent 1px)`, backgroundSize: "50px 50px" }} />
-      <div className="relative mb-12 w-full px-4 sm:px-8 md:px-12">
-        <svg viewBox="0 0 1000 150" className="w-full" preserveAspectRatio="xMidYMid meet" style={{ height: "auto", maxHeight: "30vh" }}>
-          <defs>
-            <linearGradient id="tg" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#286c00" /><stop offset="100%" stopColor="#7ccd54" />
-            </linearGradient>
-          </defs>
-          <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize="100" fontWeight="700" letterSpacing="0.05em" fill="none" stroke="url(#tg)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="animate-draw-text">FLO MOBILITY</text>
-        </svg>
-      </div>
-      <div className="relative mb-8">
-        <svg className="w-36 h-36 sm:w-44 sm:h-44" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="85" fill="none" stroke="#e1e3df" strokeWidth="4" />
-          <circle cx="100" cy="100" r="85" fill="none" stroke="url(#pg)" strokeWidth="4" strokeLinecap="round" strokeDasharray={`${(progress / 100) * 534} 534`} transform="rotate(-90 100 100)" className="transition-all duration-300 ease-out" />
-          <defs><linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#286c00" /><stop offset="100%" stopColor="#7ccd54" /></linearGradient></defs>
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <p className="text-5xl font-bold" style={{ fontFamily: "var(--font-dm-sans)", color: "#7ccd54" }}>{progress}%</p>
-        </div>
-      </div>
-      <div className="text-center px-4">
-        <p className="text-xl font-medium mb-2" style={{ fontFamily: "var(--font-inter)", color: "#191c1a" }}>Loading Experience</p>
-        <p className="text-sm font-medium uppercase tracking-[0.1em]" style={{ fontFamily: "var(--font-mono)", color: "#717a68" }}>{msg}</p>
-      </div>
-      <style jsx>{`
-        @keyframes draw-text { 0% { stroke-dasharray: 0 2000; } 100% { stroke-dasharray: 2000 0; } }
-        .animate-draw-text { animation: draw-text 3s cubic-bezier(0.2, 0.8, 0.2, 1) infinite; }
-      `}</style>
-    </motion.div>
-  );
-}
-
 // ─── Hero inner content (shared; rendered in both mobile & desktop wrappers) ──
-function HeroInner() {
+function HeroInner({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) {
+  const isMobile = variant === 'mobile';
+
   return (
-    <>
+    <div
+      className={
+        isMobile
+          ? 'mt-0 w-full px-4 pt-[calc(6.5rem+env(safe-area-inset-top))]'
+          : 'mt-[12vh]'
+      }
+    >
       {/* Vertical accent line */}
-      <motion.div
-        initial={{ scaleY: 0, originY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 1.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute left-0 top-[15%] bottom-[15%] w-[3px] rounded-full"
-        style={{ background: "linear-gradient(to bottom, transparent, #7ccd54 25%, #7ccd54 75%, transparent)" }}
-      />
-
-      <div className="px-6 sm:px-14 lg:px-20 xl:px-24 relative z-10 w-full md:max-w-[52vw]">
-
-        {/* Live status badge */}
+      {!isMobile && (
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-2 mb-7"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: "#7ccd54" }} />
-            <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: "#7ccd54" }} />
-          </span>
-          <span className="text-[15px] font-bold tracking-[0.26em] uppercase hero-muted-text" style={{ fontFamily: "var(--font-dm-sans)" }}>
-            Live across 10+ construction sites
-          </span>
-        </motion.div>
+          initial={{ scaleY: 0, originY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 1.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute top-[15%] bottom-[15%] left-0 w-[3px] rounded-full"
+          style={{
+            background:
+              'linear-gradient(to bottom, transparent, #7ccd54 25%, #7ccd54 75%, transparent)',
+          }}
+        />
+      )}
 
-        {/* Headline */}
-        <div className="mb-8">
-          {([
-            { text: "Robots for",    cls: "hero-heading-dark"  },
-            { text: "Construction",  cls: "hero-heading-green" },
-            { text: "Sites.",        cls: "hero-heading-dark"  },
-          ] as const).map(({ text, cls }, i) => (
-            <div key={text} style={{ overflow: "hidden", paddingBottom: "0.35em", marginBottom: "-0.35em" }}>
-              <motion.h1
-                initial={{ y: "110%" }}
-                animate={{ y: "0%" }}
-                transition={{ duration: 1.0, delay: 0.08 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                className={`${cls} font-black leading-[0.86] tracking-[-0.04em]`}
-                style={{ fontSize: "clamp(3rem, 6.5vw, 8rem)", fontFamily: "var(--font-dm-sans)" }}
+      <div
+        className={
+          isMobile
+            ? 'relative z-10 w-full px-[clamp(0.9rem,4vw,1.25rem)]'
+            : 'relative z-10 w-full px-6 pt-32 sm:px-14 sm:pt-36 md:max-w-[52vw] md:pt-44 lg:px-20 lg:pt-0 xl:px-24'
+        }
+      >
+        {/* Headline — decorative animated lines. The semantic <h1> lives in the
+            always-rendered root (HeroWithScroll) so it is present in the static
+            HTML; these visible lines are aria-hidden to avoid a duplicate heading. */}
+        <div
+          aria-hidden="true"
+          className={isMobile ? 'mb-[clamp(0.9rem,3.8vw,1.35rem)]' : 'mb-8'}
+        >
+          {(
+            [
+              { text: 'Autonomous', cls: 'hero-heading-dark' },
+              { text: 'construction robots', cls: 'hero-heading-green' },
+              { text: 'at scale.', cls: 'hero-heading-dark' },
+            ] as const
+          ).map(({ text, cls }, i) => (
+            <div
+              key={text}
+              style={{
+                clipPath: 'inset(-0.18em -0.08em -0.34em -0.08em)',
+                overflow: 'visible',
+                paddingBlock: '0.18em 0.34em',
+                marginBlock: '-0.18em -0.34em',
+              }}
+            >
+              <motion.span
+                initial={{ y: '110%' }}
+                animate={{ y: '0%' }}
+                transition={{
+                  duration: 1.0,
+                  delay: 0.08 + i * 0.07,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className={`${cls} block leading-[0.98] font-black tracking-normal text-balance md:tracking-[-0.035em]`}
+                style={{
+                  fontSize: isMobile
+                    ? 'clamp(2.25rem, 10.5vw, 3.4rem)'
+                    : 'clamp(2.75rem, 6vw, 7rem)',
+                  fontFamily: 'var(--font-dm-sans)',
+                }}
               >
                 {text}
-              </motion.h1>
+              </motion.span>
             </div>
           ))}
         </div>
@@ -138,8 +115,10 @@ function HeroInner() {
           initial={{ scaleX: 0, originX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.0, delay: 0.46, ease: [0.16, 1, 0.3, 1] }}
-          className="h-px mb-7"
-          style={{ background: "rgba(25,28,26,0.12)" }}
+          className={isMobile ? 'mb-[clamp(0.9rem,3.6vw,1.25rem)] h-px' : 'mb-7 h-px'}
+          style={{
+            background: isMobile ? 'rgba(255,255,255,0.18)' : 'rgba(25,28,26,0.12)',
+          }}
         />
 
         {/* Description */}
@@ -147,10 +126,20 @@ function HeroInner() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.52, ease: [0.16, 1, 0.3, 1] }}
-          className="hero-body-text text-[20px] leading-[1.85] mb-7"
-          style={{ fontFamily: "var(--font-dm-sans)", maxWidth: "400px" }}
+          className={
+            isMobile
+              ? 'hero-body-text mb-[clamp(1rem,4vw,1.4rem)] max-w-[34ch] text-[clamp(0.92rem,3.8vw,1.08rem)] leading-[1.6] text-pretty [text-shadow:0px_0px_10px_rgba(0,0,0,0.1)]'
+              : 'hero-body-text mb-7 text-[clamp(1rem,0.78rem_+_0.95vw,1.75rem)] leading-[1.85]'
+          }
+          style={{
+            fontFamily: 'var(--font-dm-sans)',
+            maxWidth: isMobile ? undefined : '600px',
+          }}
         >
-          Enabling contractors to build smarter, faster and safer — with autonomous robots deployed across India&apos;s most demanding construction sites.
+          Enabling contractors and Developers to build{' '}
+          <b className="text-[#046825DB]">FASTER</b>, reduce{' '}
+          <b className="text-[#046825DB]">LABOUR DEPENDENCY</b> and enhance{' '}
+          <b className="text-[#046825DB]">PRODUCTIVITY</b>
         </motion.p>
 
         {/* CTA buttons */}
@@ -158,26 +147,50 @@ function HeroInner() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.62, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-center gap-3 mb-10 pointer-events-auto"
+          className={
+            isMobile
+              ? 'pointer-events-auto mb-0 flex flex-wrap items-center gap-2.5'
+              : 'pointer-events-auto mb-10 flex flex-wrap items-center gap-3'
+          }
         >
           <a
             href="/contact"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[18px] font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-md"
-            style={{ background: "#7ccd54", fontFamily: "var(--font-dm-sans)" }}
+            className="inline-flex min-h-11 items-center gap-2 rounded-full px-[clamp(1rem,4.2vw,1.5rem)] py-[clamp(0.65rem,2.8vw,0.85rem)] text-[clamp(0.78rem,3.2vw,0.92rem)] font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-md"
+            style={{ background: '#7ccd54', fontFamily: 'var(--font-dm-sans)' }}
           >
             Request a Demo
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M1.5 6h9M7 2.5l3.5 3.5L7 9.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg
+              className="h-[clamp(0.875rem,1vw,1rem)] w-[clamp(0.875rem,1vw,1rem)]"
+              viewBox="0 0 12 12"
+              fill="none"
+            >
+              <path
+                d="M1.5 6h9M7 2.5l3.5 3.5L7 9.5"
+                stroke="white"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </a>
           <a
             href="/offerings/material-movement"
-            className="hero-btn-secondary inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-[18px] font-semibold border transition-all duration-300"
-            style={{ fontFamily: "var(--font-dm-sans)" }}
+            className="hero-btn-secondary inline-flex min-h-11 items-center gap-1.5 rounded-full border px-[clamp(1rem,4.2vw,1.5rem)] py-[clamp(0.65rem,2.8vw,0.85rem)] text-[clamp(0.78rem,3.2vw,0.92rem)] font-semibold transition-all duration-300"
+            style={{ fontFamily: 'var(--font-dm-sans)' }}
           >
             Explore Solutions
-            <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-              <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg
+              className="h-[clamp(0.875rem,1vw,1rem)] w-[clamp(0.875rem,1vw,1rem)]"
+              viewBox="0 0 11 11"
+              fill="none"
+            >
+              <path
+                d="M2 9L9 2M9 2H4M9 2v5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </a>
         </motion.div>
@@ -208,9 +221,8 @@ function HeroInner() {
             </div>
           ))}
         </motion.div> */}
-
       </div>
-    </>
+    </div>
   );
 }
 
@@ -219,15 +231,25 @@ function ScrollIndicator() {
   return (
     <motion.div
       animate={{ y: [0, 5, 0] }}
-      transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+      transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
       className="flex items-center gap-2.5"
     >
-      <div className="hero-scroll-icon w-7 h-7 rounded-full flex items-center justify-center border">
+      <div className="hero-scroll-icon flex h-7 w-7 items-center justify-center rounded-full border">
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-          <path d="M5 1.5v7M2.5 6l2.5 2.5L7.5 6" stroke="currentColor" strokeOpacity="0.35" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+          <path
+            d="M5 1.5v7M2.5 6l2.5 2.5L7.5 6"
+            stroke="currentColor"
+            strokeOpacity="0.35"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </div>
-      <span className="hero-scroll-text text-[10px] font-semibold uppercase tracking-[0.18em]" style={{ fontFamily: "var(--font-dm-sans)" }}>
+      <span
+        className="hero-scroll-text text-[10px] font-semibold tracking-[0.18em] uppercase"
+        style={{ fontFamily: 'var(--font-dm-sans)' }}
+      >
         Scroll to explore
       </span>
     </motion.div>
@@ -237,59 +259,127 @@ function ScrollIndicator() {
 // ─── ScrollContent ────────────────────────────────────────────────────────────
 function ScrollContent({
   imagesRef,
-  loadFrame,
+  requestFrames,
+  subscribeToFrameLoads,
+  onFirstFrameRendered,
 }: {
   imagesRef: React.MutableRefObject<(HTMLImageElement | null)[]>;
-  loadFrame: (i: number) => void;
+  requestFrames: (indices: number[], priority?: 'high' | 'low') => void;
+  subscribeToFrameLoads: (listener: (index: number) => void) => () => void;
+  onFirstFrameRendered: () => void;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const canvasRef  = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const currentFrameRef = useRef(0);
+  const lastDrawnFrameRef = useRef<number | null>(null);
+  const firstFrameRenderedRef = useRef(false);
 
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
-    offset: ["start start", "end end"],
+    offset: ['start start', 'end end'],
   });
 
   // Canvas panel: starts right-half (52%) on desktop, expands to fullscreen over EXPAND_END px
-  const panelLeft    = useTransform(scrollYProgress, [0, EXPAND_END / TOTAL_HEIGHT], [52, 0], { clamp: true });
+  const panelLeft = useTransform(
+    scrollYProgress,
+    [0, EXPAND_END / TOTAL_HEIGHT],
+    [52, 0],
+    { clamp: true },
+  );
   const panelLeftPct = useMotionTemplate`${panelLeft}%`;
+  const heroClipRightDesktop = useTransform(panelLeft, (left) => 100 - left);
+  const heroClipPathDesktop = useMotionTemplate`inset(0 ${heroClipRightDesktop}% 0 0)`;
+  const heroRevealOpacityDesktop = useTransform(panelLeft, [0, 52], [0, 1], {
+    clamp: true,
+  });
 
-  // Desktop: hero text fades 300→700 px (stays visible while canvas expands from right half)
-  const heroOpacityDesktop = useTransform(scrollYProgress, [TEXT_FADE_START / TOTAL_HEIGHT, TEXT_FADE_END / TOTAL_HEIGHT], [1, 0], { clamp: true });
-  const heroXDesktop       = useTransform(scrollYProgress, [TEXT_FADE_START / TOTAL_HEIGHT, TEXT_FADE_END / TOTAL_HEIGHT], [0, -50], { clamp: true });
+  // Desktop: text remains selectable, then clips away in sync with the expanding canvas.
+  const heroOpacityDesktop = useTransform(
+    scrollYProgress,
+    [TEXT_FADE_START / TOTAL_HEIGHT, TEXT_FADE_END / TOTAL_HEIGHT],
+    [1, 0],
+    { clamp: true },
+  );
+  const heroXDesktop = useTransform(
+    scrollYProgress,
+    [TEXT_FADE_START / TOTAL_HEIGHT, TEXT_FADE_END / TOTAL_HEIGHT],
+    [0, -50],
+    { clamp: true },
+  );
   // Mobile: hero text + gradient fade immediately (0→200 px) so frames fill the screen cleanly
-  const heroOpacityMobile  = useTransform(scrollYProgress, [0, MOBILE_FADE_END / TOTAL_HEIGHT], [1, 0], { clamp: true });
-  const heroXMobile        = useTransform(scrollYProgress, [0, MOBILE_FADE_END / TOTAL_HEIGHT], [0, -20], { clamp: true });
+  const heroOpacityMobile = useTransform(
+    scrollYProgress,
+    [0, MOBILE_FADE_END / TOTAL_HEIGHT],
+    [1, 0],
+    { clamp: true },
+  );
+  const heroXMobile = useTransform(
+    scrollYProgress,
+    [0, MOBILE_FADE_END / TOTAL_HEIGHT],
+    [0, -20],
+    { clamp: true },
+  );
+  const heroClipRightMobile = useTransform(
+    scrollYProgress,
+    [0, MOBILE_FADE_END / TOTAL_HEIGHT],
+    [0, 100],
+    { clamp: true },
+  );
+  const heroClipPathMobile = useMotionTemplate`inset(0 ${heroClipRightMobile}% 0 0)`;
 
   // ── Canvas rendering — driven directly by scrollYProgress (no spring lag) ──
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: false });
+    const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
     let rafId = 0;
-    let dimW = 0, dimH = 0;
+    let dimW = 0,
+      dimH = 0;
 
     const draw = () => {
-      const v   = scrollYProgress.get();
+      const v = scrollYProgress.get();
       const idx = Math.min(Math.floor(v * TOTAL_FRAMES), TOTAL_FRAMES - 1);
+      currentFrameRef.current = idx;
+      let drawnFrameIndex = idx;
 
-      // Nearest-frame fallback — prevents blank flashes
+      // Prefer the exact frame, then the last drawn frame, then only a very tight local fallback.
       let img = imagesRef.current[idx];
       if (!img?.complete || !img.naturalWidth) {
-        let found = false;
-        for (let delta = 1; delta < 60 && !found; delta++) {
-          for (const d of [delta, -delta]) {
-            const ni = idx + d;
-            if (ni < 0 || ni >= TOTAL_FRAMES) continue;
-            const candidate = imagesRef.current[ni];
-            if (candidate?.complete && candidate.naturalWidth) {
-              img = candidate; found = true; break;
+        const lastDrawnIndex = lastDrawnFrameRef.current;
+        const lastDrawnImage =
+          lastDrawnIndex === null ? null : imagesRef.current[lastDrawnIndex];
+
+        if (
+          lastDrawnIndex !== null &&
+          lastDrawnImage?.complete &&
+          lastDrawnImage.naturalWidth
+        ) {
+          img = lastDrawnImage;
+          drawnFrameIndex = lastDrawnIndex;
+        } else {
+          for (let delta = 1; delta <= 2 && !img; delta++) {
+            const nextIndex = idx + delta;
+            const previousIndex = idx - delta;
+
+            const nextFrame =
+              nextIndex < TOTAL_FRAMES ? imagesRef.current[nextIndex] : null;
+            if (nextFrame?.complete && nextFrame.naturalWidth) {
+              img = nextFrame;
+              drawnFrameIndex = nextIndex;
+              break;
+            }
+
+            const previousFrame =
+              previousIndex >= 0 ? imagesRef.current[previousIndex] : null;
+            if (previousFrame?.complete && previousFrame.naturalWidth) {
+              img = previousFrame;
+              drawnFrameIndex = previousIndex;
+              break;
             }
           }
         }
-        if (!found || !img) return;
       }
       if (!img) return;
 
@@ -297,42 +387,101 @@ function ScrollContent({
       if (!parent) return;
       const { width: W, height: H } = parent.getBoundingClientRect();
       if (W === 0 || H === 0) return;
-      if (dimW !== W || dimH !== H) { canvas.width = W; canvas.height = H; dimW = W; dimH = H; }
+      if (dimW !== W || dimH !== H) {
+        canvas.width = W;
+        canvas.height = H;
+        dimW = W;
+        dimH = H;
+      }
 
       const iA = img.naturalWidth / img.naturalHeight;
       const cA = W / H;
       let dw: number, dh: number, ox: number, oy: number;
-      if (cA > iA) { dw = W; dh = W / iA; ox = 0; oy = (H - dh) / 2; }
-      else         { dh = H; dw = H * iA; ox = (W - dw) / 2; oy = 0; }
+      if (cA > iA) {
+        dw = W;
+        dh = W / iA;
+        ox = 0;
+        oy = (H - dh) / 2;
+      } else {
+        dh = H;
+        dw = H * iA;
+        ox = (W - dw) / 2;
+        oy = 0;
+      }
 
-      ctx.fillStyle = "#0d0d0d";
+      ctx.fillStyle = '#0d0d0d';
       ctx.fillRect(0, 0, W, H);
       ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
+      ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(img, ox, oy, dw, dh);
+
+      lastDrawnFrameRef.current = drawnFrameIndex;
+
+      if (!firstFrameRenderedRef.current) {
+        firstFrameRenderedRef.current = true;
+        onFirstFrameRendered();
+      }
     };
 
-    const schedule = () => { cancelAnimationFrame(rafId); rafId = requestAnimationFrame(draw); };
+    const schedule = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(draw);
+    };
 
-    const unsub = scrollYProgress.on("change", (v) => {
+    const unsubscribeProgress = scrollYProgress.on('change', (v) => {
       schedule();
-      // Preload frames around current position
+
+      // Prioritize frames in the direction of travel and keep a smaller tail behind.
       const cur = Math.min(Math.floor(v * TOTAL_FRAMES), TOTAL_FRAMES - 1);
-      for (let i = Math.max(0, cur - PRELOAD_BUFFER); i <= Math.min(TOTAL_FRAMES - 1, cur + PRELOAD_BUFFER); i++) {
-        loadFrame(i);
+      const previous = currentFrameRef.current;
+      const movingForward = cur >= previous;
+      const highPriorityIndices: number[] = [];
+      const lowPriorityIndices: number[] = [];
+
+      highPriorityIndices.push(cur);
+
+      for (let step = 1; step <= LOOKAHEAD_FRAMES; step++) {
+        const next = movingForward ? cur + step : cur - step;
+        if (next >= 0 && next < TOTAL_FRAMES) {
+          highPriorityIndices.push(next);
+        }
+      }
+
+      for (let step = 1; step <= LOOKBEHIND_FRAMES; step++) {
+        const trailing = movingForward ? cur - step : cur + step;
+        if (trailing >= 0 && trailing < TOTAL_FRAMES) {
+          lowPriorityIndices.push(trailing);
+        }
+      }
+
+      requestFrames(highPriorityIndices, 'high');
+      requestFrames(lowPriorityIndices, 'low');
+    });
+
+    const unsubscribeFrameLoads = subscribeToFrameLoads((loadedIndex) => {
+      const currentIndex = currentFrameRef.current;
+      const lastDrawnIndex = lastDrawnFrameRef.current;
+
+      if (
+        loadedIndex === currentIndex ||
+        loadedIndex === lastDrawnIndex ||
+        Math.abs(loadedIndex - currentIndex) <= 2
+      ) {
+        schedule();
       }
     });
 
-    window.addEventListener("resize", schedule);
+    window.addEventListener('resize', schedule);
     schedule(); // draw initial frame
 
     return () => {
-      unsub();
+      unsubscribeProgress();
+      unsubscribeFrameLoads();
       cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", schedule);
+      window.removeEventListener('resize', schedule);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrollYProgress]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onFirstFrameRendered, requestFrames, scrollYProgress, subscribeToFrameLoads]);
 
   // ── Background batch loading ───────────────────────────────────────────────
   useEffect(() => {
@@ -340,26 +489,38 @@ function ScrollContent({
     const SIZE = 20;
     const id = setInterval(() => {
       const start = batch * SIZE;
-      if (start >= TOTAL_FRAMES) { clearInterval(id); return; }
-      for (let i = start; i < Math.min(start + SIZE, TOTAL_FRAMES); i++) loadFrame(i);
+      if (start >= TOTAL_FRAMES) {
+        clearInterval(id);
+        return;
+      }
+      const indices: number[] = [];
+      for (let i = start; i < Math.min(start + SIZE, TOTAL_FRAMES); i++) {
+        indices.push(i);
+      }
+      requestFrames(indices, 'low');
       batch++;
-    }, 80);
+    }, 160);
     return () => clearInterval(id);
-  }, [loadFrame]);
+  }, [requestFrames]);
 
   return (
     <div
       ref={wrapperRef}
       style={{ height: `calc(${TOTAL_HEIGHT}px + 100vh)` }}
-      className="relative w-full"
+      className="relative w-full bg-[#f5f5f5]"
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden" style={{ backgroundColor: "#f5f5f5" }}>
-
+      <div
+        className="sticky top-0 h-screen w-full overflow-hidden"
+        style={{ backgroundColor: '#f5f5f5' }}
+      >
         {/* Dot grid */}
-        <div className="absolute inset-0 z-0" style={{
-          backgroundImage: `radial-gradient(circle, #191c1a18 1px, transparent 1px)`,
-          backgroundSize: "32px 32px"
-        }} />
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `radial-gradient(circle, #191c1a18 1px, transparent 1px)`,
+            backgroundSize: '32px 32px',
+          }}
+        />
 
         {/* Canvas panel — on desktop starts at right half and expands; on mobile always full-width */}
         <style>{`
@@ -375,47 +536,57 @@ function ScrollContent({
           .hero-scroll-icon { border-color: rgba(25,28,26,0.15); }
           .hero-scroll-text { color: rgba(25,28,26,0.30); }
           @media (max-width: 767px) {
-            .hero-heading-dark { color: #ffffff; }
-            .hero-heading-green { color: #7ccd54; }
-            .hero-muted-text { color: rgba(255,255,255,0.65); }
-            .hero-body-text { color: rgba(255,255,255,0.80); }
-            .hero-border { border-color: rgba(255,255,255,0.20); }
-            .hero-stat-value { color: #ffffff; }
-            .hero-stat-label { color: rgba(255,255,255,0.55); }
-            .hero-btn-secondary { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.30); }
-            .hero-scroll-icon { border-color: rgba(255,255,255,0.30); }
-            .hero-scroll-text { color: rgba(255,255,255,0.45); }
+            .hero-heading-dark { color: #191c1a; }
+            .hero-heading-green { color: #046825; }
+            .hero-muted-text { color: rgba(25,28,26,0.62); }
+            .hero-body-text { color: rgba(25,28,26,0.68); }
+            .hero-border { border-color: rgba(25,28,26,0.16); }
+            .hero-stat-value { color: #191c1a; }
+            .hero-stat-label { color: rgba(25,28,26,0.50); }
+            .hero-btn-secondary { color: #191c1a; border-color: rgba(25,28,26,0.18); background: rgba(255,255,255,0.34); }
+            .hero-scroll-icon { border-color: rgba(25,28,26,0.22); }
+            .hero-scroll-text { color: rgba(25,28,26,0.45); }
+            .hero-canvas-panel canvas {
+              filter: brightness(1.02) contrast(1.04) saturate(1.02);
+            }
           }
         `}</style>
         <motion.div
-          className="hero-canvas-panel absolute top-0 bottom-0 right-0 z-10"
-          style={{ left: panelLeftPct, willChange: "left" }}
+          className="hero-canvas-panel pointer-events-none absolute top-0 right-0 bottom-0 z-10"
+          style={{ left: panelLeftPct, willChange: 'left' }}
         >
-          <canvas ref={canvasRef} className="w-full h-full" />
+          <canvas ref={canvasRef} className="h-full w-full" />
         </motion.div>
 
         {/* ── Desktop hero text: left column, fades 300→700 px ── */}
         <motion.div
-          style={{ opacity: heroOpacityDesktop, x: heroXDesktop }}
-          className="hidden md:flex absolute inset-0 z-0 flex-col justify-center pointer-events-none"
+          style={{
+            opacity: heroOpacityDesktop,
+            x: heroXDesktop,
+            clipPath: heroClipPathDesktop,
+          }}
+          className="absolute inset-0 z-20 hidden flex-col justify-center md:flex"
         >
           <HeroInner />
         </motion.div>
 
         {/* ── Mobile hero text: full-width overlay, fades 0→200 px immediately ── */}
         <motion.div
-          style={{ opacity: heroOpacityMobile, x: heroXMobile }}
-          className="flex md:hidden absolute inset-0 z-20 flex-col justify-center pointer-events-none"
+          style={{
+            opacity: heroOpacityMobile,
+            x: heroXMobile,
+            clipPath: heroClipPathMobile,
+          }}
+          className="absolute inset-0 z-20 flex flex-col justify-start md:hidden"
         >
-          {/* Dark gradient so text is readable over canvas */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/20 pointer-events-none" />
-          <HeroInner />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_32%_38%,rgba(255,255,255,0.52),transparent_40%),linear-gradient(180deg,rgba(245,245,245,0.74),rgba(245,245,245,0.52))] backdrop-blur-[2px]" />
+          <HeroInner variant="mobile" />
         </motion.div>
 
         {/* ── Scroll indicator — desktop ── */}
         <motion.div
-          style={{ opacity: heroOpacityDesktop }}
-          className="hidden md:block absolute bottom-8 left-14 lg:left-20 xl:left-24 z-30 pointer-events-none"
+          style={{ opacity: heroRevealOpacityDesktop, clipPath: heroClipPathDesktop }}
+          className="pointer-events-none absolute bottom-8 left-14 z-30 hidden md:block lg:left-20 xl:left-24"
         >
           <ScrollIndicator />
         </motion.div>
@@ -423,7 +594,7 @@ function ScrollContent({
         {/* ── Scroll indicator — mobile ── */}
         <motion.div
           style={{ opacity: heroOpacityMobile }}
-          className="flex md:hidden absolute bottom-8 left-8 z-30 pointer-events-none"
+          className="pointer-events-none absolute bottom-7 left-7 z-30 hidden md:hidden"
         >
           <ScrollIndicator />
         </motion.div>
@@ -433,20 +604,39 @@ function ScrollContent({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-          style={{ borderColor: "rgba(40,108,0,0.3)", color: "#286c00", background: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", fontFamily: "var(--font-dm-sans)" }}
+          style={{
+            borderColor: 'rgba(40,108,0,0.3)',
+            color: '#286c00',
+            background: 'rgba(255,255,255,0.7)',
+            backdropFilter: 'blur(8px)',
+            fontFamily: 'var(--font-dm-sans)',
+          }}
           onClick={() => {
-            const target = document.querySelector<HTMLElement>(".hero-skip-target");
+            trackEvent('select_content', {
+              content_type: 'home_hero_animation_control',
+              item_id: 'skip_animation_desktop',
+            });
+            const target = document.querySelector<HTMLElement>('.hero-skip-target');
             if (target) {
-              target.scrollIntoView({ behavior: "smooth" });
+              target.scrollIntoView({ behavior: 'smooth' });
             } else {
-              window.scrollTo({ top: TOTAL_HEIGHT + window.innerHeight, behavior: "smooth" });
+              window.scrollTo({
+                top: TOTAL_HEIGHT + window.innerHeight,
+                behavior: 'smooth',
+              });
             }
           }}
-          className="hidden md:flex fixed bottom-8 right-14 lg:right-20 xl:right-24 z-50 items-center gap-2 px-4 py-2 rounded-full border text-[12px] font-semibold uppercase tracking-[0.18em] transition-all duration-300 hover:scale-105"
+          className="absolute right-14 bottom-8 z-40 hidden items-center gap-2 rounded-full border px-4 py-2 text-[12px] font-semibold tracking-[0.18em] uppercase transition-all duration-300 hover:scale-105 md:flex lg:right-20 xl:right-24"
         >
           Skip animation
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M5 1.5v7M2.5 6l2.5 2.5L7.5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path
+              d="M5 1.5v7M2.5 6l2.5 2.5L7.5 6"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </motion.button>
 
@@ -456,22 +646,40 @@ function ScrollContent({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
           onClick={() => {
-            const target = document.querySelector<HTMLElement>(".hero-skip-target");
+            trackEvent('select_content', {
+              content_type: 'home_hero_animation_control',
+              item_id: 'skip_animation_mobile',
+            });
+            const target = document.querySelector<HTMLElement>('.hero-skip-target');
             if (target) {
-              target.scrollIntoView({ behavior: "smooth" });
+              target.scrollIntoView({ behavior: 'smooth' });
             } else {
-              window.scrollTo({ top: TOTAL_HEIGHT + window.innerHeight, behavior: "smooth" });
+              window.scrollTo({
+                top: TOTAL_HEIGHT + window.innerHeight,
+                behavior: 'smooth',
+              });
             }
           }}
-          className="flex md:hidden fixed bottom-8 right-8 z-50 items-center gap-2 px-4 py-2 rounded-full border text-[11px] font-semibold uppercase tracking-[0.18em]"
-          style={{ borderColor: "rgba(40,108,0,0.5)", color: "#286c00", background: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", fontFamily: "var(--font-dm-sans)" }}
+          className="absolute right-8 bottom-8 z-40 flex min-h-10 items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold tracking-[0.18em] uppercase md:hidden"
+          style={{
+            borderColor: 'rgba(40,108,0,0.5)',
+            color: '#286c00',
+            background: 'rgba(255,255,255,0.7)',
+            backdropFilter: 'blur(8px)',
+            fontFamily: 'var(--font-dm-sans)',
+          }}
         >
           Skip
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M5 1.5v7M2.5 6l2.5 2.5L7.5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path
+              d="M5 1.5v7M2.5 6l2.5 2.5L7.5 6"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </motion.button>
-
       </div>
     </div>
   );
@@ -480,73 +688,193 @@ function ScrollContent({
 // ─── Root component ───────────────────────────────────────────────────────────
 export function HeroWithScroll() {
   // Images stored in a REF — no React re-renders when frames load
-  const imagesRef    = useRef<(HTMLImageElement | null)[]>(Array(TOTAL_FRAMES).fill(null));
-  const loadedRef    = useRef(new Set<number>());
-  const queueRef     = useRef(new Set<number>());
+  const imagesRef = useRef<(HTMLImageElement | null)[]>(Array(TOTAL_FRAMES).fill(null));
+  const loadedRef = useRef(new Set<number>());
+  const queueRef = useRef(new Set<number>());
+  const failedRef = useRef(new Set<number>());
+  const retriesRef = useRef(new Map<number, number>());
+  const highQueueRef = useRef<number[]>([]);
+  const lowQueueRef = useRef<number[]>([]);
+  const inFlightRef = useRef(0);
+  const frameListenersRef = useRef(new Set<(index: number) => void>());
 
-  const [initialLoaded, setInitialLoaded]   = useState(false);
+  const [openingReady, setOpeningReady] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [showContent, setShowContent]       = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
+  const [contentMounted, setContentMounted] = useState(false);
 
-  const loadFrame = useCallback((index: number) => {
-    if (index < 0 || index >= TOTAL_FRAMES) return;
-    if (loadedRef.current.has(index) || queueRef.current.has(index)) return;
-    queueRef.current.add(index);
-    const img = new Image();
-    img.src = `${FRAME_PATH}${String(index).padStart(6, "0")}${FRAME_EXT}`;
-    img.onload = () => {
-      loadedRef.current.add(index);
-      queueRef.current.delete(index);
-      imagesRef.current[index] = img; // write to ref — no re-render
-    };
-    img.onerror = () => queueRef.current.delete(index);
+  const emitFrameLoaded = useCallback((index: number) => {
+    frameListenersRef.current.forEach((listener) => listener(index));
   }, []);
 
-  // Load initial frames evenly distributed across the sequence
-  useEffect(() => {
-    let done = 0;
-    for (let i = 0; i < INITIAL_LOAD_COUNT; i++) {
-      const idx = Math.floor((i / INITIAL_LOAD_COUNT) * TOTAL_FRAMES);
-      queueRef.current.add(idx);
+  const updateOpeningProgress = useCallback(() => {
+    let loadedCount = 0;
+
+    for (let index = 0; index < INITIAL_PLAYABLE_FRAMES; index++) {
+      const image = imagesRef.current[index];
+      if (image?.complete && image.naturalWidth) {
+        loadedCount++;
+      }
+    }
+
+    const nextProgress = Math.round((loadedCount / INITIAL_PLAYABLE_FRAMES) * 100);
+    setLoadingProgress(nextProgress);
+
+    if (loadedCount === INITIAL_PLAYABLE_FRAMES) {
+      setOpeningReady(true);
+      setContentMounted(true);
+    }
+  }, []);
+
+  const startLoad = useCallback(
+    (index: number) => {
+      queueRef.current.add(index);
+      inFlightRef.current += 1;
+
       const img = new Image();
-      img.src = `${FRAME_PATH}${String(idx).padStart(6, "0")}${FRAME_EXT}`;
+      img.decoding = 'async';
+      const frameNumber = index + FRAME_NUMBER_OFFSET;
+      img.src = `${FRAME_PATH}${String(frameNumber).padStart(6, '0')}${FRAME_EXT}`;
+
       img.onload = () => {
-        loadedRef.current.add(idx);
-        queueRef.current.delete(idx);
-        imagesRef.current[idx] = img;
-        done++;
-        setLoadingProgress(Math.round((done / INITIAL_LOAD_COUNT) * 100));
-        if (done === INITIAL_LOAD_COUNT) setInitialLoaded(true);
+        loadedRef.current.add(index);
+        failedRef.current.delete(index);
+        queueRef.current.delete(index);
+        imagesRef.current[index] = img;
+        inFlightRef.current -= 1;
+
+        updateOpeningProgress();
+        emitFrameLoaded(index);
+        pumpQueue();
       };
+
       img.onerror = () => {
-        queueRef.current.delete(idx);
-        done++;
-        if (done === INITIAL_LOAD_COUNT) setInitialLoaded(true);
+        queueRef.current.delete(index);
+        inFlightRef.current -= 1;
+
+        const attempts = retriesRef.current.get(index) ?? 0;
+        if (attempts < MAX_LOAD_RETRIES) {
+          retriesRef.current.set(index, attempts + 1);
+          highQueueRef.current.unshift(index);
+        } else {
+          failedRef.current.add(index);
+          updateOpeningProgress();
+        }
+
+        pumpQueue();
       };
+    },
+    [emitFrameLoaded, updateOpeningProgress],
+  );
+
+  const pumpQueue = useCallback(() => {
+    while (inFlightRef.current < MAX_CONCURRENT_LOADS) {
+      const nextIndex = highQueueRef.current.shift() ?? lowQueueRef.current.shift();
+
+      if (nextIndex === undefined) return;
+      if (
+        loadedRef.current.has(nextIndex) ||
+        queueRef.current.has(nextIndex) ||
+        failedRef.current.has(nextIndex)
+      ) {
+        continue;
+      }
+
+      startLoad(nextIndex);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startLoad]);
+
+  const requestFrames = useCallback(
+    (indices: number[], priority: 'high' | 'low' = 'low') => {
+      const targetQueue =
+        priority === 'high' ? highQueueRef.current : lowQueueRef.current;
+
+      indices.forEach((index) => {
+        if (index < 0 || index >= TOTAL_FRAMES) return;
+        if (
+          loadedRef.current.has(index) ||
+          queueRef.current.has(index) ||
+          failedRef.current.has(index)
+        ) {
+          return;
+        }
+
+        if (highQueueRef.current.includes(index) || lowQueueRef.current.includes(index)) {
+          return;
+        }
+
+        targetQueue.push(index);
+      });
+
+      pumpQueue();
+    },
+    [pumpQueue],
+  );
+
+  const subscribeToFrameLoads = useCallback((listener: (index: number) => void) => {
+    frameListenersRef.current.add(listener);
+
+    return () => {
+      frameListenersRef.current.delete(listener);
+    };
   }, []);
 
   useEffect(() => {
-    if (initialLoaded) {
-      const t = window.setTimeout(() => setShowContent(true), 300);
-      return () => clearTimeout(t);
+    const openingFrames = Array.from(
+      { length: INITIAL_PLAYABLE_FRAMES },
+      (_, index) => index,
+    );
+    requestFrames(openingFrames, 'high');
+  }, [requestFrames]);
+
+  const handleFirstFrameRendered = useCallback(() => {
+    if (!openingReady) return;
+    setShowLoader(false);
+  }, [openingReady]);
+
+  useEffect(() => {
+    if (contentMounted) {
+      requestFrames(
+        Array.from(
+          { length: INITIAL_PLAYABLE_FRAMES + LOOKAHEAD_FRAMES },
+          (_, index) => index,
+        ),
+        'high',
+      );
     }
-  }, [initialLoaded]);
+  }, [contentMounted, requestFrames]);
 
   return (
     <>
+      {/* Semantic H1 rendered unconditionally so it is present in the static
+          export HTML. The visible animated headline (inside ScrollContent) is
+          decorative/aria-hidden and only mounts client-side after the loader. */}
+      <h1 className="sr-only">Autonomous construction robots at scale.</h1>
+
       <AnimatePresence mode="wait">
-        {!initialLoaded && <LoadingScreen key="loading" progress={loadingProgress} />}
+        {showLoader && (
+          <ExperienceLoader
+            key="loading"
+            progress={loadingProgress}
+            detail={
+              openingReady ? 'Rendering first frame...' : 'Preparing opening sequence...'
+            }
+          />
+        )}
       </AnimatePresence>
 
-      {showContent && (
+      {contentMounted && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <ScrollContent imagesRef={imagesRef} loadFrame={loadFrame} />
+          <ScrollContent
+            imagesRef={imagesRef}
+            requestFrames={requestFrames}
+            subscribeToFrameLoads={subscribeToFrameLoads}
+            onFirstFrameRendered={handleFirstFrameRendered}
+          />
         </motion.div>
       )}
     </>

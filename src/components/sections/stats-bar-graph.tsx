@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 interface StatMetric {
   value: number;
@@ -64,7 +64,7 @@ function AnimatedMetricValue({
 export function StatsBarGraph({ stats }: StatsBarGraphProps) {
   const { ref, isIntersecting } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.35,
-    rootMargin: "0px 0px -10% 0px",
+    rootMargin: '0px 0px -10% 0px',
     triggerOnce: true,
   });
 
@@ -83,15 +83,14 @@ export function StatsBarGraph({ stats }: StatsBarGraphProps) {
           {Array.from({ length: 4 }).map((_, index) => (
             <div
               key={index}
-              className={index === 3 ? "" : "border-t border-dashed border-[#7ccd54]/15"}
+              className={index === 3 ? '' : 'border-t border-dashed border-[#7ccd54]/15'}
             />
           ))}
         </div>
 
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-5 sm:gap-x-6">
           {stats.map((stat, index) => {
-            const normalizedHeight =
-              30 + ((stat.value - minValue) / range) * 70;
+            const normalizedHeight = 30 + ((stat.value - minValue) / range) * 70;
 
             return (
               <div key={stat.label} className="flex flex-col items-center">
@@ -107,7 +106,7 @@ export function StatsBarGraph({ stats }: StatsBarGraphProps) {
                 >
                   <div
                     className="text-[clamp(1.5rem,2vw+0.85rem,2.5rem)] font-semibold text-gray-900"
-                    style={{ fontFamily: "var(--font-dm-sans)" }}
+                    style={{ fontFamily: 'var(--font-dm-sans)' }}
                   >
                     <AnimatedMetricValue
                       end={stat.value}
