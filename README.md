@@ -119,9 +119,9 @@ yarn build
 
 ## Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `DB_URI` | MongoDB connection string | Yes |
+| Variable | Description               | Required |
+| -------- | ------------------------- | -------- |
+| `DB_URI` | MongoDB connection string | Yes      |
 
 ## Learn More
 
