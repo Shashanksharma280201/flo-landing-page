@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
 import { ContactForm } from '@/components/sections/contact/contact-form';
+import { ROICalculatorSection } from '@/components/sections/contact/roi-calculator';
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const BG = '#ffffff';
@@ -521,6 +522,7 @@ export default function ContactPage() {
     <div className="w-full" style={{ color: TEXT, background: BG2 }}>
       <HeroSection />
       {/* <ReasonsSection /> */}
+      <ROICalculatorSection />
       <CTASection />
     </div>
   );

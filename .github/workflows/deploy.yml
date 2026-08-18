@@ -1,0 +1,191 @@
+name: Deploy static site
+
+on:
+  push:
+    branches:
+      - deploy
+  repository_dispatch:
+    types: [cms-publish] # Allows triggering builds via database triggers/webhooks
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions UI without a PAT or Git push
+
+concurrency:
+  group: deploy-static-site
+  cancel-in-progress: true
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'ap-south-1' }}
+  S3_BUCKET: landing-page-v2-443x6
+  CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+  CLOUDFRONT_INVALIDATION_MAX_PATHS: ${{ vars.CLOUDFRONT_INVALIDATION_MAX_PATHS || '100' }}
+
+jobs:
+  build:
+    name: Build Static Site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Restore Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build static export
+        run: pnpm build
+        env:
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+          NEXT_PUBLIC_MISSION_CONTROL_API_URL: ${{ vars.NEXT_PUBLIC_MISSION_CONTROL_API_URL || 'https://fleet.flomobility.com' }}
+          DB_URI: ${{ secrets.DB_URI }}
+
+      - name: Post-build sanity check
+        run: |
+          if [ ! -d "out" ] || [ ! -f "out/index.html" ] || [ ! -s "out/index.html" ]; then
+            echo "Error: Static export directory 'out' or 'out/index.html' is missing or empty." >&2
+            exit 1
+          fi
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-site-export
+          path: out/
+          retention-days: 3
+
+  deploy:
+    name: Deploy to AWS
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: static-site-export
+          path: out/
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Preview changed S3 objects
+        id: changes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          aws s3 sync out/ "s3://${S3_BUCKET}" --delete --dryrun > /tmp/s3-dryrun.txt
+
+          python - <<'PY'
+          from pathlib import Path
+          import os
+          import re
+
+          bucket = os.environ["S3_BUCKET"]
+          max_paths = int(os.environ["CLOUDFRONT_INVALIDATION_MAX_PATHS"])
+          dryrun = Path("/tmp/s3-dryrun.txt").read_text().splitlines()
+          s3_prefix = f"s3://{bucket}/"
+          keys = set()
+
+          for line in dryrun:
+              upload = re.search(r"upload: out/(.+?) to s3://", line)
+              if upload:
+                  keys.add(upload.group(1))
+                  continue
+
+              delete = re.search(r"delete: s3://[^/]+/(.+)$", line)
+              if delete:
+                  keys.add(delete.group(1))
+
+          paths = set()
+          for key in keys:
+              if not key or key.startswith("_next/static/"):
+                  continue
+
+              normalized = "/" + key.lstrip("/")
+              paths.add(normalized)
+
+              if key == "index.html":
+                  paths.add("/")
+              elif key.endswith("/index.html"):
+                  route = "/" + key[: -len("/index.html")].strip("/")
+                  paths.add(route)
+                  paths.add(route + "/")
+              elif key.endswith(".html"):
+                  paths.add(normalized[:-5])
+
+          sorted_paths = sorted(paths)
+          fallback = len(sorted_paths) > max_paths
+          invalidation_paths = ["/*"] if fallback else sorted_paths
+
+          output = Path(os.environ["GITHUB_OUTPUT"])
+          with output.open("a") as fh:
+              fh.write(f"changed_count={len(keys)}\n")
+              fh.write(f"invalidation_count={len(invalidation_paths)}\n")
+              fh.write(f"fallback={'true' if fallback else 'false'}\n")
+              delimiter = "INVALIDATION_PATHS_EOF"
+              fh.write(f"invalidation_paths<<{delimiter}\n")
+              fh.write("\n".join(invalidation_paths))
+              fh.write(f"\n{delimiter}\n")
+
+          summary = Path(os.environ["GITHUB_STEP_SUMMARY"])
+          with summary.open("a") as fh:
+              fh.write("### S3 sync preview\n\n")
+              fh.write(f"- Changed S3 objects: `{len(keys)}`\n")
+              fh.write(f"- CloudFront invalidation paths: `{len(invalidation_paths)}`\n")
+              fh.write(f"- Fallback invalidation: `{'yes' if fallback else 'no'}`\n\n")
+              if invalidation_paths:
+                  fh.write("```text\n")
+                  fh.write("\n".join(invalidation_paths[:max_paths]))
+                  fh.write("\n```\n")
+          PY
+
+      - name: Sync route assets to S3
+        run: |
+          aws s3 sync out/ "s3://${S3_BUCKET}" \
+            --delete \
+            --exclude "_next/static/*" \
+            --cache-control "public,max-age=0,must-revalidate"
+
+      - name: Sync immutable Next.js assets to S3
+        run: |
+          aws s3 sync out/_next/static/ "s3://${S3_BUCKET}/_next/static/" \
+            --delete \
+            --cache-control "public,max-age=31536000,immutable"
+
+      - name: Invalidate changed CloudFront paths
+        if: steps.changes.outputs.invalidation_count != '0'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CLOUDFRONT_DISTRIBUTION_ID}" ]; then
+            echo "CLOUDFRONT_DISTRIBUTION_ID secret is required for invalidation." >&2
+            exit 1
+          fi
+
+          mapfile -t paths <<< "${{ steps.changes.outputs.invalidation_paths }}"
+          aws cloudfront create-invalidation \
+            --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
+            --paths "${paths[@]}"
